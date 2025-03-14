@@ -63,6 +63,48 @@ sysinfo.txt
 *.unitypackage.meta
 *.app
 
+# Ignore sprites and textures
+*.png
+*.jpg
+*.jpeg
+*.tga
+*.psd
+*.exr
+*.hdr
+
+# Ignore 3D models
+*.fbx
+*.obj
+*.blend
+*.dae
+*.gltf
+*.glb
+*.3ds
+*.max
+
+# Ignore audio files
+*.wav
+*.mp3
+*.ogg
+*.flac
+*.aiff
+
+# Ignore video files
+*.mp4
+*.mov
+*.avi
+*.webm
+
+# Ignore other Unity-generated files
+*.csproj
+*.sln
+*.userprefs
+*.pidb
+*.booproj
+*.opendb
+*.VC.db
+sysinfo.txt
+
 # Crashlytics generated file
 crashlytics-build.properties
 
