@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -x
-
 # Path to your Git repository
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
@@ -20,16 +18,23 @@ convert_gitignore_to_plasticignore() {
     # Create a temporary file for our processed content
     >"$temp_file"
 
-    # Default rule - ignore everything not explicitly included (moved to the top)
-    echo "*" >"$temp_file"
-
     # Headers at the very beginning
-    echo "# Automatically generated from .gitignore with reversed rules" >>"$temp_file"
+    echo "# Automatically generated from .gitignore with reversed rules" >"$temp_file"
     echo "# Generated on $(date)" >>"$temp_file"
     echo "# This file inverts Git ignore rules for Unity Plastic SCM" >>"$temp_file"
     echo "" >>"$temp_file"
 
-    # Processed .gitignore rules in the middle
+    # Default rule - ignore everything not explicitly included (added first)
+    echo "*" >>"$temp_file"
+
+    # Add the original ignore.conf content first (ensure it's prioritized)
+    if [[ -f "$IGNORE_CONF" ]]; then
+        echo "# Original ignore.conf content" >>"$temp_file"
+        cat "$IGNORE_CONF" >>"$temp_file"
+        echo "" >>"$temp_file"
+    fi
+
+    # Processed .gitignore rules in the middle (inverse rules)
     while IFS= read -r line || [[ -n "$line" ]]; do
         # Handle section dividers and comments as-is
         if [[ "$line" =~ ^# ]]; then
@@ -62,21 +67,8 @@ convert_gitignore_to_plasticignore() {
         fi
     done <"$gitignore_path"
 
-    echo "" >>"$temp_file"
-
-    # Ignore.conf content (if it exists)
-    if [[ -f "$IGNORE_CONF" ]]; then
-        echo "# Original ignore.conf content" >>"$temp_file"
-        cat "$IGNORE_CONF" >>"$temp_file"
-        echo "" >>"$temp_file"
-    fi
-
-    # Explicitly allow ignore.conf itself
+    # Explicitly add ignore.conf itself
     echo "!ignore.conf" >>"$temp_file"
-
-    # The catch-all "*" rule at the very end (should be moved to the beginning)
-    # echo "# Default rule - ignore everything not explicitly included" >> "$temp_file"
-    # echo "*" >> "$temp_file"
 
     # Replace the target file with our temporary file
     mv "$temp_file" "$plasticignore_path"
