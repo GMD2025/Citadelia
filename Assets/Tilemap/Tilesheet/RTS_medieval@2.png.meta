@@ -471,6 +471,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -3259,7 +3272,133 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      RTS_medieval@2_0: -730100288125635459
+      RTS_medieval@2_1: 1086783647822359178
+      RTS_medieval@2_10: -3151152826728203068
+      RTS_medieval@2_100: 2365258482334406340
+      RTS_medieval@2_101: 7433126681112525509
+      RTS_medieval@2_102: -8699903415777107771
+      RTS_medieval@2_103: 9054374119614683055
+      RTS_medieval@2_104: -7837698803512587496
+      RTS_medieval@2_105: -6334054605833447468
+      RTS_medieval@2_106: -3997162509606285823
+      RTS_medieval@2_107: 494018345108938219
+      RTS_medieval@2_108: -6961635192942279611
+      RTS_medieval@2_109: -3811849192645052961
+      RTS_medieval@2_11: -7034178006129912602
+      RTS_medieval@2_110: -3025566085667232883
+      RTS_medieval@2_111: -3224886627937047658
+      RTS_medieval@2_112: 5144418779006725171
+      RTS_medieval@2_113: -8369382761199147251
+      RTS_medieval@2_114: -8380008707298726246
+      RTS_medieval@2_115: -9000435247761556880
+      RTS_medieval@2_116: 2815887814579627226
+      RTS_medieval@2_117: -1401015729671499130
+      RTS_medieval@2_118: 2110594083334987213
+      RTS_medieval@2_119: 2492327329075725306
+      RTS_medieval@2_12: -8132751026731055030
+      RTS_medieval@2_120: -5905329418722662790
+      RTS_medieval@2_121: -2218198966514975133
+      RTS_medieval@2_122: -7378668833788811833
+      RTS_medieval@2_123: -6528412336524372062
+      RTS_medieval@2_124: -2246815244687402028
+      RTS_medieval@2_125: -8978146151245626038
+      RTS_medieval@2_13: -6153184113562294778
+      RTS_medieval@2_14: -4147054728263199701
+      RTS_medieval@2_15: -3130654362534477834
+      RTS_medieval@2_16: -8743592249306041209
+      RTS_medieval@2_17: -7213424425299681046
+      RTS_medieval@2_18: -2503936262394839839
+      RTS_medieval@2_19: 7879457391367873932
+      RTS_medieval@2_2: -8223888522509754171
+      RTS_medieval@2_20: -3541834622323829016
+      RTS_medieval@2_21: -3636977471343087293
+      RTS_medieval@2_22: -7551075211332358335
+      RTS_medieval@2_23: -6229460234617728499
+      RTS_medieval@2_24: -5340369211581611182
+      RTS_medieval@2_25: -2036212386645575834
+      RTS_medieval@2_26: 6458952519893294719
+      RTS_medieval@2_27: 509550879037499524
+      RTS_medieval@2_28: 7113538930650831388
+      RTS_medieval@2_29: -4557111500465654064
+      RTS_medieval@2_3: -3055401472402145613
+      RTS_medieval@2_30: -8381106119904367951
+      RTS_medieval@2_31: 656708242795963553
+      RTS_medieval@2_32: 134106429331119553
+      RTS_medieval@2_33: 5758353508231783875
+      RTS_medieval@2_34: 8344326340976807322
+      RTS_medieval@2_35: 5047260665697350640
+      RTS_medieval@2_36: -8058465657368014882
+      RTS_medieval@2_37: 5094330715482595348
+      RTS_medieval@2_38: 19678382450290332
+      RTS_medieval@2_39: -1768809774793793713
+      RTS_medieval@2_4: -5221642237017938455
+      RTS_medieval@2_40: 1149008071826741358
+      RTS_medieval@2_41: -8358397607224773051
+      RTS_medieval@2_42: -484265556908112515
+      RTS_medieval@2_43: 5942490959377587896
+      RTS_medieval@2_44: -7536498660030301779
+      RTS_medieval@2_45: 5836409563368825845
+      RTS_medieval@2_46: -3271295092334569819
+      RTS_medieval@2_47: -1612883915679594851
+      RTS_medieval@2_48: -6370300945529733233
+      RTS_medieval@2_49: -5085404942661939862
+      RTS_medieval@2_5: 4534640832196463326
+      RTS_medieval@2_50: 6461198350511160410
+      RTS_medieval@2_51: 6753778741073851084
+      RTS_medieval@2_52: -8264385356409226980
+      RTS_medieval@2_53: 6759850744859138396
+      RTS_medieval@2_54: -556118313800811176
+      RTS_medieval@2_55: -1415417223570822499
+      RTS_medieval@2_56: 778087837257136957
+      RTS_medieval@2_57: 6922640578579055174
+      RTS_medieval@2_58: -7258931191175352897
+      RTS_medieval@2_59: 1824928745428258137
+      RTS_medieval@2_6: -5868241393608159542
+      RTS_medieval@2_60: -6983012190488632922
+      RTS_medieval@2_61: -3381903629031533044
+      RTS_medieval@2_62: 7129598175556369529
+      RTS_medieval@2_63: 9176636359420830794
+      RTS_medieval@2_64: 5380709053851162247
+      RTS_medieval@2_65: -6011161016835228539
+      RTS_medieval@2_66: -6668545130738482440
+      RTS_medieval@2_67: 2217946122627970240
+      RTS_medieval@2_68: 6299004766935064703
+      RTS_medieval@2_69: 1393448601001536536
+      RTS_medieval@2_7: -8733742038249469284
+      RTS_medieval@2_70: 3740511475120258559
+      RTS_medieval@2_71: 3926084611118714883
+      RTS_medieval@2_72: 8907107067430532193
+      RTS_medieval@2_73: -7931344410939115632
+      RTS_medieval@2_74: -6937208429874386769
+      RTS_medieval@2_75: 411220424465931126
+      RTS_medieval@2_76: -5401757774300699409
+      RTS_medieval@2_77: 7077396769917492235
+      RTS_medieval@2_78: -230323833089978747
+      RTS_medieval@2_79: 2796034122687528804
+      RTS_medieval@2_8: 4625306433555912779
+      RTS_medieval@2_80: 1599936576673124362
+      RTS_medieval@2_81: -292200037773161127
+      RTS_medieval@2_82: 299424313056821395
+      RTS_medieval@2_83: 2738681656019124198
+      RTS_medieval@2_84: 5659369361713314012
+      RTS_medieval@2_85: -65575116922254399
+      RTS_medieval@2_86: 2992292391840909854
+      RTS_medieval@2_87: -7695994273673767328
+      RTS_medieval@2_88: 472577842669310397
+      RTS_medieval@2_89: 6030275870479518072
+      RTS_medieval@2_9: 3784413022584779671
+      RTS_medieval@2_90: -8163637813667040292
+      RTS_medieval@2_91: 3766598191810627093
+      RTS_medieval@2_92: -5949159941904860711
+      RTS_medieval@2_93: 5833367921090067671
+      RTS_medieval@2_94: 7119636100861762631
+      RTS_medieval@2_95: 1655814789752226600
+      RTS_medieval@2_96: -6651681409455578642
+      RTS_medieval@2_97: 6741070306424969747
+      RTS_medieval@2_98: -3039786808657108903
+      RTS_medieval@2_99: -3244139519589747376
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

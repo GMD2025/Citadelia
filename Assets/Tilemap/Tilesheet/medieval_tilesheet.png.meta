@@ -471,6 +471,19 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -3259,7 +3272,133 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      medieval_tilesheet_0: -3314271785575527403
+      medieval_tilesheet_1: 6494548781853929706
+      medieval_tilesheet_10: -6789133097392538035
+      medieval_tilesheet_100: 4107169377756894938
+      medieval_tilesheet_101: 7129521747901732817
+      medieval_tilesheet_102: -6437364431625118300
+      medieval_tilesheet_103: 7110330685995767492
+      medieval_tilesheet_104: -5206307096435266691
+      medieval_tilesheet_105: 246591861053684709
+      medieval_tilesheet_106: 2452553224058060998
+      medieval_tilesheet_107: 403563518399907736
+      medieval_tilesheet_108: 2972149211349012656
+      medieval_tilesheet_109: 2746450641182785724
+      medieval_tilesheet_11: -1231812943054594379
+      medieval_tilesheet_110: 8800132779941010527
+      medieval_tilesheet_111: -825331983916348980
+      medieval_tilesheet_112: 2964807904940490486
+      medieval_tilesheet_113: 1874638683097876547
+      medieval_tilesheet_114: 9166424852326620884
+      medieval_tilesheet_115: -8379323532782737653
+      medieval_tilesheet_116: 9220892715235637443
+      medieval_tilesheet_117: 3944918410346182644
+      medieval_tilesheet_118: 2362208515763536144
+      medieval_tilesheet_119: 5548654541083606110
+      medieval_tilesheet_12: 7151688517417685034
+      medieval_tilesheet_120: 4283902303533115392
+      medieval_tilesheet_121: -1290303477569094121
+      medieval_tilesheet_122: 8209794572118564926
+      medieval_tilesheet_123: 7093088890104927310
+      medieval_tilesheet_124: 3365091030758349159
+      medieval_tilesheet_125: -6281510828644196786
+      medieval_tilesheet_13: 315747813886967972
+      medieval_tilesheet_14: -3802887857723246809
+      medieval_tilesheet_15: 6538639365636095540
+      medieval_tilesheet_16: -1036317019091617459
+      medieval_tilesheet_17: 2973415215607765951
+      medieval_tilesheet_18: -7202771334365702651
+      medieval_tilesheet_19: -9079680561827956873
+      medieval_tilesheet_2: -9130879439924087061
+      medieval_tilesheet_20: -302894304630280335
+      medieval_tilesheet_21: 6476188027323108694
+      medieval_tilesheet_22: 5832247851046435725
+      medieval_tilesheet_23: 9106566217897873668
+      medieval_tilesheet_24: -7312383465574289844
+      medieval_tilesheet_25: -6472211734649488194
+      medieval_tilesheet_26: -7195606683655049220
+      medieval_tilesheet_27: 3163565552318084322
+      medieval_tilesheet_28: 6583696758984297708
+      medieval_tilesheet_29: -3146285204934823375
+      medieval_tilesheet_3: 7926011746399687880
+      medieval_tilesheet_30: 7691712958648508722
+      medieval_tilesheet_31: -8101394772900198829
+      medieval_tilesheet_32: 673089639521391452
+      medieval_tilesheet_33: -9097929771323198585
+      medieval_tilesheet_34: 2741450952487453666
+      medieval_tilesheet_35: 5521579182230888085
+      medieval_tilesheet_36: 3324698285619192880
+      medieval_tilesheet_37: 8079143279813836810
+      medieval_tilesheet_38: 7346136661931531934
+      medieval_tilesheet_39: 4392740774136793373
+      medieval_tilesheet_4: -6079041502036697222
+      medieval_tilesheet_40: -6039984828880935811
+      medieval_tilesheet_41: -6629023545519911804
+      medieval_tilesheet_42: -3429681013076697112
+      medieval_tilesheet_43: 3855011545715073716
+      medieval_tilesheet_44: -5875766002924912403
+      medieval_tilesheet_45: 116898221937341726
+      medieval_tilesheet_46: -427187365841104034
+      medieval_tilesheet_47: 403808457430946102
+      medieval_tilesheet_48: -3908637710342115392
+      medieval_tilesheet_49: -8105445971244362807
+      medieval_tilesheet_5: -7601494163587780855
+      medieval_tilesheet_50: -6929114766283725420
+      medieval_tilesheet_51: -3506825672399023539
+      medieval_tilesheet_52: -4008839132697857593
+      medieval_tilesheet_53: -3545774846336624301
+      medieval_tilesheet_54: -5244068304586432119
+      medieval_tilesheet_55: -8345452454884939679
+      medieval_tilesheet_56: -4567567678871889948
+      medieval_tilesheet_57: 7216935939227707629
+      medieval_tilesheet_58: 6856068464461188041
+      medieval_tilesheet_59: -6393518324680449487
+      medieval_tilesheet_6: 6337898705942846053
+      medieval_tilesheet_60: -1461821564281788719
+      medieval_tilesheet_61: 4878849810794328598
+      medieval_tilesheet_62: 5284382692947628944
+      medieval_tilesheet_63: -7652217368671782963
+      medieval_tilesheet_64: 8469280075700652715
+      medieval_tilesheet_65: -1972032315694400239
+      medieval_tilesheet_66: 1616115901576933640
+      medieval_tilesheet_67: -2357109320842094810
+      medieval_tilesheet_68: -1380967417565040979
+      medieval_tilesheet_69: 6122472025495218818
+      medieval_tilesheet_7: 1792167296539088393
+      medieval_tilesheet_70: -4022938246979216165
+      medieval_tilesheet_71: -8714143104606183197
+      medieval_tilesheet_72: 5748213927205556201
+      medieval_tilesheet_73: -3864785990904604504
+      medieval_tilesheet_74: -3072728289176708038
+      medieval_tilesheet_75: 5413045265317268523
+      medieval_tilesheet_76: -5944120175274978630
+      medieval_tilesheet_77: 8147879406039747934
+      medieval_tilesheet_78: -6780068579240172686
+      medieval_tilesheet_79: -7512945918168207297
+      medieval_tilesheet_8: -4230302968136813710
+      medieval_tilesheet_80: 8380016032897891643
+      medieval_tilesheet_81: -8432224072323241423
+      medieval_tilesheet_82: -8961022468178031120
+      medieval_tilesheet_83: 2087493988873231479
+      medieval_tilesheet_84: 3193969091917430909
+      medieval_tilesheet_85: 5912922682141041426
+      medieval_tilesheet_86: 3475969829630855333
+      medieval_tilesheet_87: -1734587922708288878
+      medieval_tilesheet_88: -4423513265120009755
+      medieval_tilesheet_89: 729625993552593311
+      medieval_tilesheet_9: 4888225089482583836
+      medieval_tilesheet_90: -3364406491496597024
+      medieval_tilesheet_91: 873423066637862271
+      medieval_tilesheet_92: -2520492921184029539
+      medieval_tilesheet_93: 3293194158306724973
+      medieval_tilesheet_94: -838916338375527114
+      medieval_tilesheet_95: 5915850044438869376
+      medieval_tilesheet_96: 6096632355848572919
+      medieval_tilesheet_97: -6264627569750433080
+      medieval_tilesheet_98: -3236364249607598434
+      medieval_tilesheet_99: 5823770012317763567
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
