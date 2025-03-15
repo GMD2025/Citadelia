@@ -1,6 +1,6 @@
-﻿## Creating a game mock
+## Creating a game mock
 - 00X Story: drag and drop the building on the field 
-  - - [ ] 000 Creating square tiles that have a method to highlight them
+  - - [X] 000 Creating square tiles that have a method to highlight them
   - - [ ] 001 Creating a select-building bar
       - [X] Creating a drag'n'drop from GUI to the field
       - [ ] Loading the correct button options in the bar
