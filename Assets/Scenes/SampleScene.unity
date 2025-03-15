@@ -5055,11 +5055,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30576e560b5ae44458d7b628fbbe7c57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactiveTilemaps:
-  - {fileID: 416767459}
-  - {fileID: 2037298645}
-  - {fileID: 1865430338}
-  highlightMaterial: {fileID: 2100000, guid: 672736053974c1e41881a912ac70a114, type: 2}
+  outlinePrefab: {fileID: 6007272961333544781, guid: 23b37b2bb23234348bb92fdaa105e25e, type: 3}
+  highlightColor: {r: 0.3584906, g: 0, b: 0, a: 0.28235295}
+  shouldHighlight: 1
+  highlightSize: {x: 2, y: 2}
 --- !u!1 &1865430335
 GameObject:
   m_ObjectHideFlags: 0
