@@ -6,7 +6,7 @@ REPO_ROOT=$(git rev-parse --show-toplevel 2>/dev/null) || {
 }
 
 pre_commit() {
-    SRC="$REPO_ROOT/git_scripts/pre-commit/generate-plastic-ignore.sh"
+    SRC="$REPO_ROOT/git_scripts/pre-commit/script.sh"
     DEST="$REPO_ROOT/.git/hooks/pre-commit"
 
     if [[ ! -f "$SRC" ]]; then
