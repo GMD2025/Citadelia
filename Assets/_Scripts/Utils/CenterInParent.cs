@@ -1,7 +1,7 @@
-using CustomInspector.Button;
+using _Scripts.CustomInspector.Button;
 using UnityEngine;
 
-namespace Utils
+namespace _Scripts.Utils
 {
     public class CenterInParent : MonoBehaviour
     {

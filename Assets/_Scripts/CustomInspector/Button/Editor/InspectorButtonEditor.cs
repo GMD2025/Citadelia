@@ -2,10 +2,10 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace CustomInspector.Button
+namespace _Scripts.CustomInspector.Button.Editor
 {
     [CustomEditor(typeof(MonoBehaviour), true)]
-    public class InspectorButtonEditor : Editor
+    public class InspectorButtonEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {

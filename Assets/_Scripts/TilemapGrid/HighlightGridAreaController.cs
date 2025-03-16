@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
-namespace TilemapGrid
+namespace _Scripts.TilemapGrid
 {
     public class HighlightGridAreaController : MonoBehaviour
     {
@@ -29,11 +32,15 @@ namespace TilemapGrid
         private GameObject highlightObject;
         private Grid grid;
         private Camera mainCamera;
+        private Tilemap[] tilemaps;
+
+        private BoundsInt highlightedAreaBounds;
 
         private void Awake()
         {
             grid = GetComponent<Grid>();
             mainCamera = Camera.main;
+            tilemaps = GetComponentsInChildren<Tilemap>();
             CreateHighlightObject();
         }
 
@@ -72,6 +79,7 @@ namespace TilemapGrid
             Vector3Int cellPosition = grid.WorldToCell(worldPosition);
 
             HighlightGridArea(cellPosition, highlightSize);
+            GetHighlightedTiles(highlightedAreaBounds);
         }
 
         private void HighlightGridArea(Vector3Int startTilePosition, Vector2Int size)
@@ -98,6 +106,44 @@ namespace TilemapGrid
 
             highlightObject.transform.position = centerPosition;
             highlightObject.transform.localScale = new Vector3(width, height, 1);
+
+            highlightedAreaBounds = new BoundsInt(
+                Vector3Int.FloorToInt(adjustedStartPosition), 
+                new Vector3Int(size.x, size.y, 1) // ensure size.z = 1, otherwise tilemap doesn't return any tiles from the bounds
+            );
+        }
+
+        public TileBase[] GetHighlightedTiles(BoundsInt bounds)
+        {
+            if (tilemaps == null || tilemaps.Length == 0) 
+            {
+                return null;
+            }
+
+            Dictionary<Vector3Int, TileBase> topLayerTiles = new();
+
+            for (int i = tilemaps.Length - 1; i >= 0; i--) // Start from topmost tilemap
+            {
+                Tilemap tilemap = tilemaps[i];
+                TileBase[] tiles = tilemap.GetTilesBlock(bounds);
+
+                if (tiles.Length == 0)
+                {
+                    continue;
+                }
+
+                int index = 0;
+                foreach (Vector3Int pos in bounds.allPositionsWithin)
+                {
+                    if (tiles[index] != null && !topLayerTiles.ContainsKey(pos))
+                    {
+                        topLayerTiles[pos] = tiles[index];
+                    }
+                    index++;
+                }
+            }
+
+            return topLayerTiles.Values.ToArray();
         }
     }
 }

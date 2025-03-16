@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CustomInspector.Button
+namespace _Scripts.CustomInspector.Button
 {
     [AttributeUsage(AttributeTargets.Method)]
     public class InspectorButtonAttribute : Attribute
