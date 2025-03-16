@@ -2,6 +2,7 @@
 
 - 00X Story: drag and drop the building on the field
   - - [x] 000 Creating square tiles that have a method to highlight them
+    - - [x] 001_1 Retrieve a set of highlighted tiles from a highest tilemap layer
   - - [ ] 001 Creating a select-building bar
       - [x] Creating a drag'n'drop from GUI to the field
       - [ ] Loading the correct button options in the bar
