@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 namespace _Scripts.TilemapGrid
 {
     public class HighlightGridAreaController : MonoBehaviour
     {
-        [SerializeField] private GameObject outlinePrefab;
+        [SerializeField] private GameObject highlighterPrefab;
         [SerializeField] private Color highlightColor = Color.white;
         [SerializeField] private bool shouldHighlight = true;
         [SerializeField] private Vector2Int highlightSize = new(1, 1);
@@ -52,13 +53,13 @@ namespace _Scripts.TilemapGrid
 
         private void CreateHighlightObject()
         {
-            if (outlinePrefab == null)
+            if (highlighterPrefab == null)
             {
                 Debug.LogError("Outline Prefab not assigned!");
                 return;
             }
 
-            highlightObject = Instantiate(outlinePrefab);
+            highlightObject = Instantiate(highlighterPrefab);
             highlightRenderer = highlightObject.GetComponent<SpriteRenderer>();
             highlightObject.SetActive(false);
         }
@@ -73,8 +74,7 @@ namespace _Scripts.TilemapGrid
 
             highlightObject.SetActive(true);
 
-            Vector3 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-            worldPosition.z = 0;
+            Vector2 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
             Vector3Int cellPosition = grid.WorldToCell(worldPosition);
 
