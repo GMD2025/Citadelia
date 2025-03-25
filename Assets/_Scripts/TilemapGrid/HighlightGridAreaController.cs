@@ -74,6 +74,13 @@ namespace _Scripts.TilemapGrid
 
             highlightObject.SetActive(true);
 
+            Vector3 mousePos = Input.mousePosition;
+            
+            if (mousePos.x < 0 || mousePos.x > Screen.width || mousePos.y < 0 || mousePos.y > Screen.height)
+            {
+                return;
+            }
+            
             Vector2 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
             Vector3Int cellPosition = grid.WorldToCell(worldPosition);

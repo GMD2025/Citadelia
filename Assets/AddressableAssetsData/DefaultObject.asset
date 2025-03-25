@@ -9,10 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c9a9bb7a820479396a37a721ff55c63, type: 3}
-  m_Name: Gold
+  m_Script: {fileID: 11500000, guid: 3a189bb168d8d90478a09ea08c2f3d72, type: 3}
+  m_Name: DefaultObject
   m_EditorClassIdentifier: 
-  resourceName: Gold
-  icon: {fileID: 0}
-  initialAmount: 100
-  maxAmount: 50000
+  m_AddressableAssetSettingsGuid: a9e0866c99474c044b0df5984858a1d4
