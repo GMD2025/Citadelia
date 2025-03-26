@@ -26,7 +26,13 @@ git_content+="$(cat "$COMMON_IGNORE")"
 
 plastic_content+=$'\n\n'"############################### Added from ${COMMON_IGNORE_RELATIVE} ###############################"$'\n\n'
 while IFS= read -r line; do
-    [[ -z "$line" || "$line" == \#* ]] && plastic_content+="${line}"$'\n' || plastic_content+="!${line}"$'\n'
+    # Trim leading/trailing whitespace
+    trimmed=$(echo "$line" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+
+    # Skip empty or comment lines
+    [[ -z "$trimmed" || "$trimmed" == \#* ]] && continue
+    # Add exception rule
+    plastic_content+="!${trimmed}"$'\n'
 done <"$COMMON_IGNORE"
 
 # Write final ignore files
