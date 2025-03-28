@@ -1,5 +1,6 @@
 ﻿using _Scripts.CustomInspector.Button;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Scripts.Utils
 {
@@ -7,9 +8,9 @@ namespace _Scripts.Utils
     public class EquilateralTriangleBuilder : MonoBehaviour
     {
         [Header("Triangle Points")] 
-        [SerializeField] private GameObject leftTop;
-        [SerializeField] private GameObject rightTop;
-        [SerializeField] private GameObject centerBottom;
+        [SerializeField] private GameObject point1GameObject;
+        [SerializeField] private GameObject point2GameObject;
+        [SerializeField] private GameObject point3GameObject;
 
         [Header("Settings")]
         [SerializeField] private Transform centerPosition;
@@ -29,9 +30,9 @@ namespace _Scripts.Utils
         [InspectorButton("Position")]
         private void Position()
         {
-            cachedLeftTopLocalPosition = leftTop.transform.localPosition;
-            cachedRightTopLocalPosition = rightTop.transform.localPosition;
-            cachedCenterBottomLocalPosition = centerBottom.transform.localPosition;
+            cachedLeftTopLocalPosition = point1GameObject.transform.localPosition;
+            cachedRightTopLocalPosition = point2GameObject.transform.localPosition;
+            cachedCenterBottomLocalPosition = point3GameObject.transform.localPosition;
 
             float triangleHeight = Mathf.Sqrt(3f) / 2f * size;
 
@@ -47,17 +48,17 @@ namespace _Scripts.Utils
                 bottomRightVertex = new Vector3(bottomRightVertex.x, 0, bottomRightVertex.y);
             }
 
-            leftTop.transform.position = centerPosition.TransformPoint(topVertex);
-            rightTop.transform.position = centerPosition.TransformPoint(bottomLeftVertex);
-            centerBottom.transform.position = centerPosition.TransformPoint(bottomRightVertex);
+            point1GameObject.transform.position = centerPosition.TransformPoint(topVertex);
+            point2GameObject.transform.position = centerPosition.TransformPoint(bottomLeftVertex);
+            point3GameObject.transform.position = centerPosition.TransformPoint(bottomRightVertex);
         }
 
         [InspectorButton("Reset Position")]
         private void ResetPosition()
         {
-            leftTop.transform.localPosition = cachedLeftTopLocalPosition;
-            rightTop.transform.localPosition = cachedRightTopLocalPosition;
-            centerBottom.transform.localPosition = cachedCenterBottomLocalPosition;
+            point1GameObject.transform.localPosition = cachedLeftTopLocalPosition;
+            point2GameObject.transform.localPosition = cachedRightTopLocalPosition;
+            point3GameObject.transform.localPosition = cachedCenterBottomLocalPosition;
         }
     }
 
