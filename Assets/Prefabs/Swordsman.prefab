@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1822519352722545165}
   - component: {fileID: 4400580507141496574}
-  - component: {fileID: -6936289533813210908}
   - component: {fileID: 8213193710146087321}
   - component: {fileID: 3949146133772361551}
+  - component: {fileID: -6936289533813210908}
   - component: {fileID: 5880895038831915597}
   m_Layer: 3
   m_Name: Swordsman
@@ -91,19 +91,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-6936289533813210908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2602448445874458205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4adb2351a7c9451eaf9aa9d4edae5776, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectToFollow: {fileID: 830156503035213129, guid: 7e5cdced80eccc6479bffae8b7a9afbe, type: 3}
 --- !u!114 &8213193710146087321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -138,6 +125,19 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-6936289533813210908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2602448445874458205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4adb2351a7c9451eaf9aa9d4edae5776, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objectToFollow: {fileID: 830156503035213129, guid: 7e5cdced80eccc6479bffae8b7a9afbe, type: 3}
 --- !u!210 &5880895038831915597
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -146,7 +146,7 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2602448445874458205}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 716145999
+  m_SortingLayer: 3
   m_SortingOrder: 6
   m_SortAtRoot: 0

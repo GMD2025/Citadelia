@@ -16,8 +16,10 @@ namespace _Scripts
 
         private void Update()
         {
-            if (gameObject.activeSelf)
-                navMeshAgent.SetDestination(objectToFollow.transform.position);
+            if(!navMeshAgent.isOnNavMesh || !isActiveAndEnabled)
+                Debug.LogError($"Either NavMeshAgent is not on the NavMesh or it is inactive");
+            
+            navMeshAgent.SetDestination(objectToFollow.transform.position);
         }
     }
 }
