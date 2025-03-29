@@ -1,12 +1,14 @@
 ﻿using _Scripts.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Scripts.Buildings
 {
-    public class WarriorBuildingController : MonoBehaviour
+    public class TrainUnitController : MonoBehaviour
     {
+        // TODO think if we can benefit from introducing SO for interval and unit prefab
         [SerializeField] private float trainInterval = 4f;
-        [SerializeField] private GameObject warriorPrefab;
+        [SerializeField] private GameObject unitPrefab;
         [SerializeField] private Transform spawnPoint;
 
         private IntervalExecutor intervalExecutor;
@@ -19,7 +21,7 @@ namespace _Scripts.Buildings
 
         private void TrainWarrior()
         {
-            Instantiate(warriorPrefab, spawnPoint.position, spawnPoint.rotation);
+            Instantiate(unitPrefab, spawnPoint.position, spawnPoint.rotation);
         }
     }
 }
