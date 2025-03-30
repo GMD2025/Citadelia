@@ -13,6 +13,8 @@ namespace _Scripts.TilemapGrid
         [SerializeField] private bool shouldHighlight = true;
         [SerializeField] private Vector2Int highlightSize = new(1, 1);
 
+        public Vector3Int CellPosition { get; private set; }
+
         public bool ShouldHighlight
         {
             get => shouldHighlight;
@@ -35,7 +37,7 @@ namespace _Scripts.TilemapGrid
         private Camera mainCamera;
         private Tilemap[] tilemaps;
 
-        private BoundsInt highlightedAreaBounds;
+        public BoundsInt HighlightedAreaBounds { get; private set; }
 
         private void Awake()
         {
@@ -75,18 +77,17 @@ namespace _Scripts.TilemapGrid
             highlightObject.SetActive(true);
 
             Vector3 mousePos = Input.mousePosition;
-            
+
             if (mousePos.x < 0 || mousePos.x > Screen.width || mousePos.y < 0 || mousePos.y > Screen.height)
             {
                 return;
             }
-            
-            Vector2 worldPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 
-            Vector3Int cellPosition = grid.WorldToCell(worldPosition);
+            Vector2 worldPosition = mainCamera.ScreenToWorldPoint(mousePos);
 
-            HighlightGridArea(cellPosition, highlightSize);
-            GetHighlightedTiles(highlightedAreaBounds);
+            CellPosition = grid.WorldToCell(worldPosition);
+
+            HighlightGridArea(CellPosition, highlightSize);
         }
 
         private void HighlightGridArea(Vector3Int startTilePosition, Vector2Int size)
@@ -114,15 +115,15 @@ namespace _Scripts.TilemapGrid
             highlightObject.transform.position = centerPosition;
             highlightObject.transform.localScale = new Vector3(width, height, 1);
 
-            highlightedAreaBounds = new BoundsInt(
-                Vector3Int.FloorToInt(adjustedStartPosition), 
+            HighlightedAreaBounds = new BoundsInt(
+                Vector3Int.FloorToInt(adjustedStartPosition),
                 new Vector3Int(size.x, size.y, 1) // ensure size.z = 1, otherwise tilemap doesn't return any tiles from the bounds
             );
         }
 
-        public TileBase[] GetHighlightedTiles(BoundsInt bounds)
+        public Dictionary<Vector3Int, TileBase> GetHighlightedTiles(BoundsInt bounds)
         {
-            if (tilemaps == null || tilemaps.Length == 0) 
+            if (tilemaps == null || tilemaps.Length == 0)
             {
                 return null;
             }
@@ -150,7 +151,7 @@ namespace _Scripts.TilemapGrid
                 }
             }
 
-            return topLayerTiles.Values.ToArray();
+            return topLayerTiles;
         }
     }
 }
