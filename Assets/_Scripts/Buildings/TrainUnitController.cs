@@ -11,12 +11,9 @@ namespace _Scripts.Buildings
         [SerializeField] private GameObject unitPrefab;
         [SerializeField] private Transform spawnPoint;
 
-        private IntervalExecutor intervalExecutor;
-
         private void Start()
         {
-            intervalExecutor = new IntervalExecutor(this, trainInterval, TrainWarrior);
-            intervalExecutor.Start();
+            InvokeRepeating(nameof(TrainWarrior), trainInterval, trainInterval);
         }
 
         private void TrainWarrior()

@@ -11,14 +11,12 @@ namespace _Scripts.ResourceSystem
         [SerializeField] private ResourceProductionData resourceProdData;
         [SerializeField, Tooltip("Resource production animation")] private GameObject resourceProdUIPrefab;
         
-        private IntervalExecutor executor;
         private ResourceProductionService resourceProdService;
 
         private void Start()
         {
             resourceProdService = resourceProdServiceRefData.Get;
-            executor = new IntervalExecutor(this, resourceProdData.intervalSeconds, ProduceResource);
-            executor.Start();
+            InvokeRepeating(nameof(ProduceResource), resourceProdData.intervalSeconds, resourceProdData.intervalSeconds);
         }
 
         private void ProduceResource()
