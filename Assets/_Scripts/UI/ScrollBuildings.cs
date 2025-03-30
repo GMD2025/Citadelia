@@ -1,50 +1,53 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScrollBuildings : MonoBehaviour
+namespace _Scripts.UI
 {
-    [SerializeField] private Button arrowLeft;
-    [SerializeField] private Button arrowRight;
-    [SerializeField] private RectTransform content;
-    
-    private int currentIndex = 0;
-    
-    void Awake()
+    public class ScrollBuildings : MonoBehaviour
     {
-        arrowLeft.onClick.AddListener(ScrollLeft);
-        arrowRight.onClick.AddListener(ScrollRight);
-    }
-
-    void ScrollLeft()
-    {
-        if (currentIndex > 0)
+        [SerializeField] private Button arrowLeft;
+        [SerializeField] private Button arrowRight;
+        [SerializeField] private RectTransform content;
+    
+        private int currentIndex = 0;
+    
+        void Awake()
         {
-            currentIndex--;
-            UpdatePosition();
+            arrowLeft.onClick.AddListener(ScrollLeft);
+            arrowRight.onClick.AddListener(ScrollRight);
         }
-    }
-    
-    void ScrollRight()
-    {
-        if (currentIndex < content.childCount - 1)
+
+        void ScrollLeft()
         {
-            currentIndex++;
-            UpdatePosition();
+            if (currentIndex > 0)
+            {
+                currentIndex--;
+                UpdatePosition();
+            }
         }
-    }
+    
+        void ScrollRight()
+        {
+            if (currentIndex < content.childCount - 1)
+            {
+                currentIndex++;
+                UpdatePosition();
+            }
+        }
 
     
-    private void UpdatePosition()
-    {
-        float newX = -currentIndex * 80;
-        content.anchoredPosition = new Vector2(newX, content.anchoredPosition.y);
-        UpdateButtons();
-    }
+        private void UpdatePosition()
+        {
+            float newX = -currentIndex * 80;
+            content.anchoredPosition = new Vector2(newX, content.anchoredPosition.y);
+            UpdateButtons();
+        }
     
-    private void UpdateButtons()
-    {
-        arrowLeft.interactable = currentIndex > 0;
-        arrowRight.interactable = currentIndex < content.childCount - 1;
-    }
+        private void UpdateButtons()
+        {
+            arrowLeft.interactable = currentIndex > 0;
+            arrowRight.interactable = currentIndex < content.childCount - 1;
+        }
     
+    }
 }

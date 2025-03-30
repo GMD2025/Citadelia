@@ -1,12 +1,9 @@
-using System;
 using _Scripts.TilemapGrid;
-using Unity.VisualScripting;
+using _Scripts.UI.Buildings;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.Tilemaps;
-using UnityEngine.UI;
 
-namespace _Scripts
+namespace _Scripts.UI
 {
     public class FingerTracking : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
