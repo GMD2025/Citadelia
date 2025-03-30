@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using _Scripts.ResourceSystem.Data;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -8,38 +9,35 @@ namespace _Scripts.ResourceSystem
 {
     public class ResourceProductionService : MonoBehaviour
     {
-        [SerializeField] private ResourceProductionServiceSO resourceProdService;
+        [SerializeField] private ResourceProductionServiceRefData resourceProdServiceRefData;
 
-        private Dictionary<ResourceSO, int> resourceStorage = new Dictionary<ResourceSO, int>();
-        public event Action<ResourceSO, int> OnResourceChanged;
+        private Dictionary<ResourceData, int> resourceStorage = new Dictionary<ResourceData, int>();
+        public event Action<ResourceData, int> OnResourceChanged;
 
         private void Awake()
         {
-            resourceProdService.SetRuntime(this);
+            resourceProdServiceRefData.SetRuntime(this);
         }
 
-        public int GetResourceAmount(ResourceSO resourceSo)
+        public int GetResourceAmount(ResourceData resourceData)
         {
-            return resourceStorage.GetValueOrDefault(resourceSo, resourceSo.initialAmount);
+            return resourceStorage.GetValueOrDefault(resourceData, resourceData.initialAmount);
         }
 
-        public void AddResource(ResourceSO resourceSo, int amount)
+        public void AddResource(ResourceData resourceData, int amount)
         {
-            resourceStorage.TryAdd(resourceSo, resourceSo.initialAmount);
-            resourceStorage[resourceSo] = Math.Min(resourceStorage[resourceSo] + amount, resourceSo.maxAmount);
-            
-            if (OnResourceChanged == null)
-                Debug.Log("Pizda");
-            OnResourceChanged?.Invoke(resourceSo, resourceStorage[resourceSo]);
+            resourceStorage.TryAdd(resourceData, resourceData.initialAmount);
+            resourceStorage[resourceData] = Math.Min(resourceStorage[resourceData] + amount, resourceData.maxAmount);
+            OnResourceChanged?.Invoke(resourceData, resourceStorage[resourceData]);
         }
 
-        public bool SpendResource(ResourceSO resourceSo, int amount)
+        public bool SpendResource(ResourceData resourceData, int amount)
         {
-            if (!resourceStorage.ContainsKey(resourceSo) || resourceStorage[resourceSo] < amount)
+            if (!resourceStorage.ContainsKey(resourceData) || resourceStorage[resourceData] < amount)
                 return false;
 
-            resourceStorage[resourceSo] -= amount;
-            OnResourceChanged?.Invoke(resourceSo, resourceStorage[resourceSo]);
+            resourceStorage[resourceData] -= amount;
+            OnResourceChanged?.Invoke(resourceData, resourceStorage[resourceData]);
             return true;
         }
     }

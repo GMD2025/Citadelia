@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using _Scripts.ResourceSystem.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,12 +9,12 @@ namespace _Scripts.ResourceSystem
 {
     public class ResourceUI : MonoBehaviour
     {
-        [SerializeField] private ResourceSO resourceSo;
+        [SerializeField] private ResourceData resourceData;
         
         private TextMeshProUGUI amountText;
         private Image resourceImg; 
         
-        public ResourceSO ResourceSo => resourceSo;
+        public ResourceData ResourceData => resourceData;
 
         private void Awake()
         {
@@ -24,8 +25,8 @@ namespace _Scripts.ResourceSystem
 
         private void Start()
         {
-            resourceImg.sprite = resourceSo.icon;
-            amountText.text = $"{resourceSo.initialAmount}";
+            resourceImg.sprite = resourceData.icon;
+            amountText.text = $"{resourceData.initialAmount}";
         }
 
         public void UpdateUI(int currentAmount)

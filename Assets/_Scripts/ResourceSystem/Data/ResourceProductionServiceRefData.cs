@@ -1,11 +1,9 @@
-﻿using System;
-using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace _Scripts.ResourceSystem
+namespace _Scripts.ResourceSystem.Data
 {
     [CreateAssetMenu(fileName = "ResourceControllerRef", menuName = "Data/Service References/Resource Production")]
-    public class ResourceProductionServiceSO : ScriptableObject
+    public class ResourceProductionServiceRefData : ScriptableObject
     {
         [SerializeField, Tooltip("This runtime reference is set automatically at runtime by the ResourceProductionService. Do not assign manually."), Header("Don't assign")]
         private ResourceProductionService runtimeProductionService;

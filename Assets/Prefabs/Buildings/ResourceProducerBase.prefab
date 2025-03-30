@@ -50,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8102609889982080117, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Name
-      value: ResourceProducerBase Variant
+      value: ResourceProducerBase
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -77,5 +77,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 65b5588b28724acb901dea0d4d42f6e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resourceProdServiceSo: {fileID: 11400000, guid: f3f67145aa525a54c9e5ac41fade9a48, type: 2}
-  productionConfig: {fileID: 0}
+  resourceProdServiceRefData: {fileID: 11400000, guid: f3f67145aa525a54c9e5ac41fade9a48, type: 2}
+  resourceProdData: {fileID: 0}
+  resourceProdUIPrefab: {fileID: 2838710053948698343, guid: 2b7971390e2157a41b4ac9a3454ea5c3, type: 3}

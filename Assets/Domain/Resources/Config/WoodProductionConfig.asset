@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resourceType: {fileID: 11400000, guid: a33836f01d5205b41b70cd9dd52a5542, type: 2}
   productionAmount: 20
-  intervalSeconds: 8
+  intervalSeconds: 5
