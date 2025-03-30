@@ -36,12 +36,14 @@ namespace _Scripts
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            Debug.Log(Input.touchCount);
-            draggedBuilding = new GameObject("DraggingTower");
+            gridController.HighlightSize = building.cellsize;
+            Debug.Log(building.cellsize);
+            Debug.Log("Highilight size - " + gridController.HighlightSize);
+            draggedBuilding = new GameObject(building.name);
             draggedBuilding.transform.position = gridController.transform.position;
 
             SpriteRenderer spriteRenderer = draggedBuilding.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = GetComponent<Image>().sprite;
+            spriteRenderer.sprite = building.sprite;
             spriteRenderer.sortingOrder = 4;
             spriteRenderer.color = new Color(1, 1, 1, 0.5f);
         }
