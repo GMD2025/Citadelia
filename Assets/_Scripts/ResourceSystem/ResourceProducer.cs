@@ -1,42 +1,30 @@
-﻿using System.Collections;
+﻿using _Scripts.ResourceSystem.Data;
+using _Scripts.Utils;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Scripts.ResourceSystem
 {
     public class ResourceProducer : MonoBehaviour
     {
-        [SerializeField] private ResourceController resourceController;
-        [SerializeField] private Resource resourceType;
-        [SerializeField] private int productionAmount;
-        [SerializeField] private float productionInterval;
-
-        private Coroutine productionCoroutine;
+        [SerializeField] private ResourceProductionServiceRefData resourceProdServiceRefData;
+        [SerializeField] private ResourceProductionData resourceProdData;
+        [SerializeField, Tooltip("Resource production animation")] private GameObject resourceProdUIPrefab;
+        
+        private ResourceProductionService resourceProdService;
 
         private void Start()
         {
-            StartProduction();
+            resourceProdService = resourceProdServiceRefData.Get;
+            InvokeRepeating(nameof(ProduceResource), resourceProdData.intervalSeconds, resourceProdData.intervalSeconds);
         }
 
-        public void StartProduction()
+        private void ProduceResource()
         {
-            productionCoroutine ??= StartCoroutine(Produce());
-        }
-
-        public void StopProduction()
-        {
-            if (productionCoroutine == null) return;
-            StopCoroutine(productionCoroutine);
-            productionCoroutine = null;
-        }
-
-        private IEnumerator Produce()
-        {
-            while (true) // Keeps running until stopped
-            {
-                yield return new WaitForSeconds(productionInterval);
-                resourceController.AddResource(resourceType, productionAmount);
-                Debug.Log($"Resource: {resourceType.resourceName}. Produced {productionAmount}; Total {resourceController.GetResourceAmount(resourceType)}");
-            }
+            resourceProdService.AddResource(resourceProdData.resourceType, resourceProdData.productionAmount);
+            var popupInstance = Instantiate(resourceProdUIPrefab, transform.position, Quaternion.identity, transform);
+            popupInstance.GetComponent<ResourceProductionAnimation>().SetResourceData(resourceProdData);
+            Debug.Log($"[{gameObject.name}] Produced {resourceProdData.productionAmount} {resourceProdData.resourceType.resourceName}. Total: {resourceProdService.GetResourceAmount(resourceProdData.resourceType)}");
         }
     }
 }

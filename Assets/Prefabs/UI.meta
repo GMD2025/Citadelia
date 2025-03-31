@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Prefabs/UI.meta
+guid: a64bfa118f617094d9a05c66bea5a1f5
+========
+guid: 10911f95e35a1b544b49ce69689a4a37
+>>>>>>>> main:Assets/_Scripts/UI.meta
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

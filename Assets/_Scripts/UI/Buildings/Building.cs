@@ -6,7 +6,7 @@ namespace _Scripts.UI.Buildings
     public class Building : ScriptableObject
     {
         public Sprite sprite;
-        public string name;
+        public new string name;
         public Vector2Int cellsize;
     }
 }

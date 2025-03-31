@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Domain/Resources/Config/GoldProductionConfig.asset.meta
+guid: 9887f9d7b08597e4391c2f8ac9472e96
+========
 guid: 6d1c2be37b154634994d0055a4f412d8
+>>>>>>>> main:Assets/_Scripts/UI/Buildings/Building 1.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000

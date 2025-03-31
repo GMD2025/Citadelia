@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Gold
   m_EditorClassIdentifier: 
   resourceName: Gold
-  icon: {fileID: 0}
+  icon: {fileID: -7248506988745690217, guid: 394e1aaad3d7eb148a08dc9c10cc94b6, type: 3}
   initialAmount: 100
   maxAmount: 50000

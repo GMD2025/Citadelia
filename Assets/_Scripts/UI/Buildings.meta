@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Scenes/Sevastian.meta
+guid: d62d318b5ba76a045809abd94ff5b70c
+========
 guid: 421906b46ec4c4b41aad87fd74dd573f
+>>>>>>>> main:Assets/_Scripts/UI/Buildings.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

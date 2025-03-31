@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Domain/Resources/Config/StoneProductionConfig.asset.meta
+guid: 41097764174ff2c45a444a9d14142504
+========
+guid: bd7fc28cd7aae4f429ac64a1e46185ca
+>>>>>>>> main:Assets/_Scripts/UI/Buildings/Building 2.asset.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

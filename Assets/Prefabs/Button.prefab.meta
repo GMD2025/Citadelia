@@ -1,6 +1,12 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/UI_TEST.meta
+guid: a827366fbbdc26e40a37db1203fe5c8d
+folderAsset: yes
+DefaultImporter:
+========
 guid: a1ba397217b9f02439ce11c00d2406ea
 PrefabImporter:
+>>>>>>>> main:Assets/Prefabs/Button.prefab.meta
   externalObjects: {}
   userData: 
   assetBundleName: 
