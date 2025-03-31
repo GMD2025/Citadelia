@@ -1,9 +1,5 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Assets/Domain/Resources/Config/WoodProductionConfig.asset.meta
 guid: bdcbdaf4ef18c05499462ff46f48c070
-========
-guid: fdbfd17c43305c4449cb302f9c8ca047
->>>>>>>> main:Assets/_Scripts/UI/Buildings/Building 3.asset.meta
 NativeFormatImporter:
   externalObjects: {}
   mainObjectFileID: 11400000

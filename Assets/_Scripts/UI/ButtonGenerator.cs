@@ -9,12 +9,14 @@ namespace _Scripts.UI
     {
         [SerializeField] private List<Building> buildings;
         [SerializeField] private GameObject tileButtonPrefab;
+        [SerializeField] private string buildingSortingLayer;
+
         private Canvas canvas;
-    
+
         void Start()
         {
             LoadTiles();
-            canvas = GetComponentInParent<Canvas>(); 
+            canvas = GetComponentInParent<Canvas>();
         }
 
         void LoadTiles()
@@ -27,21 +29,23 @@ namespace _Scripts.UI
                 }
             }
         }
-    
+
         void CreateButton(Building building)
         {
             // Debug.Log(sprite);
             GameObject buttonObj = Instantiate(tileButtonPrefab, transform);
-            buttonObj.GetComponent<FingerTracking>().building = building;
+            var fingerTracking = buttonObj.GetComponent<FingerTracking>();
+            fingerTracking.Building = building;
+            fingerTracking.BuildingSortingLayer = buildingSortingLayer;
             Image image = buttonObj.GetComponent<Image>();
             if (image != null)
             {
                 image.sprite = building.sprite;
             }
         }
+
         void Update()
         {
-        
         }
     }
 }

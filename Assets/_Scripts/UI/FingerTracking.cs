@@ -7,13 +7,15 @@ namespace _Scripts.UI
 {
     public class FingerTracking : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        public Building building;
+        public Building Building { get; set; }
+        public string BuildingSortingLayer { get; set; }
         private GameObject lastHighlightedTile;
         private GameObject draggedBuilding;
 
         private HighlightGridAreaController gridController;
         private Grid gridGameObject;
         private Vector3 cellsize;
+
 
         private void Awake()
         {
@@ -33,15 +35,15 @@ namespace _Scripts.UI
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            gridController.HighlightSize = building.cellsize;
-            Debug.Log(building.cellsize);
+            gridController.HighlightSize = Building.cellsize;
+            Debug.Log(Building.cellsize);
             Debug.Log("Highilight size - " + gridController.HighlightSize);
-            draggedBuilding = new GameObject(building.name);
+            draggedBuilding = new GameObject(Building.name);
             draggedBuilding.transform.position = gridController.transform.position;
 
             SpriteRenderer spriteRenderer = draggedBuilding.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = building.sprite;
-            spriteRenderer.sortingOrder = 4;
+            spriteRenderer.sprite = Building.sprite;
+            spriteRenderer.sortingLayerName = BuildingSortingLayer;
             spriteRenderer.color = new Color(1, 1, 1, 0.5f);
         }
 
@@ -49,7 +51,8 @@ namespace _Scripts.UI
         {
             Debug.Log(gridController.CellPosition);
             GameObject newCell = Instantiate(draggedBuilding);
-            newCell.GetComponent<SpriteRenderer>().color = new Color(1, 1, 1, 1);
+            var spriteRenderer = newCell.GetComponent<SpriteRenderer>();
+            spriteRenderer.color = new Color(1, 1, 1, 1);
             Destroy(draggedBuilding);
         }
     }
