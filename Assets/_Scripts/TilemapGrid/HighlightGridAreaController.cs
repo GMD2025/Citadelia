@@ -9,9 +9,12 @@ namespace _Scripts.TilemapGrid
     public class HighlightGridAreaController : MonoBehaviour
     {
         [SerializeField] private GameObject highlighterPrefab;
-        [SerializeField] private Color highlightColor = Color.white;
         [SerializeField] private bool shouldHighlight = true;
         [SerializeField] private Vector2Int highlightSize = new(1, 1);
+
+        [Header("Highlight Colors")]
+        [SerializeField] private Color highlightColor = Color.white;
+        [SerializeField] private Color highlightColorDeny = Color.red;
 
         public Vector3Int CellPosition { get; private set; }
 
@@ -24,11 +27,35 @@ namespace _Scripts.TilemapGrid
         public Vector2Int HighlightSize
         {
             get => highlightSize;
-            set =>
+            set
+            {
+                Debug.Log($"Setting highlight size: {value}");
+                int newX = Mathf.Max(1, value.x);
+                int newY = Mathf.Max(1, value.y);
                 highlightSize = new Vector2Int(
-                    Mathf.Max(1, value.x),
-                    Mathf.Max(1, value.y)
+                    newX, newY
                 );
+
+                foreach (var sh in supplementalHighlights)
+                {
+                    Destroy(sh);
+                }
+
+                supplementalHighlights.Clear();
+
+                for (int x = 1; x <= newX; x++)
+                {
+                    for (int y = 1; y <= newY; y++)
+                    {
+                        if (x == 1 && y == 1) continue;
+                        GameObject newCell = Instantiate(highlighterPrefab, highlightObject.transform);
+                        newCell.transform.position +=
+                            new Vector3(grid.cellSize.x * (x - 1), grid.cellSize.y * (y - 1), 0);
+                        newCell.GetComponent<SpriteRenderer>().color = highlightColorDeny;
+                        supplementalHighlights.Add(newCell);
+                    }
+                }
+            }
         }
 
         private SpriteRenderer highlightRenderer;
@@ -36,6 +63,7 @@ namespace _Scripts.TilemapGrid
         private Grid grid;
         private Camera mainCamera;
         private Tilemap[] tilemaps;
+        private List<GameObject> supplementalHighlights = new List<GameObject>();
 
         public BoundsInt HighlightedAreaBounds { get; private set; }
 
@@ -49,8 +77,8 @@ namespace _Scripts.TilemapGrid
 
         private void Update()
         {
-            highlightRenderer.color = highlightColor;
             HandleUserHover();
+            RepaintHighlight();
         }
 
         private void CreateHighlightObject()
@@ -63,6 +91,7 @@ namespace _Scripts.TilemapGrid
 
             highlightObject = Instantiate(highlighterPrefab);
             highlightRenderer = highlightObject.GetComponent<SpriteRenderer>();
+            highlightRenderer.color = highlightColor;
             highlightObject.SetActive(false);
         }
 
@@ -101,23 +130,19 @@ namespace _Scripts.TilemapGrid
             Vector3Int adjustedStartPosition = startTilePosition + offset;
             Vector3 cellBottomLeft = grid.CellToWorld(adjustedStartPosition);
 
-            float tileSizeX = grid.cellSize.x;
-            float tileSizeY = grid.cellSize.y;
-            float width = size.x * tileSizeX;
-            float height = size.y * tileSizeY;
-
             Vector3 centerPosition = new Vector3(
-                cellBottomLeft.x + (width / 2),
-                cellBottomLeft.y + (height / 2),
+                cellBottomLeft.x + 0.5f,
+                cellBottomLeft.y + 0.5f,
                 0
             );
 
             highlightObject.transform.position = centerPosition;
-            highlightObject.transform.localScale = new Vector3(width, height, 1);
+            // highlightObject.transform.localScale = new Vector3(width, height, 1);
 
             HighlightedAreaBounds = new BoundsInt(
                 Vector3Int.FloorToInt(adjustedStartPosition),
-                new Vector3Int(size.x, size.y, 1) // ensure size.z = 1, otherwise tilemap doesn't return any tiles from the bounds
+                new Vector3Int(size.x, size.y,
+                    1) // ensure size.z = 1, otherwise tilemap doesn't return any tiles from the bounds
             );
         }
 
@@ -147,11 +172,27 @@ namespace _Scripts.TilemapGrid
                     {
                         topLayerTiles[pos] = tiles[index];
                     }
+
                     index++;
                 }
             }
 
             return topLayerTiles;
+        }
+
+        private void RepaintHighlight()
+        {
+            if (tilemaps == null || tilemaps.Length == 0)
+            {
+                return;
+            }
+            Tilemap tilemap = tilemaps[3];
+            GameObject[] gameObjects = highlightObject.GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray();
+            foreach (var gameObject in gameObjects)
+            {
+                TileBase found = tilemap.GetTile(Vector3Int.RoundToInt(gameObject.transform.position - new Vector3(0.5f, 0.5f, 0)));
+                gameObject.GetComponent<SpriteRenderer>().color = found ? highlightColorDeny : highlightColor;
+            }
         }
     }
 }
