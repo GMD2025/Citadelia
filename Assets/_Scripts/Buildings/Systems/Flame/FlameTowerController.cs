@@ -16,14 +16,18 @@ namespace _Scripts.Buildings.Systems.Flame
         private void Start()
         {
             triangleBuilder = flameRing.GetComponent<PolygonBuilder>();
-            IntervalRunner.Start(this, () => fireDelay, CheckAndFire);
-            IntervalRunner.Start(this, () => flameRestoreDelay, RestoreFlame);
+            InvokeRepeating(nameof(CheckAndFire), fireDelay, fireDelay);
+            InvokeRepeating(nameof(RestoreFlame), flameRestoreDelay, flameRestoreDelay);
+            // IntervalRunner.Start(this, () => fireDelay, CheckAndFire);
+            // IntervalRunner.Start(this, () => flameRestoreDelay, RestoreFlame);
         }
 
         private void OnDisable()
         {
-            IntervalRunner.Stop(this, CheckAndFire);
-            IntervalRunner.Stop(this, RestoreFlame);
+            CancelInvoke(nameof(CheckAndFire));
+            CancelInvoke(nameof(RestoreFlame));
+            // IntervalRunner.Stop(this, CheckAndFire);
+            // IntervalRunner.Stop(this, RestoreFlame);
         }
 
         private void CheckAndFire()

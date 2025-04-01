@@ -26,6 +26,11 @@ namespace _Scripts.Utils
         {
             ClearInstances();
             vertices.Clear();
+            
+            foreach (Transform child in polygon.CenterPointTransform)
+            {
+                Utils.SmartDestroy(child.gameObject);
+            }
 
             var positions = polygon.GetVertices();
             foreach (var pos in positions)
@@ -48,7 +53,8 @@ namespace _Scripts.Utils
                 return;
             }
 
-            int filled = 0;
+            if (numberToFill == Int32.MaxValue)
+                numberToFill = polygon.NumberOfSides;
             for (int i = 0; i < vertices.Count; i++)
             {
                 if (vertices[i].instance == null)
@@ -59,8 +65,9 @@ namespace _Scripts.Utils
 
                     vertices[i].instance = instance;
 
-                    filled++;
-                    if (filled >= numberToFill)
+                    numberToFill--;
+                    
+                    if (numberToFill <= 0)
                         break;
                 }
             }

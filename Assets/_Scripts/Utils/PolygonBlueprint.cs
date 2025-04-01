@@ -14,6 +14,13 @@ namespace _Scripts.Utils
         [SerializeField] private Transform centerPosition;
         [SerializeField] private CoordinatePlane polygonPlane = CoordinatePlane.XY;
 
+        public int NumberOfSides => numberOfSides;
+        public Transform CenterPointTransform
+        {
+            get => centerPosition;
+            set => centerPosition = value;
+        }
+
         public List<Vector3> GetVertices()
         {
             var vertices = new List<Vector3>();
