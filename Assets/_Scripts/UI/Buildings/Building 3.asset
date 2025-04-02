@@ -15,3 +15,6 @@ MonoBehaviour:
   sprite: {fileID: 5380709053851162247, guid: 6dd8ebc09516edd49999f42c0f7ed33c, type: 3}
   name: Pamjatnik
   cellsize: {x: 1, y: 1}
+  resources:
+  - resourceData: {fileID: 11400000, guid: 14826a5645b227f4687102cd9020f548, type: 2}
+    amount: 20

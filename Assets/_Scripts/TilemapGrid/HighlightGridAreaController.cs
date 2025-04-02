@@ -220,7 +220,7 @@ namespace _Scripts.TilemapGrid
 
         public void SetTileAsOccupied()
         {
-            Tilemap tilemap = tilemaps[tilemaps.Length - 1];
+            Tilemap tilemap = tilemaps[^1];
             GameObject[] higlightTiles = highlightObject.GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray();
             foreach (var higlightTile in higlightTiles)
             {
