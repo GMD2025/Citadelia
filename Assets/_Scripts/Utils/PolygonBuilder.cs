@@ -16,13 +16,10 @@ namespace _Scripts.Utils
 
         private List<PolygonVertex> vertices = new();
 
-        private void Start()
-        {
-            BuildPolygon();
-        }
+        public List<GameObject> Instances => vertices.Select(v => v.instance).ToList();
 
         [InspectorButton("Build Polygon")]
-        private void BuildPolygon()
+        public void BuildPolygon()
         {
             ClearInstances();
             vertices.Clear();
@@ -45,12 +42,13 @@ namespace _Scripts.Utils
             FillMissingInstances();
         }
 
-        public void FillMissingInstances(int numberToFill = Int32.MaxValue)
+        public List<GameObject> FillMissingInstances(int numberToFill = Int32.MaxValue)
         {
+            List<GameObject> instantiatedObjects = new List<GameObject>();
             if (!pointPrefab)
             {
                 Debug.LogError("Point Prefab is not assigned.");
-                return;
+                return new List<GameObject>();
             }
 
             if (numberToFill == Int32.MaxValue)
@@ -64,6 +62,7 @@ namespace _Scripts.Utils
                     instance.name = $"Point {i + 1}";
 
                     vertices[i].instance = instance;
+                    instantiatedObjects.Add(instance);
 
                     numberToFill--;
                     
@@ -71,6 +70,8 @@ namespace _Scripts.Utils
                         break;
                 }
             }
+
+            return instantiatedObjects;
         }
 
         public void NotifyVertexInstanceRemoved(Transform instanceTransform)
