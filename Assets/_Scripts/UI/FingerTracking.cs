@@ -1,3 +1,4 @@
+using _Scripts.ResourceSystem;
 using _Scripts.TilemapGrid;
 using _Scripts.UI.Buildings;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace _Scripts.UI
         private GameObject draggedBuilding;
 
         private HighlightGridAreaController gridController;
+        private ResourceProductionService resourceService;
         private Grid gridGameObject;
         private Vector3 cellsize;
 
@@ -21,6 +23,7 @@ namespace _Scripts.UI
         private void Awake()
         {
             gridController = FindAnyObjectByType<HighlightGridAreaController>();
+            resourceService = FindAnyObjectByType<ResourceProductionService>();
             gridGameObject = FindAnyObjectByType<Grid>();
             cellsize = gridGameObject.GetComponent<Grid>().cellSize;
         }
@@ -48,20 +51,27 @@ namespace _Scripts.UI
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            if (gridController.Selectable) gridController.SetTileAsOccupied();
+            if (gridController.Selectable)
+            {
+                bool richEnough = resourceService.SpendResources(Building.resources);
+
+                if (richEnough)
+                {
+                    GameObject newCell = Instantiate(draggedBuilding, gridGameObject.transform);
+                    var spriteRenderer = newCell.GetComponent<SpriteRenderer>();
+                    spriteRenderer.color = new Color(1, 1, 1, 1);
+                }
+                
+                gridController.SetTileAsOccupied();
+            }
+            else
+            {
+                gridController.highlightParent.transform.DOShakePosition(1f, new Vector3(0.3f, 0, 0), 30);
+            }
+            
             // Reset to one tile for PC to see the standard highlight on hover
             gridController.HighlightSize = new Vector2Int(1, 1);
             Destroy(draggedBuilding);
-
-            if (!gridController.Selectable)
-            {
-                gridController.highlightParent.transform.DOShakePosition(1f, new Vector3(0.3f, 0, 0), 30);
-                return;
-            }
-            
-            GameObject newCell = Instantiate(draggedBuilding);
-            var spriteRenderer = newCell.GetComponent<SpriteRenderer>();
-            spriteRenderer.color = new Color(1, 1, 1, 1);
         }
     }
 }
