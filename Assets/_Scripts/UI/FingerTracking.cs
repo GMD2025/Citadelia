@@ -2,6 +2,7 @@ using _Scripts.TilemapGrid;
 using _Scripts.UI.Buildings;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 namespace _Scripts.UI
 {
@@ -36,8 +37,6 @@ namespace _Scripts.UI
         public void OnPointerDown(PointerEventData eventData)
         {
             gridController.HighlightSize = Building.cellsize;
-            Debug.Log(Building.cellsize);
-            Debug.Log("Highilight size - " + gridController.HighlightSize);
             draggedBuilding = new GameObject(Building.name);
             draggedBuilding.transform.position = gridController.transform.position;
 
@@ -49,11 +48,20 @@ namespace _Scripts.UI
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            Debug.Log(gridController.CellPosition);
+            if (gridController.Selectable) gridController.SetTileAsOccupied();
+            // Reset to one tile for PC to see the standard highlight on hover
+            gridController.HighlightSize = new Vector2Int(1, 1);
+            Destroy(draggedBuilding);
+
+            if (!gridController.Selectable)
+            {
+                gridController.highlightParent.transform.DOShakePosition(1f, new Vector3(0.3f, 0, 0), 30);
+                return;
+            }
+            
             GameObject newCell = Instantiate(draggedBuilding);
             var spriteRenderer = newCell.GetComponent<SpriteRenderer>();
             spriteRenderer.color = new Color(1, 1, 1, 1);
-            Destroy(draggedBuilding);
         }
     }
 }
