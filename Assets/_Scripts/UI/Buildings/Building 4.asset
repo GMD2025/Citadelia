@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 03e52eba25f650d46bf4efd7137b2f83, type: 3}
   name: Pamjatnik
-  cellsize: {x: 2, y: 2}
+  cellsize: {x: 5, y: 5}

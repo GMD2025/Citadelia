@@ -49,17 +49,19 @@ namespace _Scripts.TilemapGrid
                     {
                         if (x == 1 && y == 1) continue;
                         GameObject newCell = Instantiate(highlighterPrefab, highlightObject.transform);
+                        int sign = x % 2 == 0 ? 1 : -1;
                         newCell.transform.position +=
-                            new Vector3(grid.cellSize.x * (x - 1), grid.cellSize.y * (y - 1), 0);
-                        newCell.GetComponent<SpriteRenderer>().color = highlightColorDeny;
+                            new Vector3(grid.cellSize.x * (x - 1) * sign, grid.cellSize.y * (y - 1) * sign, 0);
                         supplementalHighlights.Add(newCell);
                     }
                 }
             }
         }
 
+        public bool Selectable { get; private set; } = true;
+
         private SpriteRenderer highlightRenderer;
-        private GameObject highlightObject;
+        public GameObject highlightObject {get; private set;}
         private Grid grid;
         private Camera mainCamera;
         private Tilemap[] tilemaps;
@@ -188,11 +190,22 @@ namespace _Scripts.TilemapGrid
             }
             Tilemap tilemap = tilemaps[3];
             GameObject[] gameObjects = highlightObject.GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray();
+            bool denied = false;
             foreach (var gameObject in gameObjects)
             {
+                SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
                 TileBase found = tilemap.GetTile(Vector3Int.RoundToInt(gameObject.transform.position - new Vector3(0.5f, 0.5f, 0)));
-                gameObject.GetComponent<SpriteRenderer>().color = found ? highlightColorDeny : highlightColor;
+                if (found)
+                {
+                    renderer.color = highlightColorDeny;
+                    denied = true;
+                }
+                else
+                {
+                    renderer.color = highlightColor;
+                }
             }
+            Selectable = !denied;
         }
     }
 }
