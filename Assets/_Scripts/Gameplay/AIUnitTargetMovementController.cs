@@ -1,8 +1,8 @@
-﻿using System.Linq;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace _Scripts
+namespace _Scripts.Gameplay
 {
     public class AIUnitTargetMovementController : MonoBehaviour
     {
