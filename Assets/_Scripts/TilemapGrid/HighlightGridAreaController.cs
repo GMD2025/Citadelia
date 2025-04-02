@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Mathematics.Geometry;
 using UnityEngine;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
@@ -11,6 +13,7 @@ namespace _Scripts.TilemapGrid
         [SerializeField] private GameObject highlighterPrefab;
         [SerializeField] private bool shouldHighlight = true;
         [SerializeField] private Vector2Int highlightSize = new(1, 1);
+        [SerializeField] private TileBase transparentTile;
 
         [Header("Highlight Colors")]
         [SerializeField] private Color highlightColor = Color.white;
@@ -49,9 +52,14 @@ namespace _Scripts.TilemapGrid
                     {
                         if (x == 1 && y == 1) continue;
                         GameObject newCell = Instantiate(highlighterPrefab, highlightObject.transform);
-                        int sign = x % 2 == 0 ? 1 : -1;
+                        int signX = x % 2 == 0 ? 1 : -1;
+                        int signY = y % 2 == 0 ? 1 : -1;
+                        float addX = grid.cellSize.x * Mathf.Floor(x / 2) * signX;
+                        float addY = grid.cellSize.y * Mathf.Floor(y / 2) * signY;
+                        Debug.Log($"Adding highlight cell {addX}, {addY}, while x and y are {x}, {y}");
                         newCell.transform.position +=
-                            new Vector3(grid.cellSize.x * (x - 1) * sign, grid.cellSize.y * (y - 1) * sign, 0);
+                            new Vector3(addX,
+                                addY, 0);
                         supplementalHighlights.Add(newCell);
                     }
                 }
@@ -62,6 +70,7 @@ namespace _Scripts.TilemapGrid
 
         private SpriteRenderer highlightRenderer;
         public GameObject highlightObject {get; private set;}
+        public GameObject highlightParent {get; private set;}
         private Grid grid;
         private Camera mainCamera;
         private Tilemap[] tilemaps;
@@ -74,6 +83,7 @@ namespace _Scripts.TilemapGrid
             grid = GetComponent<Grid>();
             mainCamera = Camera.main;
             tilemaps = GetComponentsInChildren<Tilemap>();
+            highlightParent = GameObject.Find("Highlight");
             CreateHighlightObject();
         }
 
@@ -90,8 +100,8 @@ namespace _Scripts.TilemapGrid
                 Debug.LogError("Outline Prefab not assigned!");
                 return;
             }
-
-            highlightObject = Instantiate(highlighterPrefab);
+            
+            highlightObject = Instantiate(highlighterPrefab, highlightParent.transform);
             highlightRenderer = highlightObject.GetComponent<SpriteRenderer>();
             highlightRenderer.color = highlightColor;
             highlightObject.SetActive(false);
@@ -133,8 +143,8 @@ namespace _Scripts.TilemapGrid
             Vector3 cellBottomLeft = grid.CellToWorld(adjustedStartPosition);
 
             Vector3 centerPosition = new Vector3(
-                cellBottomLeft.x + 0.5f,
-                cellBottomLeft.y + 0.5f,
+                cellBottomLeft.x + 0.5f + Mathf.Floor((size.x - 1 )/ 2),
+                cellBottomLeft.y + 0.5f + Mathf.Floor((size.y - 1 )/ 2),
                 0
             );
 
@@ -188,7 +198,7 @@ namespace _Scripts.TilemapGrid
             {
                 return;
             }
-            Tilemap tilemap = tilemaps[3];
+            Tilemap tilemap = tilemaps[tilemaps.Length - 1];
             GameObject[] gameObjects = highlightObject.GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray();
             bool denied = false;
             foreach (var gameObject in gameObjects)
@@ -206,6 +216,16 @@ namespace _Scripts.TilemapGrid
                 }
             }
             Selectable = !denied;
+        }
+
+        public void SetTileAsOccupied()
+        {
+            Tilemap tilemap = tilemaps[tilemaps.Length - 1];
+            GameObject[] higlightTiles = highlightObject.GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray();
+            foreach (var higlightTile in higlightTiles)
+            {
+                tilemap.SetTile(Vector3Int.FloorToInt(higlightTile.transform.position), transparentTile);
+            }
         }
     }
 }

@@ -48,13 +48,14 @@ namespace _Scripts.UI
 
         public void OnPointerUp(PointerEventData eventData)
         {
+            if (gridController.Selectable) gridController.SetTileAsOccupied();
             // Reset to one tile for PC to see the standard highlight on hover
             gridController.HighlightSize = new Vector2Int(1, 1);
             Destroy(draggedBuilding);
 
             if (!gridController.Selectable)
             {
-                gridController.highlightObject.transform.DOShakePosition(1f, new Vector3(0.3f, 0, 0), 30);
+                gridController.highlightParent.transform.DOShakePosition(1f, new Vector3(0.3f, 0, 0), 30);
                 return;
             }
             
