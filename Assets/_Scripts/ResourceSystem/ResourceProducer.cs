@@ -1,4 +1,5 @@
-﻿using _Scripts.ResourceSystem.Data;
+﻿using System;
+using _Scripts.ResourceSystem.Data;
 using _Scripts.Utils;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -16,7 +17,12 @@ namespace _Scripts.ResourceSystem
         private void Start()
         {
             resourceProdService = resourceProdServiceRefData.Get;
-            InvokeRepeating(nameof(ProduceResource), resourceProdData.intervalSeconds, resourceProdData.intervalSeconds);
+            IntervalRunner.Start(this, () => resourceProdData.intervalSeconds, ProduceResource);
+        }
+
+        private void OnDisable()
+        {
+            IntervalRunner.StopAll(this);
         }
 
         private void ProduceResource()

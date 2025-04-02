@@ -35,12 +35,17 @@ namespace _Scripts.Utils
                 }
             }
 
+            public IEnumerator RunOnce()
+            {
+                yield return new WaitForSeconds(interval());
+                callback?.Invoke();
+            }
+
             private IEnumerator Run()
             {
                 while (true)
                 {
-                    yield return new WaitForSeconds(interval());
-                    callback?.Invoke();
+                    yield return RunOnce();
                 }
             }
         }
@@ -69,6 +74,20 @@ namespace _Scripts.Utils
                 executor.Stop();
                 executors.Remove(key);
             }
+        }
+
+        public static void RunOnce(MonoBehaviour host, Func<float> intervalGetter, Action callback)
+        {
+            if (!Application.isPlaying || !host || callback == null)
+                return;
+
+            host.StartCoroutine(RunOnceCoroutine(intervalGetter, callback));
+        }
+
+        private static IEnumerator RunOnceCoroutine(Func<float> intervalGetter, Action callback)
+        {
+            yield return new WaitForSeconds(intervalGetter.Invoke());
+            callback?.Invoke();
         }
 
         public static void StopAll(MonoBehaviour host)
