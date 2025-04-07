@@ -12,6 +12,7 @@ namespace _Scripts.TilemapGrid
     {
         [SerializeField] private GameObject highlighterPrefab;
         [SerializeField] private bool shouldHighlight = true;
+        // fix
         [SerializeField] private Vector2Int highlightSize = new(1, 1);
         [SerializeField] private TileBase transparentTile;
 
@@ -20,63 +21,29 @@ namespace _Scripts.TilemapGrid
         [SerializeField] private Color highlightColorDeny = Color.red;
 
         public Vector3Int CellPosition { get; private set; }
-
         public bool ShouldHighlight
         {
             get => shouldHighlight;
             set => shouldHighlight = value;
         }
-
         public Vector2Int HighlightSize
         {
             get => highlightSize;
-            set
-            {
-                Debug.Log($"Setting highlight size: {value}");
-                int newX = Mathf.Max(1, value.x);
-                int newY = Mathf.Max(1, value.y);
-                highlightSize = new Vector2Int(
-                    newX, newY
-                );
-
-                foreach (var sh in supplementalHighlights)
-                {
-                    Destroy(sh);
-                }
-
-                supplementalHighlights.Clear();
-
-                for (int x = 1; x <= newX; x++)
-                {
-                    for (int y = 1; y <= newY; y++)
-                    {
-                        if (x == 1 && y == 1) continue;
-                        GameObject newCell = Instantiate(highlighterPrefab, highlightObject.transform);
-                        int signX = x % 2 == 0 ? 1 : -1;
-                        int signY = y % 2 == 0 ? 1 : -1;
-                        float addX = grid.cellSize.x * Mathf.Floor(x / 2) * signX;
-                        float addY = grid.cellSize.y * Mathf.Floor(y / 2) * signY;
-                        Debug.Log($"Adding highlight cell {addX}, {addY}, while x and y are {x}, {y}");
-                        newCell.transform.position +=
-                            new Vector3(addX,
-                                addY, 0);
-                        supplementalHighlights.Add(newCell);
-                    }
-                }
-            }
+            set => SetHighlightedArea(value);
         }
-
-        public bool Selectable { get; private set; } = true;
-
-        private SpriteRenderer highlightRenderer;
         public GameObject highlightObject {get; private set;}
         public GameObject highlightParent {get; private set;}
+        public BoundsInt HighlightedAreaBounds { get; private set; }
+
+        
+        public bool Selectable { get; private set; } = true;
+        private Vector2Int lastHighlightSize = new(1, 1);
+        private SpriteRenderer highlightRenderer;
         private Grid grid;
         private Camera mainCamera;
         private Tilemap[] tilemaps;
         private List<GameObject> supplementalHighlights = new List<GameObject>();
 
-        public BoundsInt HighlightedAreaBounds { get; private set; }
 
         private void Awake()
         {
@@ -90,7 +57,46 @@ namespace _Scripts.TilemapGrid
         private void Update()
         {
             HandleUserHover();
+            if (Application.isPlaying && highlightSize != lastHighlightSize)
+            {
+                SetHighlightedArea(highlightSize);
+            }
             RepaintHighlight();
+        }
+
+        private void SetHighlightedArea(Vector2Int value)
+        {
+            lastHighlightSize = value;
+            int newX = Mathf.Max(1, value.x);
+            int newY = Mathf.Max(1, value.y);
+            highlightSize = new Vector2Int(
+                newX, newY
+            );
+
+            foreach (var sh in supplementalHighlights)
+            {
+                Destroy(sh);
+            }
+
+            supplementalHighlights.Clear();
+
+            for (int x = 1; x <= newX; x++)
+            {
+                for (int y = 1; y <= newY; y++)
+                {
+                    if (x == 1 && y == 1) continue;
+                    GameObject newCell = Instantiate(highlighterPrefab, highlightObject.transform);
+                    int signX = x % 2 == 0 ? 1 : -1;
+                    int signY = y % 2 == 0 ? 1 : -1;
+                    float addX = grid.cellSize.x * Mathf.Floor(x / 2) * signX;
+                    float addY = grid.cellSize.y * Mathf.Floor(y / 2) * signY;
+                    Debug.Log($"Adding highlight cell {addX}, {addY}, while x and y are {x}, {y}");
+                    newCell.transform.position +=
+                        new Vector3(addX,
+                            addY, 0);
+                    supplementalHighlights.Add(newCell);
+                }
+            }
         }
 
         private void CreateHighlightObject()
@@ -158,63 +164,42 @@ namespace _Scripts.TilemapGrid
             );
         }
 
-        public Dictionary<Vector3Int, TileBase> GetHighlightedTiles(BoundsInt bounds)
-        {
-            if (tilemaps == null || tilemaps.Length == 0)
-            {
-                return null;
-            }
-
-            Dictionary<Vector3Int, TileBase> topLayerTiles = new();
-
-            for (int i = tilemaps.Length - 1; i >= 0; i--) // Start from topmost tilemap
-            {
-                Tilemap tilemap = tilemaps[i];
-                TileBase[] tiles = tilemap.GetTilesBlock(bounds);
-
-                if (tiles.Length == 0)
-                {
-                    continue;
-                }
-
-                int index = 0;
-                foreach (Vector3Int pos in bounds.allPositionsWithin)
-                {
-                    if (tiles[index] != null && !topLayerTiles.ContainsKey(pos))
-                    {
-                        topLayerTiles[pos] = tiles[index];
-                    }
-
-                    index++;
-                }
-            }
-
-            return topLayerTiles;
-        }
-
         private void RepaintHighlight()
         {
             if (tilemaps == null || tilemaps.Length == 0)
-            {
                 return;
-            }
-            Tilemap tilemap = tilemaps[tilemaps.Length - 1];
-            GameObject[] gameObjects = highlightObject.GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray();
+
+            Tilemap tilemapToDeny = tilemaps[tilemaps.Length - 1];
+            GameObject[] gameObjects = highlightObject.GetComponentsInChildren<Transform>()
+                .Select(t => t.gameObject)
+                .ToArray();
+
             bool denied = false;
+
             foreach (var gameObject in gameObjects)
             {
                 SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
-                TileBase found = tilemap.GetTile(Vector3Int.RoundToInt(gameObject.transform.position - new Vector3(0.5f, 0.5f, 0)));
-                if (found)
+                if (!renderer)
+                    continue;
+
+                Vector3Int tilePos = Vector3Int.RoundToInt(gameObject.transform.position - new Vector3(0.5f, 0.5f, 0));
+
+                bool foundInAny = tilemaps.Any(tm => tm.GetTile(tilePos) != null);
+                bool foundInDeny = tilemapToDeny.GetTile(tilePos) != null;
+
+                if (!foundInAny)
                 {
-                    renderer.color = highlightColorDeny;
-                    denied = true;
+                    renderer.enabled = false;
                 }
                 else
                 {
-                    renderer.color = highlightColor;
+                    renderer.enabled = true;
+                    renderer.color = foundInDeny ? highlightColorDeny : highlightColor;
+                    if (foundInDeny)
+                        denied = true;
                 }
             }
+
             Selectable = !denied;
         }
 
