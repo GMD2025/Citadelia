@@ -34,9 +34,15 @@ namespace _Scripts.Gameplay.Buildings.Systems.Flame
         private void CheckAndFire()
         {
             Collider2D enemyCollider = Physics2D.OverlapCircle(transform.position, flameTowerData.detectionRadius, enemyLayer);
+            if (!enemyCollider)
+                return;
+            
             Transform flame = GetClosestFlame(enemyCollider.transform.position);
+            if (!flame)
+                return;
+            
             var flameProjectile = flame.GetComponent<FlameProjectile>();
-            if (!flameProjectile || !flame || !enemyCollider)
+            if (!flameProjectile)
                 return;
 
             bool hasFired = flameProjectile.FireFlame(enemyCollider.transform.position);
