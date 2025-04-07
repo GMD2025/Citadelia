@@ -120,38 +120,5 @@ namespace _Scripts.TilemapGrid
                 new Vector3Int(size.x, size.y, 1) // ensure size.z = 1, otherwise tilemap doesn't return any tiles from the bounds
             );
         }
-
-        public Dictionary<Vector3Int, TileBase> GetHighlightedTiles(BoundsInt bounds)
-        {
-            if (tilemaps == null || tilemaps.Length == 0)
-            {
-                return null;
-            }
-
-            Dictionary<Vector3Int, TileBase> topLayerTiles = new();
-
-            for (int i = tilemaps.Length - 1; i >= 0; i--) // Start from topmost tilemap
-            {
-                Tilemap tilemap = tilemaps[i];
-                TileBase[] tiles = tilemap.GetTilesBlock(bounds);
-
-                if (tiles.Length == 0)
-                {
-                    continue;
-                }
-
-                int index = 0;
-                foreach (Vector3Int pos in bounds.allPositionsWithin)
-                {
-                    if (tiles[index] != null && !topLayerTiles.ContainsKey(pos))
-                    {
-                        topLayerTiles[pos] = tiles[index];
-                    }
-                    index++;
-                }
-            }
-
-            return topLayerTiles;
-        }
     }
 }
