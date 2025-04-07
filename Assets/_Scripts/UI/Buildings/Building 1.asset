@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 8344326340976807322, guid: 6dd8ebc09516edd49999f42c0f7ed33c, type: 3}
   name: Ratusha
-  cellsize: {x: 1, y: 1}
+  cellsize: {x: 3, y: 3}
+  resources:
+  - resourceData: {fileID: 11400000, guid: c373c01eaf188b944bf1e2cce8dee79b, type: 2}
+    amount: 20

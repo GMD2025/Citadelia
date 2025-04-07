@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using _Scripts.ResourceSystem.Data;
+using _Scripts.UI.Buildings;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -38,6 +39,26 @@ namespace _Scripts.ResourceSystem
 
             resourceStorage[resourceData] -= amount;
             OnResourceChanged?.Invoke(resourceData, resourceStorage[resourceData]);
+            return true;
+        }
+
+        public bool SpendResources(Resource[] resources)
+        {
+            foreach (var resource in resources)
+            {
+                if (!resourceStorage.ContainsKey(resource.resourceData) ||
+                    resourceStorage[resource.resourceData] < resource.amount)
+                    return false;
+            }
+
+            foreach (var resource in resources)
+            {
+                Debug.Log("bilo: " + GetResourceAmount(resource.resourceData));
+                resourceStorage[resource.resourceData] -= resource.amount;
+                OnResourceChanged?.Invoke(resource.resourceData, resourceStorage[resource.resourceData]);
+                Debug.Log("stalo: " + GetResourceAmount(resource.resourceData));
+            }
+
             return true;
         }
     }

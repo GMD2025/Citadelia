@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using _Scripts.UI.Buildings;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,8 +34,14 @@ namespace _Scripts.UI
 
         void CreateButton(Building building)
         {
-            // Debug.Log(sprite);
             GameObject buttonObj = Instantiate(tileButtonPrefab, transform);
+
+            if (building.resources.Length != 0)
+            {
+                buttonObj.GetComponentInChildren<TextMeshProUGUI>().text = building.resources[0].amount.ToString();
+                buttonObj.GetComponentInChildren<SpriteRenderer>().sprite = building.resources[0].resourceData.icon;
+            }
+            
             var fingerTracking = buttonObj.GetComponent<FingerTracking>();
             fingerTracking.Building = building;
             fingerTracking.BuildingSortingLayer = buildingSortingLayer;

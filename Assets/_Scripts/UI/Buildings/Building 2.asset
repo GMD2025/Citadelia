@@ -15,3 +15,8 @@ MonoBehaviour:
   sprite: {fileID: -1401015729671499130, guid: 6dd8ebc09516edd49999f42c0f7ed33c, type: 3}
   name: Ferma
   cellsize: {x: 2, y: 2}
+  resources:
+  - resourceData: {fileID: 11400000, guid: 14826a5645b227f4687102cd9020f548, type: 2}
+    amount: 10
+  - resourceData: {fileID: 11400000, guid: a33836f01d5205b41b70cd9dd52a5542, type: 2}
+    amount: 5

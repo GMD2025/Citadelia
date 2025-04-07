@@ -1,7 +1,9 @@
+using _Scripts.ResourceSystem;
 using _Scripts.TilemapGrid;
 using _Scripts.UI.Buildings;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using DG.Tweening;
 
 namespace _Scripts.UI
 {
@@ -13,6 +15,7 @@ namespace _Scripts.UI
         private GameObject draggedBuilding;
 
         private HighlightGridAreaController gridController;
+        private ResourceProductionService resourceService;
         private Grid gridGameObject;
         private Vector3 cellsize;
 
@@ -20,6 +23,7 @@ namespace _Scripts.UI
         private void Awake()
         {
             gridController = FindAnyObjectByType<HighlightGridAreaController>();
+            resourceService = FindAnyObjectByType<ResourceProductionService>();
             gridGameObject = FindAnyObjectByType<Grid>();
             cellsize = gridGameObject.GetComponent<Grid>().cellSize;
         }
@@ -36,8 +40,6 @@ namespace _Scripts.UI
         public void OnPointerDown(PointerEventData eventData)
         {
             gridController.HighlightSize = Building.cellsize;
-            Debug.Log(Building.cellsize);
-            Debug.Log("Highilight size - " + gridController.HighlightSize);
             draggedBuilding = new GameObject(Building.name);
             draggedBuilding.transform.position = gridController.transform.position;
 
@@ -49,10 +51,26 @@ namespace _Scripts.UI
 
         public void OnPointerUp(PointerEventData eventData)
         {
-            Debug.Log(gridController.CellPosition);
-            GameObject newCell = Instantiate(draggedBuilding);
-            var spriteRenderer = newCell.GetComponent<SpriteRenderer>();
-            spriteRenderer.color = new Color(1, 1, 1, 1);
+            if (gridController.Selectable)
+            {
+                bool richEnough = resourceService.SpendResources(Building.resources);
+
+                if (richEnough)
+                {
+                    GameObject newCell = Instantiate(draggedBuilding, gridGameObject.transform);
+                    var spriteRenderer = newCell.GetComponent<SpriteRenderer>();
+                    spriteRenderer.color = new Color(1, 1, 1, 1);
+                }
+                
+                gridController.SetTileAsOccupied();
+            }
+            else
+            {
+                gridController.highlightParent.transform.DOShakePosition(1f, new Vector3(0.3f, 0, 0), 30);
+            }
+            
+            // Reset to one tile for PC to see the standard highlight on hover
+            gridController.HighlightSize = new Vector2Int(1, 1);
             Destroy(draggedBuilding);
         }
     }
