@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRadius: 10
   fireDelay: 2
-  flameRestoreDelay: 5
-  cooldownAfterRestore: 1
+  flameRestoreDelay: 3
+  cooldownAfterRestore: 2
   speed: 15
   damageOnHit: 50
