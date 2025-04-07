@@ -30,7 +30,6 @@ namespace _Scripts.ResourceSystem
             resourceProdService.AddResource(resourceProdData.resourceType, resourceProdData.productionAmount);
             var popupInstance = Instantiate(resourceProdUIPrefab, transform.position, Quaternion.identity, transform);
             popupInstance.GetComponent<ResourceProductionAnimation>().SetResourceData(resourceProdData);
-            Debug.Log($"[{gameObject.name}] Produced {resourceProdData.productionAmount} {resourceProdData.resourceType.resourceName}. Total: {resourceProdService.GetResourceAmount(resourceProdData.resourceType)}");
         }
     }
 }

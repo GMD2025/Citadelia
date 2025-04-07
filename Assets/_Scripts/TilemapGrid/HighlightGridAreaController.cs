@@ -32,7 +32,6 @@ namespace _Scripts.TilemapGrid
             get => highlightSize;
             set
             {
-                Debug.Log($"Setting highlight size: {value}");
                 int newX = Mathf.Max(1, value.x);
                 int newY = Mathf.Max(1, value.y);
                 highlightSize = new Vector2Int(
@@ -56,7 +55,6 @@ namespace _Scripts.TilemapGrid
                         int signY = y % 2 == 0 ? 1 : -1;
                         float addX = grid.cellSize.x * Mathf.Floor(x / 2) * signX;
                         float addY = grid.cellSize.y * Mathf.Floor(y / 2) * signY;
-                        Debug.Log($"Adding highlight cell {addX}, {addY}, while x and y are {x}, {y}");
                         newCell.transform.position +=
                             new Vector3(addX,
                                 addY, 0);

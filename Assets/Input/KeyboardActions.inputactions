@@ -1,0 +1,102 @@
+{
+    "name": "KeyboardActions",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "03b9cd65-b81c-4d24-bd62-a8e28fb6d4f3",
+            "actions": [],
+            "bindings": []
+        },
+        {
+            "name": "Gameplay",
+            "id": "3bb33c2f-2317-47da-a1f3-06f006cbfff3",
+            "actions": [
+                {
+                    "name": "Vertical",
+                    "type": "Button",
+                    "id": "63d558f6-f5ee-41e7-b23e-c626b1b87a94",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "Vertical",
+                    "id": "9f8dcc5d-0cbc-423a-8942-9229d53ce0e2",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Vertical",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Positive",
+                    "id": "b7546d41-8b6c-42c1-8d5c-8f074c6b6313",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeybaordScheme",
+                    "action": "Vertical",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Negative",
+                    "id": "3f5d7cb1-f52a-46a2-831c-f976fb7e98ce",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeybaordScheme",
+                    "action": "Vertical",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
+        },
+        {
+            "name": "Global",
+            "id": "cc03fe12-d5a9-4e01-b541-8e318ad6afa2",
+            "actions": [
+                {
+                    "name": "Switch",
+                    "type": "Button",
+                    "id": "48ed4893-6d5e-4d1e-8c72-e8ce3035b2b7",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "76e2945d-7a10-4679-a39e-bcdbce939d30",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeybaordScheme",
+                    "action": "Switch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "KeybaordScheme",
+            "bindingGroup": "KeybaordScheme",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": true,
+                    "isOR": false
+                }
+            ]
+        }
+    ]
+}

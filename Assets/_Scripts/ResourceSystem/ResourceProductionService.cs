@@ -53,10 +53,8 @@ namespace _Scripts.ResourceSystem
 
             foreach (var resource in resources)
             {
-                Debug.Log("bilo: " + GetResourceAmount(resource.resourceData));
                 resourceStorage[resource.resourceData] -= resource.amount;
                 OnResourceChanged?.Invoke(resource.resourceData, resourceStorage[resource.resourceData]);
-                Debug.Log("stalo: " + GetResourceAmount(resource.resourceData));
             }
 
             return true;
