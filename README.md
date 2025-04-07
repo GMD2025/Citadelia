@@ -1,3 +1,7 @@
+<a href="https://www.figma.com/board/PHm3roV1mkPZR1UrZZMZ5v/GMD?node-id=0-1&t=6pE2uI4GlM2q4ucD-1" target="_blank">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" alt="Figma" width="40" />
+</a>
+
 ## Collaboration
 
 ### Setup
