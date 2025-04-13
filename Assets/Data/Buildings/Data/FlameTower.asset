@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FlameTower
   m_EditorClassIdentifier: 
   detectionRadius: 10
-  fireDelay: 2
+  fireDelay: 3
   flameRestoreDelay: 5
   cooldownAfterRestore: 1
   speed: 15

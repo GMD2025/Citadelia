@@ -10,12 +10,15 @@ namespace _Scripts.UI.Buildings
         public ResourceData resourceData;
         public int amount;
     }
-    [CreateAssetMenu(fileName = "Building", menuName = "Scriptable Objects/Buildings")]
-    public class Building : ScriptableObject
+    [CreateAssetMenu(fileName = "Building", menuName = "Scriptable Objects/Buildings/UI")]
+    public class BuildingData : ScriptableObject
     {
-        public Sprite sprite;
-        public new string name;
+        public GameObject buildingPrefab;
         public Vector2Int cellsize;
+        
+        [Header("Resources")]
         public Resource[] resources;
+
+        public Sprite Sprite => buildingPrefab.GetComponent<SpriteRenderer>().sprite;
     }
 }
