@@ -26,14 +26,6 @@
 - Apply to positions, directions, animation data before sending to clients
 
 
-
-What was done:
-- building sizing
-- have a list of tilemaps to denny instead of single
-- instead of placing the sprite instantiate the building (have prefab ref in BuildingData instead of just sprite)
-
 ## TODO:
 General:
   - Use dependency container to add grid instance (to many grid injections everywhere). (Use Michael's implementation)
-Sevastian:
-  - don't create building if they are not within the tilemaps bounds. (if even one grid cell doesn't have any tiles at all)
