@@ -1,6 +1,7 @@
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
+using _Scripts.CustomInspector;
 
 namespace _Scripts.CustomInspector.Button.Editor
 {
@@ -9,30 +10,37 @@ namespace _Scripts.CustomInspector.Button.Editor
     {
         public override void OnInspectorGUI()
         {
-            // Draw the default inspector first
+            // Draw serialized fields first
             DrawDefaultInspector();
 
-            // Get the type of the MonoBehaviour
             var targetType = target.GetType();
-        
-            // Get all methods in the MonoBehaviour class
             var methods = targetType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
-        
-            // Iterate through methods to find those with the InspectorButtonAttribute
+
             foreach (var method in methods)
             {
-                var buttonAttribute = method.GetCustomAttribute<InspectorButtonAttribute>();
+                // Check for [InspectorButton]
+                var buttonAttr = method.GetCustomAttribute<InspectorButtonAttribute>();
+                if (buttonAttr == null) continue;
 
-                if (buttonAttribute == null) continue;
-                // Display a button in the Inspector with the name from the attribute
-                if (GUILayout.Button(buttonAttribute.ButtonName))
+                // Check for [InspectorLabel] optionally
+                var labelAttr = method.GetCustomAttribute<InspectorLabelAttribute>();
+                if (labelAttr != null && !string.IsNullOrWhiteSpace(labelAttr.Label))
                 {
-                    // Invoke the method when the button is clicked
+                    EditorGUILayout.Space();
+                    EditorGUILayout.LabelField(labelAttr.Label, EditorStyles.boldLabel);
+                }
+
+                // Use custom name if provided, otherwise fallback to method name
+                string buttonText = string.IsNullOrWhiteSpace(buttonAttr.ButtonName)
+                    ? ObjectNames.NicifyVariableName(method.Name)
+                    : buttonAttr.ButtonName;
+
+                if (GUILayout.Button(buttonText))
+                {
                     method.Invoke(target, null);
                 }
             }
 
-            // Refresh the inspector to make sure it's updated
             Repaint();
         }
     }

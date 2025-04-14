@@ -1,6 +1,8 @@
-﻿using System;
+﻿
+
 using System.Collections.Generic;
 using System.Linq;
+using _Scripts.CustomInspector;
 using _Scripts.CustomInspector.Button;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -9,10 +11,14 @@ namespace _Scripts.TilemapGrid
 {
     public class PlaymapReflector : MonoBehaviour
     {
-        private Grid grid;
+        [SerializeField, Tooltip("Tilemaps like roads that rely on directional alignment should be flipped vertically (Y axis) relative to each tile's pivot.")]
+        private Tilemap[] tilemapsToFlip;        
+        
+        
+        private Grid grid; 
         private Tilemap[] tilemaps;
-
         private GameObject reflectedTilemapsParent;
+        
 
         private void OnValidate()
         {
@@ -23,6 +29,48 @@ namespace _Scripts.TilemapGrid
         private void Start()
         {
             Reflect();
+        }
+
+        [InspectorLabel("Debug Buttons")]
+        [InspectorButton("center tilemaps")]
+        private void CenterTilemaps()
+        {
+            foreach (var tilemap in tilemaps)
+            {
+                if (tilemap == null) continue;
+
+                tilemap.CompressBounds();
+
+                var bounds = tilemap.cellBounds;
+                var centerOffset = new Vector3Int(
+                    Mathf.FloorToInt(bounds.xMin + bounds.size.x / 2f),
+                    Mathf.FloorToInt(bounds.yMin + bounds.size.y / 2f),
+                    0
+                );
+
+                var tiles = new Dictionary<Vector3Int, TileBase>();
+                var transforms = new Dictionary<Vector3Int, Matrix4x4>();
+
+                foreach (var pos in bounds.allPositionsWithin)
+                {
+                    var tile = tilemap.GetTile(pos);
+                    if (tile != null)
+                    {
+                        tiles.Add(pos, tile);
+                        transforms.Add(pos, tilemap.GetTransformMatrix(pos));
+                    }
+                }
+
+                tilemap.ClearAllTiles();
+                foreach (var kvp in tiles)
+                {
+                    var newPos = kvp.Key - centerOffset;
+                    tilemap.SetTile(newPos, kvp.Value);
+                    tilemap.SetTransformMatrix(newPos, transforms[kvp.Key]);
+                }
+
+                tilemap.transform.localPosition = Vector3.zero;
+            }
         }
 
         [InspectorButton("reflect")]
@@ -67,6 +115,10 @@ namespace _Scripts.TilemapGrid
                         newTilemap.SetTile(mirroredPos, tile);
 
                         var flipMatrix = Matrix4x4.identity;
+                        
+                        if(tilemapsToFlip.Contains(originalTilemap))
+                            flipMatrix = Matrix4x4.Scale(new Vector3(1, -1, 1));
+                        
                         newTilemap.SetTransformMatrix(mirroredPos, flipMatrix);
                     }
                 }
@@ -79,12 +131,18 @@ namespace _Scripts.TilemapGrid
         [InspectorButton("clear")]
         private void Clear()
         {
-            if (reflectedTilemapsParent != null) Utils.Utils.SmartDestroy(reflectedTilemapsParent);
+            Transform existing = grid.transform.Find("ReflectedTilemaps");
+            if (existing != null)
+            {
+                DestroyImmediate(existing.gameObject);
+            }
+
+            reflectedTilemapsParent = null;
+
             tilemaps?
-                .Where(t => t)
+                .Where(t => t != null)
                 .ToList()
                 .ForEach(t => t.transform.position = Vector3.zero);
-
         }
     }
 }
