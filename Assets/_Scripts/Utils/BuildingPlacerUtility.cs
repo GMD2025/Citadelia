@@ -1,8 +1,7 @@
-﻿using System;
-using _Scripts.UI.Buildings;
+﻿using _Scripts.UI.Buildings;
 using UnityEngine;
 
-namespace _Scripts.Gameplay.Buildings.Systems
+namespace _Scripts.Utils
 {
     public class BuildingPlacerUtility
     {

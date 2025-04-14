@@ -11,16 +11,13 @@ namespace _Scripts.TilemapGrid
     {
         private Grid grid;
         private Tilemap[] tilemaps;
-        private List<Tilemap> reflectedTilemaps;
 
-        private Vector3Int positionOffset;
+        private GameObject reflectedTilemapsParent;
 
-        private void Awake()
+        private void OnValidate()
         {
             grid = GetComponent<Grid>();
-            tilemaps = grid.GetComponentsInChildren<Tilemap>().Where(t => !t.name.Contains("_Reflected")).ToArray();
-            positionOffset = Vector3Int.zero;
-            positionOffset.y = tilemaps.OrderBy(tilemap => tilemap.size.y).Select(t => t.cellBounds.size.y).First();
+            tilemaps = grid.GetComponentsInChildren<Tilemap>();
         }
 
         private void Start()
@@ -31,22 +28,22 @@ namespace _Scripts.TilemapGrid
         [InspectorButton("reflect")]
         private void Reflect()
         {
-            tilemaps = grid.GetComponentsInChildren<Tilemap>().Where(t => !t.name.Contains("_Reflected")).ToArray();
-    
-            if (reflectedTilemaps == null) reflectedTilemaps = new List<Tilemap>();
-            reflectedTilemaps.Clear();
+            Clear();
+            reflectedTilemapsParent = new GameObject("ReflectedTilemaps");
+            reflectedTilemapsParent.transform.SetParent(grid.transform);
+            tilemaps = grid.GetComponentsInChildren<Tilemap>();
 
             int maxY = tilemaps.Max(tm => tm.cellBounds.yMax);
             int minY = tilemaps.Min(tm => tm.cellBounds.yMin);
             int totalHeight = maxY - minY;
-            var positionOffset = new Vector3Int(0, totalHeight, 0);
+            var positionOffset = new Vector3Int(0, totalHeight / 2, 0);
 
             foreach (var originalTilemap in tilemaps)
             {
                 if (originalTilemap == null) continue;
 
                 var reflectedTilemapGo = new GameObject($"{originalTilemap.name}_Reflected");
-                reflectedTilemapGo.transform.SetParent(grid.transform, false);
+                reflectedTilemapGo.transform.SetParent(reflectedTilemapsParent.transform);
 
                 var newTilemap = reflectedTilemapGo.AddComponent<Tilemap>();
                 var newRenderer = reflectedTilemapGo.AddComponent<TilemapRenderer>();
@@ -67,30 +64,27 @@ namespace _Scripts.TilemapGrid
                         int mirroredY = mirrorLineY - y;
                         var mirroredPos = new Vector3Int(x, mirroredY, 0);
 
-                        newTilemap.SetTile(mirroredPos + positionOffset, tile);
+                        newTilemap.SetTile(mirroredPos, tile);
 
                         var flipMatrix = Matrix4x4.identity;
-                        newTilemap.SetTransformMatrix(mirroredPos + positionOffset, flipMatrix);
+                        newTilemap.SetTransformMatrix(mirroredPos, flipMatrix);
                     }
                 }
-
-                reflectedTilemaps.Add(newTilemap);
+                Vector3 worldOffset = Vector3.Scale(positionOffset, grid.cellSize);
+                originalTilemap.transform.position -= worldOffset;
+                newTilemap.transform.position += worldOffset;
             }
         }
 
         [InspectorButton("clear")]
         private void Clear()
         {
-            foreach (var reflected in reflectedTilemaps)
-            {
-                if (reflected != null)
-                {
-                    Utils.Utils.SmartDestroy(reflected.gameObject);
-                }
-            }
+            if (reflectedTilemapsParent != null) Utils.Utils.SmartDestroy(reflectedTilemapsParent);
+            tilemaps?
+                .Where(t => t)
+                .ToList()
+                .ForEach(t => t.transform.position = Vector3.zero);
 
-            reflectedTilemaps.Clear();
         }
-
     }
 }
