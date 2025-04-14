@@ -36,5 +36,4 @@ What was done:
 General:
   - Use dependency container to add grid instance (to many grid injections everywhere). (Use Michael's implementation)
 Sevastian:
-  - instantiate the reflected tiles under parent
   - don't create building if they are not within the tilemaps bounds. (if even one grid cell doesn't have any tiles at all)

@@ -176,9 +176,8 @@ namespace _Scripts.TilemapGrid
             GameObject[] gameObjects = highlightObject.GetComponentsInChildren<Transform>()
                 .Select(t => t.gameObject)
                 .ToArray();
-
-            bool denied = false;
-
+            
+            bool allCellsValid = true;
             foreach (var gameObject in gameObjects)
             {
                 SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
@@ -187,28 +186,30 @@ namespace _Scripts.TilemapGrid
 
                 Vector3Int tilePos = Vector3Int.RoundToInt(gameObject.transform.position - new Vector3(0.5f, 0.5f, 0));
 
-                bool foundInAny = tilemaps.Any(tm => tm.GetTile(tilePos) != null);
+                bool hasTile = tilemaps.Any(tm => tm.GetTile(tilePos) != null);
                 bool foundInDeny = tilemapsToDeny.Any(t => t.GetTile(tilePos) != null);
 
-                if (!foundInAny)
+                renderer.enabled = hasTile;
+
+                if (!hasTile || foundInDeny)
                 {
-                    renderer.enabled = false;
+                    renderer.color = highlightColorDeny;
+                    allCellsValid = false;
                 }
                 else
                 {
-                    renderer.enabled = true;
-                    renderer.color = foundInDeny ? highlightColorDeny : highlightColor;
-                    if (foundInDeny)
-                        denied = true;
+                    renderer.color = highlightColor;
                 }
             }
 
-            Selectable = !denied;
+            Selectable = allCellsValid;
         }
 
         public void SetTileAsOccupied()
         {
-            Tilemap tilemap = tilemaps[^1];
+            Tilemap tilemap = tilemaps
+                .OrderBy(t => t.GetComponent<TilemapRenderer>().sortingOrder)
+                .Last();
             GameObject[] higlightTiles = highlightObject.GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray();
             foreach (var higlightTile in higlightTiles)
             {

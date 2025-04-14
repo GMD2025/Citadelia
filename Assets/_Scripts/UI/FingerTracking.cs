@@ -60,7 +60,7 @@ namespace _Scripts.UI
             {
                 bool richEnough = resourceService.SpendResources(BuildingData.resources);
 
-                if (isTodayBlackFriday || richEnough)
+                if ((isTodayBlackFriday || richEnough))
                 {
                     GameObject newBuilding = Instantiate(BuildingData.buildingPrefab,
                         draggedBuilding.transform.position, Quaternion.identity, gridGameObject.transform);
