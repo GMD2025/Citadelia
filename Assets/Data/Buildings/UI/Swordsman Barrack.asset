@@ -10,11 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a9d6518823914024b89cb339029217f8, type: 3}
-  m_Name: Building 3
+  m_Name: Swordsman Barrack
   m_EditorClassIdentifier: 
-  sprite: {fileID: 5380709053851162247, guid: 6dd8ebc09516edd49999f42c0f7ed33c, type: 3}
-  name: Pamjatnik
-  cellsize: {x: 1, y: 1}
+  buildingPrefab: {fileID: 7908068709618864951, guid: 023491af03b3b8f44b801e5c8ce502d1, type: 3}
+  cellsize: {x: 3, y: 3}
   resources:
+  - resourceData: {fileID: 11400000, guid: c373c01eaf188b944bf1e2cce8dee79b, type: 2}
+    amount: 120
   - resourceData: {fileID: 11400000, guid: 14826a5645b227f4687102cd9020f548, type: 2}
-    amount: 20
+    amount: 280
+  - resourceData: {fileID: 11400000, guid: a33836f01d5205b41b70cd9dd52a5542, type: 2}
+    amount: 350

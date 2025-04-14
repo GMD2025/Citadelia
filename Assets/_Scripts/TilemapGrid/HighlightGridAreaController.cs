@@ -20,6 +20,9 @@ namespace _Scripts.TilemapGrid
         [SerializeField] private Color highlightColor = Color.white;
         [SerializeField] private Color highlightColorDeny = Color.red;
 
+
+        [Header("Tilemaps preventing from placing building")]
+        [SerializeField] private Tilemap[] tilemapsToDeny;
         public Vector3Int CellPosition { get; private set; }
         public bool ShouldHighlight
         {
@@ -90,7 +93,7 @@ namespace _Scripts.TilemapGrid
                     int signY = y % 2 == 0 ? 1 : -1;
                     float addX = grid.cellSize.x * Mathf.Floor(x / 2) * signX;
                     float addY = grid.cellSize.y * Mathf.Floor(y / 2) * signY;
-                    Debug.Log($"Adding highlight cell {addX}, {addY}, while x and y are {x}, {y}");
+                    // Debug.Log($"Adding highlight cell {addX}, {addY}, while x and y are {x}, {y}");
                     newCell.transform.position +=
                         new Vector3(addX,
                             addY, 0);
@@ -173,9 +176,8 @@ namespace _Scripts.TilemapGrid
             GameObject[] gameObjects = highlightObject.GetComponentsInChildren<Transform>()
                 .Select(t => t.gameObject)
                 .ToArray();
-
-            bool denied = false;
-
+            
+            bool allCellsValid = true;
             foreach (var gameObject in gameObjects)
             {
                 SpriteRenderer renderer = gameObject.GetComponent<SpriteRenderer>();
@@ -184,28 +186,30 @@ namespace _Scripts.TilemapGrid
 
                 Vector3Int tilePos = Vector3Int.RoundToInt(gameObject.transform.position - new Vector3(0.5f, 0.5f, 0));
 
-                bool foundInAny = tilemaps.Any(tm => tm.GetTile(tilePos) != null);
-                bool foundInDeny = tilemapToDeny.GetTile(tilePos) != null;
+                bool hasTile = tilemaps.Any(tm => tm.GetTile(tilePos) != null);
+                bool foundInDeny = tilemapsToDeny.Any(t => t.GetTile(tilePos) != null);
 
-                if (!foundInAny)
+                renderer.enabled = hasTile;
+
+                if (!hasTile || foundInDeny)
                 {
-                    renderer.enabled = false;
+                    renderer.color = highlightColorDeny;
+                    allCellsValid = false;
                 }
                 else
                 {
-                    renderer.enabled = true;
-                    renderer.color = foundInDeny ? highlightColorDeny : highlightColor;
-                    if (foundInDeny)
-                        denied = true;
+                    renderer.color = highlightColor;
                 }
             }
 
-            Selectable = !denied;
+            Selectable = allCellsValid;
         }
 
         public void SetTileAsOccupied()
         {
-            Tilemap tilemap = tilemaps[^1];
+            Tilemap tilemap = tilemaps
+                .OrderBy(t => t.GetComponent<TilemapRenderer>().sortingOrder)
+                .Last();
             GameObject[] higlightTiles = highlightObject.GetComponentsInChildren<Transform>().Select(t => t.gameObject).ToArray();
             foreach (var higlightTile in higlightTiles)
             {
