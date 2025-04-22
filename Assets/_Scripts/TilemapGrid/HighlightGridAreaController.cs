@@ -55,7 +55,6 @@ namespace _Scripts.TilemapGrid
             tilemaps = GetComponentsInChildren<Tilemap>();
             highlightParent = GameObject.Find("Highlight");
             CreateHighlightObject();
-            CreateHighlightObject();
         }
 
         private void Update()
