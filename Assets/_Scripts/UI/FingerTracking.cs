@@ -1,6 +1,8 @@
+using _Scripts.Gameplay.Buildings.Systems;
 using _Scripts.ResourceSystem;
 using _Scripts.TilemapGrid;
 using _Scripts.UI.Buildings;
+using _Scripts.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
@@ -9,7 +11,8 @@ namespace _Scripts.UI
 {
     public class FingerTracking : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
-        public Building Building { get; set; }
+        [SerializeField] private bool isTodayBlackFriday;
+        public BuildingData BuildingData { get; set; }
         public string BuildingSortingLayer { get; set; }
         private GameObject draggedBuilding;
 
@@ -38,36 +41,37 @@ namespace _Scripts.UI
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            gridController.HighlightSize = Building.cellsize;
-            draggedBuilding = new GameObject(Building.name);
+            gridController.HighlightSize = BuildingData.cellsize;
+            draggedBuilding = new GameObject(BuildingData.name);
             draggedBuilding.transform.position = gridController.transform.position;
 
             SpriteRenderer spriteRenderer = draggedBuilding.AddComponent<SpriteRenderer>();
-            spriteRenderer.sprite = Building.sprite;
-            spriteRenderer.sortingLayerName = BuildingSortingLayer;
             spriteRenderer.color = new Color(1, 1, 1, 0.5f);
+            spriteRenderer.sprite = BuildingData.Sprite;
+            spriteRenderer.sortingLayerName = BuildingSortingLayer;
+            draggedBuilding.transform.localScale = BuildingPlacerUtility.GetLocalScale(BuildingData, gridGameObject);
         }
 
         public void OnPointerUp(PointerEventData eventData)
         {
             if (gridController.Selectable)
             {
-                bool richEnough = resourceService.SpendResources(Building.resources);
+                bool richEnough = resourceService.SpendResources(BuildingData.resources);
 
-                if (richEnough)
+                if ((isTodayBlackFriday || richEnough))
                 {
-                    GameObject newCell = Instantiate(draggedBuilding, gridGameObject.transform);
-                    var spriteRenderer = newCell.GetComponent<SpriteRenderer>();
-                    spriteRenderer.color = new Color(1, 1, 1, 1);
+                    GameObject newBuilding = Instantiate(BuildingData.buildingPrefab,
+                        draggedBuilding.transform.position, Quaternion.identity, gridGameObject.transform);
+                    BuildingPlacerUtility.AdjustSize(newBuilding, BuildingData, gridGameObject);
                 }
-                
+
                 gridController.SetTileAsOccupied();
             }
             else
             {
                 gridController.highlightParent.transform.DOShakePosition(1f, new Vector3(0.3f, 0, 0), 30);
             }
-            
+
             // Reset to one tile for PC to see the standard highlight on hover
             gridController.HighlightSize = new Vector2Int(1, 1);
             Destroy(draggedBuilding);

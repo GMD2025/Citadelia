@@ -28,13 +28,17 @@ PrefabInstance:
       propertyPath: productionConfig
       value: 
       objectReference: {fileID: 11400000, guid: bdcbdaf4ef18c05499462ff46f48c070, type: 2}
+    - target: {fileID: 1361058041048648148, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: resourceProdData
+      value: 
+      objectReference: {fileID: 11400000, guid: bdcbdaf4ef18c05499462ff46f48c070, type: 2}
     - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 134.35
       objectReference: {fileID: 0}
     - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -6.9
       objectReference: {fileID: 0}
     - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -46,15 +50,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -72,18 +76,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: WoodMill Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3807083159324533105, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6625046246883034775, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
       propertyPath: m_Size.x
-      value: 10.24
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6625046246883034775, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
       propertyPath: m_Size.y
-      value: 10.24
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6625046246883034775, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 07ec99ee03790124bbed1e0c5b6c1eb6, type: 3}
+    - target: {fileID: 6625046246883034775, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6625046246883034775, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1

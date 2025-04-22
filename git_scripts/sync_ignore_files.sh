@@ -5,6 +5,8 @@ set -e
 # Get the Git repository root path
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File "$REPO_ROOT/git_scripts/pre-commit/script.ps1"
+
 # Define file paths
 IGNORE_DIR="$REPO_ROOT/Ignore"
 GIT_IGNORE_TEMPLATE="$IGNORE_DIR/gitignore-template.conf"

@@ -41,16 +41,20 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2258517007209350035, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Size.x
-      value: 10.24
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2258517007209350035, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Size.y
-      value: 10.24
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2258517007209350035, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: df60aef454467b941b002e2465b8e81e, type: 3}
+    - target: {fileID: 2258517007209350035, guid: 469045dfa782ca246be8833d07698482, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2258517007209350035, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -64,24 +68,28 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5298935601310585982, guid: 469045dfa782ca246be8833d07698482, type: 3}
+      propertyPath: m_Center.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5298935601310585982, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Extents.x
-      value: 5.1200004
+      value: 3.16
       objectReference: {fileID: 0}
     - target: {fileID: 5298935601310585982, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Extents.y
-      value: 5.1200004
+      value: 2.75
       objectReference: {fileID: 0}
     - target: {fileID: 5298935601310585982, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Extents.z
-      value: 5.1200004
+      value: 3.16
       objectReference: {fileID: 0}
     - target: {fileID: 7384289829766426211, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.67
+      value: 89.759995
       objectReference: {fileID: 0}
     - target: {fileID: 7384289829766426211, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.46
+      value: -7.22
       objectReference: {fileID: 0}
     - target: {fileID: 7384289829766426211, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_LocalPosition.z
@@ -119,6 +127,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SwordsmanBarrack Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 8102609889982080117, guid: 469045dfa782ca246be8833d07698482, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -147,7 +159,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d080201a05c5455db2c27643c2e7004b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trainInterval: 4
+  trainInterval: 6
   unitPrefab: {fileID: 2602448445874458205, guid: c58bcc994cab65b4b8eb9ac8c58bf155, type: 3}
   spawnPoint: {fileID: 8227086077996740052}
 --- !u!4 &8914627168978721057 stripped

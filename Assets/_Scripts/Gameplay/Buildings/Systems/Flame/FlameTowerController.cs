@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using _Scripts.Gameplay.Buildings.Systems.Flame.Data;
 using _Scripts.Utils;
 using UnityEngine;

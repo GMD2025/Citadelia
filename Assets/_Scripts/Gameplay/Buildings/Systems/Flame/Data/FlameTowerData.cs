@@ -2,7 +2,7 @@
 
 namespace _Scripts.Gameplay.Buildings.Systems.Flame.Data
 {
-    [CreateAssetMenu(fileName = "FlameTower", menuName = "Data/Buildings/Flame Mage Tower", order = 0)]
+    [CreateAssetMenu(fileName = "FlameTower", menuName = "Scriptable Objects/Buildings/Data/Flame Mage Tower")]
     public class FlameTowerData : ScriptableObject
     {
         [Header("Detection")]

@@ -79,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -474071591
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: -1554648942058723538, guid: 3cd5ed26d54f6754a9f7a271e03fe573, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -281,7 +281,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -474071591
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: -1554648942058723538, guid: 3cd5ed26d54f6754a9f7a271e03fe573, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -483,7 +483,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -474071591
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: -1554648942058723538, guid: 3cd5ed26d54f6754a9f7a271e03fe573, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -685,16 +685,20 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2258517007209350035, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Size.x
-      value: 10.24
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2258517007209350035, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Size.y
-      value: 10.24
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2258517007209350035, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 03e52eba25f650d46bf4efd7137b2f83, type: 3}
+    - target: {fileID: 2258517007209350035, guid: 469045dfa782ca246be8833d07698482, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2258517007209350035, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -705,19 +709,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5298935601310585982, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Extents.x
-      value: 4.19
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 5298935601310585982, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Extents.y
-      value: 5.995
+      value: 3.245
       objectReference: {fileID: 0}
     - target: {fileID: 5298935601310585982, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Extents.z
-      value: 4.19
+      value: 1.8
       objectReference: {fileID: 0}
     - target: {fileID: 7384289829766426211, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.3
+      value: 101.15
       objectReference: {fileID: 0}
     - target: {fileID: 7384289829766426211, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_LocalPosition.y
@@ -758,6 +762,10 @@ PrefabInstance:
     - target: {fileID: 8102609889982080117, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Name
       value: MageTower Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 8102609889982080117, guid: 469045dfa782ca246be8833d07698482, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

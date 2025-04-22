@@ -46,9 +46,6 @@ TagManager:
   - name: Tiles
     uniqueID: 2520115677
     locked: 0
-  - name: Highlighter
-    uniqueID: 429234281
-    locked: 0
   - name: Buildings
     uniqueID: 3820895705
     locked: 0
@@ -58,8 +55,8 @@ TagManager:
   - name: UI
     uniqueID: 3012396123
     locked: 0
-  - name: New Layer 4
-    uniqueID: 1574099665
+  - name: Highlighter
+    uniqueID: 429234281
     locked: 0
   m_RenderingLayers:
   - Default
