@@ -20,6 +20,7 @@ pre_commit() {
     fi
 
     cp "$SRC" "$DEST"
+    cp "$SRC_PS1" "$DEST"
     chmod +x "$DEST"
     echo "Pre-commit hook installed successfully."
 }
