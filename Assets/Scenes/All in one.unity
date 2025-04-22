@@ -312,7 +312,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstUIButton: {fileID: 1887029394}
-  playerInput: {fileID: 0}
 --- !u!1 &226586979 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6822888464126987279, guid: 7af3a2305daedc7428a8b9ae9057b66a, type: 3}
@@ -5316,8 +5315,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_FirstSelected: {fileID: 1887029394}
-  m_sendNavigationEvents: 1
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 0
   m_DragThreshold: 10
 --- !u!4 &587300127
 Transform:
@@ -6129,7 +6128,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   highlighterPrefab: {fileID: 6007272961333544781, guid: 23b37b2bb23234348bb92fdaa105e25e, type: 3}
-  shouldHighlight: 1
   highlightSize: {x: 2, y: 2}
   transparentTile: {fileID: 11400000, guid: 4e7b1045450665f4a949d30318b397ee, type: 2}
   highlightColor: {r: 0.3584906, g: 0, b: 0, a: 0.28235295}

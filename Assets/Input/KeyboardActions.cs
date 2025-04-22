@@ -128,7 +128,7 @@ public partial class @KeyboardActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/leftArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";KeybaordScheme"",
                     ""action"": ""Horizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -139,7 +139,7 @@ public partial class @KeyboardActions: IInputActionCollection2, IDisposable
                     ""path"": ""<Keyboard>/rightArrow"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";KeybaordScheme"",
                     ""action"": ""Horizontal"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
@@ -276,10 +276,10 @@ public partial class @KeyboardActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""31091869-475b-4879-a23e-4ea389c80996"",
-                    ""path"": ""<Keyboard>/q"",
+                    ""path"": ""<Keyboard>/g"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";KeybaordScheme"",
                     ""action"": ""Confirm"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -287,10 +287,10 @@ public partial class @KeyboardActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ef880a80-8d16-4c69-9bce-5d655859ffa4"",
-                    ""path"": ""<Keyboard>/e"",
+                    ""path"": ""<Keyboard>/h"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": "";KeybaordScheme"",
                     ""action"": ""Cancel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
