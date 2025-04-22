@@ -1,62 +1,110 @@
+using _Scripts;
+using _Scripts.TilemapGrid;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public enum InputMode { Gameplay, UI }
+public enum FocusState { Gameplay, UI }
 public class InputModeManager : MonoBehaviour
 {
+    [SerializeField] private GameObject firstUIButton;
     public static InputModeManager Instance;
 
     [SerializeField] private PlayerInput playerInput;
-    [SerializeField] private InputActionAsset inputActions;
-
-    public InputMode CurrentMode { get; private set; }
+    public FocusState CurrentFocus { get; private set; }
+    public IGridInput InputMode { get; private set; }
     
-    private InputActionMap gameplayMap;
-    private InputActionMap uiMap;
-    private InputActionMap globalMap;
+    private KeyboardActions keyboardActions;
+    private GameObject currentFocusButton;
+    private EventSystem eventSystem;
     
     private void Awake()
     {
-        gameplayMap = inputActions.FindActionMap("Gameplay");
-        uiMap = inputActions.FindActionMap("UI");
-        globalMap = inputActions.FindActionMap("Global");
-        
-        globalMap.Enable();
-        
         if (Instance == null) Instance = this;
         else Destroy(gameObject);
+        
+        eventSystem = EventSystem.current;
+        keyboardActions = new KeyboardActions();
+        
+        // Gameplay Move
+        keyboardActions.Gameplay.Move.performed += OnMove;
+        keyboardActions.Gameplay.Move.canceled += OnStopMove;
+        keyboardActions.Gameplay.Move.Enable();
+        
+        // Global
+        keyboardActions.Global.SwitchFocus.performed += ctx => ToggleMode();
+        keyboardActions.Global.Enable();
+        
+        // UI
+        keyboardActions.UI.Confirm.performed += ctx =>
+        {
+            Debug.Log("Confirm");
+        };
+        keyboardActions.UI.Confirm.Enable();
+        
+        CurrentFocus = FocusState.Gameplay;
     }
 
     private void Start()
     {
-        playerInput.actions["Switch"].performed += ctx => ToggleMode();
+        // keyboardActions.Gameplay.Disable();
+        // keyboardActions.UI.Disable();
     }
     
     public void ToggleMode()
     {
-        if (CurrentMode == InputMode.Gameplay)
+        Debug.Log("toggle mode");
+        if (CurrentFocus == FocusState.Gameplay)
         {
-            uiMap.Disable();
-            gameplayMap.Enable();
+            CurrentFocus = FocusState.UI;
+            keyboardActions.UI.Enable();
+            EnableUI();
+            keyboardActions.Gameplay.Disable();
         }
-        else if (CurrentMode == InputMode.UI)
+        else if (CurrentFocus == FocusState.UI)
         {
-            uiMap.Enable();
-            gameplayMap.Disable();
+            CurrentFocus = FocusState.Gameplay;
+            keyboardActions.UI.Disable();
+            DisableUI();
+            keyboardActions.Gameplay.Enable();
         }
     }
     
-    public void SwitchMode(InputMode mode)
+    private void OnMove(InputAction.CallbackContext context)
     {
-        CurrentMode = mode;
-        switch (mode)
+        Vector2 value = context.ReadValue<Vector2>();
+        // Apply value to movement, etc.
+        IGridInput grid = DependencyContainer.Instance.GridInput;
+        if (grid is GridInputKeyboard)
         {
-            case InputMode.Gameplay:
-                playerInput.SwitchCurrentActionMap("Gameplay");
-                break;
-            case InputMode.UI:
-                playerInput.SwitchCurrentActionMap("UI");
-                break;
+            ((GridInputKeyboard)grid).MoveCurrentPosition(value);
         }
+        Debug.Log(value.ToString());
+    }
+
+    private void OnStopMove(InputAction.CallbackContext context)
+    {
+        Vector2 value = context.ReadValue<Vector2>();
+        // Apply value to movement, etc.
+        IGridInput grid = DependencyContainer.Instance.GridInput;
+        if (grid is GridInputKeyboard)
+        {
+            ((GridInputKeyboard)grid).MoveCurrentPosition(value);
+        }
+        Debug.Log(value.ToString());
+    }
+
+    
+    private void EnableUI()
+    {
+        eventSystem.sendNavigationEvents = true;
+        eventSystem.SetSelectedGameObject(currentFocusButton ?? firstUIButton);
+    }
+    private void DisableUI()
+    {
+        currentFocusButton = EventSystem.current.currentSelectedGameObject;
+        eventSystem.sendNavigationEvents = false;
+        eventSystem.SetSelectedGameObject(null);
     }
 }

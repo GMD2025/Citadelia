@@ -1,16 +1,17 @@
 using _Scripts.ResourceSystem;
 using _Scripts.TilemapGrid;
 using _Scripts.UI.Buildings;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using DG.Tweening;
 
 namespace _Scripts.UI
 {
-    public class FingerTracking : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+    public class KeyboardTracking : MonoBehaviour
     {
         public Building Building { get; set; }
         public string BuildingSortingLayer { get; set; }
+        private GameObject lastHighlightedTile;
         private GameObject draggedBuilding;
 
         private HighlightGridAreaController gridController;
@@ -36,7 +37,7 @@ namespace _Scripts.UI
             }
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+        public void OnSelect()
         {
             gridController.HighlightSize = Building.cellsize;
             draggedBuilding = new GameObject(Building.name);
@@ -48,7 +49,7 @@ namespace _Scripts.UI
             spriteRenderer.color = new Color(1, 1, 1, 0.5f);
         }
 
-        public void OnPointerUp(PointerEventData eventData)
+        public void OnConfirm(PointerEventData eventData)
         {
             if (gridController.Selectable)
             {
