@@ -8,17 +8,11 @@ using UnityEngine.Serialization;
 
 namespace _Scripts.ResourceSystem
 {
-    public class ResourceProductionService : MonoBehaviour
+    public class ResourceProductionService
     {
-        [SerializeField] private ResourceProductionServiceRefData resourceProdServiceRefData;
 
         private Dictionary<ResourceData, int> resourceStorage = new Dictionary<ResourceData, int>();
         public event Action<ResourceData, int> OnResourceChanged;
-
-        private void Awake()
-        {
-            resourceProdServiceRefData.SetRuntime(this);
-        }
 
         public int GetResourceAmount(ResourceData resourceData)
         {

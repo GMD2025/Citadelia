@@ -85,7 +85,7 @@ public class KeyboardManager : MonoBehaviour
         
         if (moveInput != Vector2.zero && moveTimer <= 0f)
         {
-            IGridInput grid = DependencyContainer.Instance.GridInput;
+            IGridInput grid = DependencyContainer.Instance.Resolve<IGridInput>();
             if (grid is GridInputKeyboard)
             {
                 ((GridInputKeyboard)grid).MoveCurrentPosition(moveInput);

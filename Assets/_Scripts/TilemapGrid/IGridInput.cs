@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
+[Serializable]
 public abstract class IGridInput
 {
+    [SerializeField] private string hui;
     protected Camera mainCamera;
     public Vector3Int CellPosition { get; protected set; }
 
