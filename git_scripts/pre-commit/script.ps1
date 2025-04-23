@@ -1,3 +1,5 @@
+exit 0
+
 if ($env:Username -eq "bagin") {
     exit 0
 }
