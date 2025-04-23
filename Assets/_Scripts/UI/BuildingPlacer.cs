@@ -24,7 +24,7 @@ namespace _Scripts.UI
         private void Awake()
         {
             gridController = FindAnyObjectByType<HighlightGridAreaController>();
-            resourceService = FindAnyObjectByType<ResourceProductionService>();
+            resourceService = DependencyContainer.Instance.Resolve<ResourceProductionService>();
             gridGameObject = FindAnyObjectByType<Grid>();
             cellsize = gridGameObject.GetComponent<Grid>().cellSize;
         }
@@ -32,17 +32,14 @@ namespace _Scripts.UI
         void Update()
         {
             if (draggedBuilding != null)
-            {
-                Vector3Int? pointer = DependencyContainer.Instance.GridInput.GetCurrentPosition(gridController.GetComponent<Grid>());
-                if (pointer is { } p) draggedBuilding.transform.position = new Vector2(p.x + cellsize.x/2, p.y + cellsize.y/2);
-            }
+                draggedBuilding.transform.position = gridController.highlightParent.transform.position;
         }
 
         public void OnPointerDown()
         {
             gridController.HighlightSize = BuildingData.cellsize;
             draggedBuilding = new GameObject(BuildingData.name);
-            draggedBuilding.transform.position = gridController.transform.position;
+            draggedBuilding.transform.position = gridController.highlightParent.transform.position;
 
             SpriteRenderer spriteRenderer = draggedBuilding.AddComponent<SpriteRenderer>();
             spriteRenderer.color = new Color(1, 1, 1, 0.5f);
@@ -61,9 +58,9 @@ namespace _Scripts.UI
                     GameObject newBuilding = Instantiate(BuildingData.buildingPrefab,
                         draggedBuilding.transform.position, Quaternion.identity, gridGameObject.transform);
                     BuildingPlacerUtility.AdjustSize(newBuilding, BuildingData, gridGameObject);
+                    gridController.SetTileAsOccupied();
                 }
 
-                gridController.SetTileAsOccupied();
             }
             else
             {
