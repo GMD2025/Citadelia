@@ -259,7 +259,7 @@ SortingGroup:
   m_GameObject: {fileID: 6304482592369991020}
   m_Enabled: 1
   m_SortingLayerID: 429234281
-  m_SortingLayer: 2
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_SortAtRoot: 0
 --- !u!114 &8852308821742473539
@@ -274,6 +274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 712308a8edb54a7494a646ea6699a80b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTodayBlackFriday: 1
 --- !u!1 &7333032944932121152
 GameObject:
   m_ObjectHideFlags: 0
