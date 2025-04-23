@@ -10,7 +10,7 @@ namespace _Scripts.Server.Network
 
         private NetworkManager net;
 
-        private void Awake()
+        private void Start()
         {
             net = NetworkManager.Singleton;
             if (net == null)

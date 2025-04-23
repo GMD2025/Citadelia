@@ -5,6 +5,7 @@ using _Scripts.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using Unity.Netcode;
 
 namespace _Scripts.UI
 {
@@ -18,7 +19,6 @@ namespace _Scripts.UI
         private HighlightGridAreaController gridController;
         private ResourceProductionService resourceService;
         private Grid gridGameObject;
-        private Vector3 cellsize;
 
 
         private void Awake()
@@ -26,12 +26,11 @@ namespace _Scripts.UI
             gridController = FindAnyObjectByType<HighlightGridAreaController>();
             resourceService = DependencyContainer.Instance.Resolve<ResourceProductionService>();
             gridGameObject = FindAnyObjectByType<Grid>();
-            cellsize = gridGameObject.GetComponent<Grid>().cellSize;
         }
 
         void Update()
         {
-            if (draggedBuilding != null)
+            if (draggedBuilding)
                 draggedBuilding.transform.position = gridController.highlightParent.transform.position;
         }
 
@@ -58,6 +57,7 @@ namespace _Scripts.UI
                     GameObject newBuilding = Instantiate(BuildingData.buildingPrefab,
                         draggedBuilding.transform.position, Quaternion.identity, gridGameObject.transform);
                     BuildingPlacerUtility.AdjustSize(newBuilding, BuildingData, gridGameObject);
+                    newBuilding.GetComponent<NetworkObject>().Spawn(true);
                     gridController.SetTileAsOccupied();
                 }
 

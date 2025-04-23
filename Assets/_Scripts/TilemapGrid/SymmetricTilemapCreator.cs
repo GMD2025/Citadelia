@@ -18,7 +18,7 @@ namespace _Scripts.TilemapGrid
     // by the link below you can view how the position (drawn by gizmo) differs from actual tilebase placement
     // (the green dots are hidden under magenta, because they overlap)
     // https://docs.google.com/presentation/d/1V88n3ZTK4adhwx3VvxhSGTsAOh5vA7dBGUmfeR3YjOU/edit?usp=sharing
-    public class PlaymapReflector : MonoBehaviour
+    public class SymmetricTilemapCreator : MonoBehaviour
     {
         [SerializeField, Tooltip("Tilemaps like roads that rely on directional alignment should be flipped vertically (Y axis) relative to each tile's pivot.")]
         private Tilemap[] tilemapsToFlip;
@@ -39,7 +39,9 @@ namespace _Scripts.TilemapGrid
 
         private void Start()
         {
-            Reflect();
+            grid = GetComponent<Grid>();
+            tilemaps = grid.GetComponentsInChildren<Tilemap>();
+            CreateSymmetricalTilemaps();
         }
 
         [InspectorLabel("Debug Buttons")]
@@ -84,8 +86,8 @@ namespace _Scripts.TilemapGrid
             }
         }
 
-        [InspectorButton("reflect")]
-        private void Reflect()
+        [InspectorButton("Create Symmetrical Tilemaps")]
+        private void CreateSymmetricalTilemaps()
         {
             Clear();
             CenterTilemaps();
@@ -161,7 +163,7 @@ namespace _Scripts.TilemapGrid
         }
 
 
-        [InspectorButton("clear")]
+        [InspectorButton("Clear Symmetrical Tilemaps")]
         private void Clear()
         {
             Transform existing = grid.transform.Find("ReflectedTilemaps");

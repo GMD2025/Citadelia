@@ -8,18 +8,22 @@ namespace _Scripts.TilemapGrid
 {
     public class HighlightGridAreaController : MonoBehaviour
     {
-        [SerializeField] private GameObject highlighterPrefab;
+        [Header("Highlighter Setup")]
+        [SerializeField] private GameObject highlighterCellPrefab;
+        [SerializeField] private GameObject highlighterParentPrefab;
         [SerializeField] private bool shouldHighlight = true;
         [SerializeField] private Vector2Int highlightSize = new(1, 1);
-        [SerializeField] private TileBase transparentTile;
 
         [Header("Highlight Colors")]
         [SerializeField] private Color highlightColor = Color.white;
         [SerializeField] private Color highlightColorDeny = Color.red;
 
+        [SerializeField] private TileBase transparentTile;
 
         [Header("Tilemaps preventing from placing building")]
         [SerializeField] private Tilemap[] tilemapsToDeny;
+        
+        
         public Vector2Int HighlightSize
         {
             get => highlightSize;
@@ -79,7 +83,7 @@ namespace _Scripts.TilemapGrid
             for (int x = 0; x < width; x++)
             for (int y = 0; y < height; y++)
             {
-                var cell = Instantiate(highlighterPrefab, highlightParent.transform);
+                var cell = Instantiate(highlighterCellPrefab, highlightParent.transform);
                 cell.name = $"HighlightCell ({x},{y})";
 
                 // local offset so that (0,0) is at the group center
@@ -109,14 +113,14 @@ namespace _Scripts.TilemapGrid
 
         private void CreateHighlightObject()
         {
-            if (highlighterPrefab == null)
+            if (highlighterCellPrefab == null)
             {
                 Debug.LogError("Outline Prefab not assigned!");
                 return;
             }
 
-            highlightParent = new GameObject("HighlightParent");
-            highlightParent.transform.SetParent(this.transform, worldPositionStays: true);
+            highlightParent = Instantiate(highlighterParentPrefab, transform);
+            highlightParent.transform.SetParent(transform, worldPositionStays: true);
             SetHighlightedArea(highlightSize);
         }
 
@@ -141,7 +145,6 @@ namespace _Scripts.TilemapGrid
             if (tilemaps == null || tilemaps.Length == 0)
                 return;
 
-            Tilemap tilemapToDeny = tilemaps[tilemaps.Length - 1];
             GameObject[] gameObjects = highlightParent.GetComponentsInChildren<Transform>()
                 .Select(t => t.gameObject)
                 .ToArray();
