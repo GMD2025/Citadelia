@@ -139,8 +139,8 @@ GameObject:
   - component: {fileID: 2870058573596194106}
   - component: {fileID: 3041858560902988427}
   - component: {fileID: 2824404708553393895}
-  - component: {fileID: 2199349797719959263}
   - component: {fileID: -5471488066684665199}
+  - component: {fileID: 8852308821742473539}
   m_Layer: 5
   m_Name: BuildingButton
   m_TagString: Untagged
@@ -228,9 +228,9 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_HighlightedColor: {r: 0.9254902, g: 0.78039217, b: 0.61960787, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_SelectedColor: {r: 0.9490196, g: 0.65882355, b: 0.34117648, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
@@ -250,19 +250,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2199349797719959263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6304482592369991020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d2b51a5aeb87d07428775b4b5338aca9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isTodayBlackFriday: 1
 --- !u!210 &-5471488066684665199
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -275,6 +262,19 @@ SortingGroup:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_SortAtRoot: 0
+--- !u!114 &8852308821742473539
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6304482592369991020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 712308a8edb54a7494a646ea6699a80b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isTodayBlackFriday: 1
 --- !u!1 &7333032944932121152
 GameObject:
   m_ObjectHideFlags: 0

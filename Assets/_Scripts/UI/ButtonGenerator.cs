@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using _Scripts.Gameplay.Buildings.Systems;
+using _Scripts.TilemapGrid;
 using _Scripts.UI.Buildings;
 using TMPro;
 using Unity.VisualScripting;
@@ -43,9 +44,10 @@ namespace _Scripts.UI
                 buttonObj.GetComponentInChildren<SpriteRenderer>().sprite = buildingData.resources[0].resourceData.icon;
             }
             
-            var fingerTracking = buttonObj.GetComponent<FingerTracking>();
-            fingerTracking.BuildingData = buildingData;
-            fingerTracking.BuildingSortingLayer = buildingSortingLayer;
+            var buildingPlacer = buttonObj.GetComponent<BuildingPlacer>();
+            if (DependencyContainer.Instance.inputMode == InputMode.Mouse) buttonObj.AddComponent<TouchTracking>();
+            buildingPlacer.BuildingData = buildingData;
+            buildingPlacer.BuildingSortingLayer = buildingSortingLayer;
             Image image = buttonObj.GetComponent<Image>();
             if (image != null)
             {
