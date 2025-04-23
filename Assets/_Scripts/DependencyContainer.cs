@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using _Scripts.ResourceSystem;
 using _Scripts.TilemapGrid;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,6 +8,7 @@ using UnityEngine.Tilemaps;
 
 namespace _Scripts
 {
+    // use SO to store all the additional setup data like below
     public enum InputMode
     {
         Keyboard,
@@ -18,8 +21,13 @@ namespace _Scripts
         [SerializeField] private InputActionAsset[] actionAssets = new InputActionAsset[2];
         
         public static DependencyContainer Instance;
+        private Dictionary<System.Type, object> services;
+        private void Register<T, K>(K instance) where K : T
+        {
+            services[typeof(T)] = instance;
+        }
         
-        public IGridInput GridInput { get; private set; }
+        public T Resolve<T>() where T : class => services[typeof(T)] as T;
 
         private void Awake()
         {
@@ -29,11 +37,18 @@ namespace _Scripts
 
         private void Start()
         {
+            RegisterGridInputSystem();
+            RegisterResourceService();
+        }
+
+        private void RegisterGridInputSystem()
+        {
             switch (inputMode)
             {
                 case InputMode.Keyboard:
                 {
-                    GridInput = new GridInputKeyboard();
+                    Register<IGridInput, GridInputKeyboard>(new GridInputKeyboard());
+
                     InputSystemUIInputModule inputModule = FindFirstObjectByType<InputSystemUIInputModule>();
                     inputModule.actionsAsset = actionAssets[1];
                     inputModule.move = InputActionReference.Create(actionAssets[1].FindActionMap("UI").FindAction("Horizontal"));
@@ -44,13 +59,19 @@ namespace _Scripts
                 }
                 case InputMode.Mouse:
                 {
-                    GridInput = new GridInputTouch();
+                    Register<IGridInput, GridInputTouch>(new GridInputTouch());
+                    
                     InputSystemUIInputModule inputModule = FindFirstObjectByType<InputSystemUIInputModule>();
                     inputModule.actionsAsset = actionAssets[0];
                     InputActionMap inputActionMap = actionAssets[1].FindActionMap("UI");
                     break;
                 }
             }
+        }
+
+        private void RegisterResourceService()
+        {
+            Register<ResourceProductionService, ResourceProductionService>(new ResourceProductionService());
         }
     }
 }

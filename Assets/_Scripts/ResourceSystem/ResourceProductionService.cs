@@ -8,7 +8,7 @@ using UnityEngine.Serialization;
 
 namespace _Scripts.ResourceSystem
 {
-    public class ResourceProductionService : MonoBehaviour
+    public class ResourceProductionService
     {
         [SerializeField] private ResourceProductionServiceRefData resourceProdServiceRefData;
 
