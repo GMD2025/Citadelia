@@ -11,6 +11,10 @@ using UnityEngine.Tilemaps;
 
 namespace _Scripts
 {
+    /// <summary>
+    /// Any non MonoBehaviour, Singleton class can be registered in DependencyContainer. 
+    /// When doing so, it is safe to remove all the Singleton features.
+    /// </summary>
     public class DependencyContainer : MonoBehaviour
     {
         [SerializeField] public DependencyContainerData Data;
@@ -44,7 +48,6 @@ namespace _Scripts
         {
             RegisterGridInputSystem();
             RegisterResourceService();
-            RegisterNetworkPrefabRegistry();
         }
         
         private void RegisterGridInputSystem()
@@ -78,11 +81,6 @@ namespace _Scripts
         private void RegisterResourceService()
         {
             Register(new ResourceProductionService());
-        }
-
-        private void RegisterNetworkPrefabRegistry()
-        {
-            Register(new NetworkPrefabRegistry());
         }
     }
 }

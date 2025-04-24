@@ -1,7 +1,7 @@
 using _Scripts.Data;
 using _Scripts.Gameplay.Buildings;
 using _Scripts.Gameplay.ResourceSystem;
-using _Scripts.Server.Network;
+using _Scripts.Network;
 using _Scripts.TilemapGrid;
 using _Scripts.Utils;
 using DG.Tweening;
@@ -55,8 +55,9 @@ namespace _Scripts.Gameplay.UserInput
 
                 if ((isTodayBlackFriday || richEnough))
                 {
-                    if (NetworkManager.Singleton.IsClient && NetworkManager.Singleton.LocalClient?.PlayerObject != null)
+                    if (NetworkManager.Singleton.IsClient && NetworkManager.Singleton.LocalClient.PlayerObject)
                     {
+                        Debug.Log("I was called 1");
                         var playerCmd = NetworkManager.Singleton.LocalClient.PlayerObject
                             .GetComponent<NetworkSpawnerCommands>();
 
@@ -65,6 +66,7 @@ namespace _Scripts.Gameplay.UserInput
                     }
                     else
                     {
+                        Debug.Log("I was called 2");
                         Instantiate(BuildingController.gameObject, draggedBuilding.transform.position, Quaternion.identity);
                     }
                     gridController.SetTileAsOccupied();

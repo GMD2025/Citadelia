@@ -3,65 +3,117 @@ using _Scripts.Data;
 using Unity.Netcode;
 using UnityEngine;
 
-public class NetworkPrefabRegistry
+namespace _Scripts
 {
-    private readonly Dictionary<int, GameObject> registry = new();
+    /// <summary>
+    /// Centralized service locator for non-MonoBehaviour dependencies.
+    /// Registers and resolves services like input systems and resource production,
+    /// replacing the need for individual singletons. Configured via DependencyContainerData.
+    /// </summary>
 
-    private bool initialized = false;
-
-    public void Init()
+    
+    public class NetworkPrefabRegistry : MonoBehaviour
     {
-        if (initialized) return;
+        public static NetworkPrefabRegistry Instance { get; private set; }
 
-        var netManager = NetworkManager.Singleton;
-        if (netManager == null)
+        private readonly Dictionary<int, GameObject> registry = new();
+        private bool initialized;
+
+        private void Awake()
         {
-            Debug.LogError("NetworkManager not yet available.");
-            return;
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
 
-        foreach (var np in netManager.NetworkConfig.Prefabs.Prefabs)
+        private void Start()
         {
-            var prefab = np.Prefab.gameObject;
-            var components = prefab.GetComponents<NetworkBehaviour>();
+            Init(); // Force eager init at scene load
+        }
 
-            IHaveId idHolder = null;
-            foreach (var comp in components)
+        public void Init()
+        {
+            if (initialized) return;
+
+            var netManager = NetworkManager.Singleton;
+            if (netManager == null || netManager.NetworkConfig == null)
             {
-                if (comp is IHaveId candidate)
+                Debug.LogError("NetworkManager or NetworkConfig not available during Init.");
+                return;
+            }
+
+            foreach (var netPrefab in netManager.NetworkConfig.Prefabs.Prefabs)
+            {
+                if (netPrefab?.Prefab == null)
                 {
-                    idHolder = candidate;
-                    break;
+                    Debug.LogWarning("Null prefab reference found in NetworkConfig.");
+                    continue;
+                }
+
+                var prefab = netPrefab.Prefab.gameObject;
+                var components = prefab.GetComponents<NetworkBehaviour>();
+
+                IHaveId idHolder = null;
+                foreach (var comp in components)
+                {
+                    if (comp is IHaveId candidate)
+                    {
+                        idHolder = candidate;
+                        break;
+                    }
+                }
+
+                if (idHolder == null)
+                {
+                    Debug.LogWarning($"Prefab '{prefab.name}' has no component implementing IHaveId.");
+                    continue;
+                }
+
+                int id = ComputeStableHash(prefab.name);
+                idHolder.Id = id;
+
+                if (!registry.TryAdd(id, prefab))
+                {
+                    Debug.LogWarning($"Duplicate prefab ID detected for '{prefab.name}' (ID: {id}).");
                 }
             }
 
-            if (idHolder == null) continue;
-
-            int id = ComputeStableHash(prefab.name);
-            idHolder.Id = id;
-
-            registry.TryAdd(id, prefab);
+            initialized = true;
+            Debug.Log($"NetworkPrefabRegistry initialized with {registry.Count} prefabs.");
         }
 
-        initialized = true;
-    }
-
-    public GameObject Get(int id)
-    {
-        Init(); // Lazy init
-        return registry.GetValueOrDefault(id);
-    }
-    
-    private static int ComputeStableHash(string s)
-    {
-        unchecked
+        public GameObject Get(int id)
         {
-            const uint fnvOffset = 2166136261;
-            const uint fnvPrime = 16777619;
-            uint hash = fnvOffset;
-            foreach (var c in s)
-                hash = (hash ^ c) * fnvPrime;
-            return (int)hash;
+            if (!initialized)
+            {
+                Debug.LogWarning("Registry was not initialized. Forcing Init().");
+                Init();
+            }
+
+            if (!registry.TryGetValue(id, out var go))
+            {
+                Debug.LogError($"Prefab with ID {id} not found in registry.");
+            }
+
+            return go;
+        }
+
+        private static int ComputeStableHash(string s)
+        {
+            unchecked
+            {
+                const uint fnvOffset = 2166136261;
+                const uint fnvPrime = 16777619;
+                uint hash = fnvOffset;
+                foreach (var c in s)
+                    hash = (hash ^ c) * fnvPrime;
+                return (int)hash;
+            }
         }
     }
 }
