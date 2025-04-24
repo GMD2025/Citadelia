@@ -1,7 +1,4 @@
-﻿using _Scripts.ResourceSystem;
-using _Scripts.UI;
-
-namespace _Scripts.Server.Data
+﻿namespace _Scripts.Server
 {
     public class PlayerState
     {

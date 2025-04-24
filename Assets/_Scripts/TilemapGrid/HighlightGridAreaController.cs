@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using _Scripts.Gameplay.UserInput;
 using _Scripts.Utils;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -175,6 +176,11 @@ namespace _Scripts.TilemapGrid
             }
 
             Selectable = allCellsValid;
+        }
+
+        public void ResetHighlighterSize()
+        {
+            HighlightSize = new Vector2Int(1, 1);
         }
 
         public void SetTileAsOccupied()

@@ -703,6 +703,14 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3400961113462768810, guid: 469045dfa782ca246be8833d07698482, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: be9face5a5466854caa02269626a834e, type: 2}
+    - target: {fileID: 3544053493412343377, guid: 469045dfa782ca246be8833d07698482, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 1146108262
+      objectReference: {fileID: 0}
     - target: {fileID: 5298935601310585982, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Shape
       value: 0
@@ -795,7 +803,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5102e8aa0d4a4fe48ed6c26c315400cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flameTowerData: {fileID: 11400000, guid: c9468930774ea5b4792306b36cf26a31, type: 2}
+  flameTowerData: {fileID: 11400000, guid: 09206527c6a28e04184f08b74067a266, type: 2}
   flameRing: {fileID: 6607860434930879246}
   enemyLayer:
     serializedVersion: 2

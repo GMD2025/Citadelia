@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
-using _Scripts.ResourceSystem;
+using _Scripts.Data;
+using _Scripts.Gameplay.ResourceSystem;
+using _Scripts.Gameplay.UserInput;
 using _Scripts.TilemapGrid;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,19 +11,12 @@ using UnityEngine.Tilemaps;
 
 namespace _Scripts
 {
-    // use SO to store all the additional setup data like below
-    public enum InputMode
-    {
-        Keyboard,
-        Mouse
-    }
     public class DependencyContainer : MonoBehaviour
     {
-        [SerializeField] public InputMode inputMode = InputMode.Keyboard;
+        [SerializeField] public DependencyContainerData Data;
 
-        [SerializeField] private InputActionAsset[] actionAssets = new InputActionAsset[2];
-        
         public static DependencyContainer Instance;
+
         private Dictionary<Type, object> services = new();
         private void Register<T, K>(K instance) where K : T
         {
@@ -40,24 +35,30 @@ namespace _Scripts
             if (Instance == null)
             {
                 Instance = this;
-                RegisterGridInputSystem();
-                RegisterResourceService();
+                RegisterDependencies();
             }
             else Destroy(gameObject);
         }
 
+        private void RegisterDependencies()
+        {
+            RegisterGridInputSystem();
+            RegisterResourceService();
+            RegisterNetworkPrefabRegistry();
+        }
+        
         private void RegisterGridInputSystem()
         {
-            switch (inputMode)
+            switch (Data.InputMode)
             {
                 case InputMode.Keyboard:
                 {
                     Register<IGridInput, GridInputKeyboard>(new GridInputKeyboard());
 
                     InputSystemUIInputModule inputModule = FindFirstObjectByType<InputSystemUIInputModule>();
-                    inputModule.actionsAsset = actionAssets[1];
-                    inputModule.move = InputActionReference.Create(actionAssets[1].FindActionMap("UI").FindAction("Horizontal"));
-                    inputModule.submit = InputActionReference.Create(actionAssets[1].FindActionMap("Global").FindAction("Confirm"));
+                    inputModule.actionsAsset = Data.ActionAssets[1];
+                    inputModule.move = InputActionReference.Create(Data.ActionAssets[1].FindActionMap("UI").FindAction("Horizontal"));
+                    inputModule.submit = InputActionReference.Create(Data.ActionAssets[1].FindActionMap("Global").FindAction("Confirm"));
                     
                     KeyboardManager keyboardManager = gameObject.AddComponent<KeyboardManager>();
                     break;
@@ -67,8 +68,8 @@ namespace _Scripts
                     Register<IGridInput, GridInputTouch>(new GridInputTouch());
                     
                     InputSystemUIInputModule inputModule = FindFirstObjectByType<InputSystemUIInputModule>();
-                    inputModule.actionsAsset = actionAssets[0];
-                    InputActionMap inputActionMap = actionAssets[1].FindActionMap("UI");
+                    inputModule.actionsAsset = Data.ActionAssets[0];
+                    InputActionMap inputActionMap = Data.ActionAssets[1].FindActionMap("UI");
                     break;
                 }
             }
@@ -76,7 +77,12 @@ namespace _Scripts
 
         private void RegisterResourceService()
         {
-            Register<ResourceProductionService>(new ResourceProductionService());
+            Register(new ResourceProductionService());
+        }
+
+        private void RegisterNetworkPrefabRegistry()
+        {
+            Register(new NetworkPrefabRegistry());
         }
     }
 }

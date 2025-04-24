@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
-using _Scripts.Gameplay.Buildings.Systems;
-using _Scripts.TilemapGrid;
-using _Scripts.UI.Buildings;
+using System.Linq;
+using _Scripts.Data;
+using _Scripts.Gameplay.Buildings;
+using _Scripts.Gameplay.UserInput;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,52 +12,56 @@ namespace _Scripts.UI
 {
     public class ButtonGenerator : MonoBehaviour
     {
-        [SerializeField] private List<BuildingData> buildings;
+        [SerializeField] private List<GameObject> buildingPrefabs;
         [SerializeField] private GameObject tileButtonPrefab;
         [SerializeField] private string buildingSortingLayer;
 
-        private Canvas canvas;
+        private List<BuildingController> buildings;
 
-        void Start()
-        {
-            LoadTiles();
-            canvas = GetComponentInParent<Canvas>();
-        }
 
-        void LoadTiles()
+        private void Awake()
         {
-            foreach (BuildingData building in buildings)
+            buildings = new List<BuildingController>();
+            foreach (var prefab in buildingPrefabs)
             {
-                if (building != null)
-                {
-                    CreateButton(building);
-                }
+                var buildingController = prefab.GetComponent<BuildingController>();
+                if(!buildingController) continue;
+                buildings.Add(buildingController);
             }
         }
 
-        void CreateButton(BuildingData buildingData)
+        private void Start()
+        {
+            LoadTiles();
+        }
+
+        private void LoadTiles()
+        {
+            foreach (var building in buildings.Where(building => building != null))
+            {
+                CreateButton(building);
+            }
+        }
+
+        private void CreateButton(BuildingController building)
         {
             GameObject buttonObj = Instantiate(tileButtonPrefab, transform);
 
-            if (buildingData.resources.Length != 0)
+            if (building.Data.resources.Length != 0)
             {
-                buttonObj.GetComponentInChildren<TextMeshProUGUI>().text = buildingData.resources[0].amount.ToString();
-                buttonObj.GetComponentInChildren<SpriteRenderer>().sprite = buildingData.resources[0].resourceData.icon;
+                buttonObj.GetComponentInChildren<TextMeshProUGUI>().text = building.Data.resources[0].amount.ToString();
+                buttonObj.GetComponentInChildren<SpriteRenderer>().sprite = building.Data.resources[0].resourceData.icon;
             }
             
             var buildingPlacer = buttonObj.GetComponent<BuildingPlacer>();
-            if (DependencyContainer.Instance.inputMode == InputMode.Mouse) buttonObj.AddComponent<TouchTracking>();
-            buildingPlacer.BuildingData = buildingData;
+            if (DependencyContainer.Instance.Data.InputMode == InputMode.Mouse) buttonObj.AddComponent<TouchTracking>();
+            buildingPlacer.BuildingController = building;
             buildingPlacer.BuildingSortingLayer = buildingSortingLayer;
             Image image = buttonObj.GetComponent<Image>();
             if (image != null)
             {
-                image.sprite = buildingData.Sprite;
+                image.sprite = building.Sprite;
             }
-        }
-
-        void Update()
-        {
         }
     }
 }

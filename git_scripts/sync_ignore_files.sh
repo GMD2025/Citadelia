@@ -5,7 +5,7 @@ set -e
 # Get the Git repository root path
 REPO_ROOT=$(git rev-parse --show-toplevel)
 
-if [ "$USERNAME" == "bagin" ]; then
+if [ "$USERNAME" != "bagin" ]; then
     target_dir="$APPDATA/VsCode"
     mkdir -p "$target_dir"
     

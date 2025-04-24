@@ -1,0 +1,53 @@
+﻿using System;
+using System.Collections.Generic;
+using _Scripts.Data;
+
+namespace _Scripts.Gameplay.ResourceSystem
+{
+    public class ResourceProductionService
+    {
+
+        private Dictionary<ResourceData, int> resourceStorage = new Dictionary<ResourceData, int>();
+        public event Action<ResourceData, int> OnResourceChanged;
+
+        public int GetResourceAmount(ResourceData resourceData)
+        {
+            return resourceStorage.GetValueOrDefault(resourceData, resourceData.initialAmount);
+        }
+
+        public void AddResource(ResourceData resourceData, int amount)
+        {
+            resourceStorage.TryAdd(resourceData, resourceData.initialAmount);
+            resourceStorage[resourceData] = Math.Min(resourceStorage[resourceData] + amount, resourceData.maxAmount);
+            OnResourceChanged?.Invoke(resourceData, resourceStorage[resourceData]);
+        }
+
+        public bool SpendResource(ResourceData resourceData, int amount)
+        {
+            if (!resourceStorage.ContainsKey(resourceData) || resourceStorage[resourceData] < amount)
+                return false;
+
+            resourceStorage[resourceData] -= amount;
+            OnResourceChanged?.Invoke(resourceData, resourceStorage[resourceData]);
+            return true;
+        }
+
+        public bool SpendResources(Resource[] resources)
+        {
+            foreach (var resource in resources)
+            {
+                if (!resourceStorage.ContainsKey(resource.resourceData) ||
+                    resourceStorage[resource.resourceData] < resource.amount)
+                    return false;
+            }
+
+            foreach (var resource in resources)
+            {
+                resourceStorage[resource.resourceData] -= resource.amount;
+                OnResourceChanged?.Invoke(resource.resourceData, resourceStorage[resource.resourceData]);
+            }
+
+            return true;
+        }
+    }
+}

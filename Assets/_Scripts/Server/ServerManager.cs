@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using _Scripts.Server.Data;
 using _Scripts.UI;
 
 namespace _Scripts.Server
