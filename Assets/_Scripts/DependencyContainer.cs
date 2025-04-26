@@ -85,7 +85,18 @@ namespace _Scripts
             Register(new ResourceProductionService());
         }
 
-        public static DependencyContainer Instance =>
+        public static DependencyContainer LocalInstance =>
             NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<DependencyContainer>();
+        
+        public static DependencyContainer Instance(ulong clientId)
+        {
+            if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var networkClient))
+            {
+                return networkClient.PlayerObject.GetComponent<DependencyContainer>();
+            }
+
+            Debug.LogError($"DependencyContainer: No player found for clientId {clientId}");
+            return null;
+        }
     }
 }

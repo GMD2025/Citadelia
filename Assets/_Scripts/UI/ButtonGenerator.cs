@@ -54,7 +54,7 @@ namespace _Scripts.UI
             }
             
             var buildingPlacer = buttonObj.GetComponent<BuildingPlacer>();
-            if (DependencyContainer.Instance.Data.InputMode == InputMode.Mouse) buttonObj.AddComponent<TouchTracking>();
+            if (DependencyContainer.LocalInstance.Data.InputMode == InputMode.Mouse) buttonObj.AddComponent<TouchTracking>();
             buildingPlacer.BuildingController = building;
             buildingPlacer.BuildingSortingLayer = buildingSortingLayer;
             Image image = buttonObj.GetComponent<Image>();

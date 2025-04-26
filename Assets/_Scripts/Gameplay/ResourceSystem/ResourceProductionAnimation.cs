@@ -1,4 +1,5 @@
-﻿using _Scripts.Data;
+﻿using System;
+using _Scripts.Data;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,8 @@ namespace _Scripts.Gameplay.ResourceSystem
     {
         [SerializeField] private Image resourceIcon;
         [SerializeField] private TextMeshProUGUI amountText;
+
+        private Canvas canvas;
 
         public void SetResourceData(ResourceProductionData resource)
         {

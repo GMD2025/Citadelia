@@ -25,7 +25,7 @@ namespace _Scripts.Gameplay.UserInput
         private void Awake()
         {
             gridController = FindAnyObjectByType<HighlightGridAreaController>();
-            resourceService = DependencyContainer.Instance.Resolve<ResourceProductionService>();
+            resourceService = DependencyContainer.LocalInstance.Resolve<ResourceProductionService>();
             gridGameObject = FindAnyObjectByType<Grid>();
         }
 
@@ -57,19 +57,14 @@ namespace _Scripts.Gameplay.UserInput
                 {
                     if (NetworkManager.Singleton.IsClient && NetworkManager.Singleton.LocalClient.PlayerObject)
                     {
-                        Debug.Log("I was called 1");
+                        Debug.Log("Client instantiating");
                         var playerCmd = NetworkManager.Singleton.LocalClient.PlayerObject
                             .GetComponent<NetworkSpawnerCommands>();
 
                         if (playerCmd)
                             playerCmd.SpawnNetworkObjectServerRpc(BuildingController.Id, draggedBuilding.transform.position);
+                        gridController.SetTileAsOccupied();
                     }
-                    else
-                    {
-                        Debug.Log("I was called 2");
-                        Instantiate(BuildingController.gameObject, draggedBuilding.transform.position, Quaternion.identity);
-                    }
-                    gridController.SetTileAsOccupied();
                 }
 
             }

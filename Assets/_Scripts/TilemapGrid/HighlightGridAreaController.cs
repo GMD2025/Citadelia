@@ -135,7 +135,7 @@ namespace _Scripts.TilemapGrid
 
             highlightParent.SetActive(true);
 
-            IGridInput input = DependencyContainer.Instance.Resolve<IGridInput>();
+            IGridInput input = DependencyContainer.LocalInstance.Resolve<IGridInput>();
 
             if (input.GetCurrentPosition(grid) is { } inputPosition)
                 HighlightGridArea(inputPosition, highlightSize);
