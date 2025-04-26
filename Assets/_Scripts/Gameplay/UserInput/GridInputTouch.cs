@@ -12,6 +12,9 @@ namespace _Scripts.Gameplay.UserInput
 
         public override Vector3Int? GetCurrentPosition(Grid grid)
         {
+            if(!mainCamera)
+                mainCamera = Camera.main;
+            
             Vector3 inputPosition = Input.mousePosition;
             if (inputPosition.x < 0 || inputPosition.x > Screen.width || inputPosition.y < 0 || inputPosition.y > Screen.height)
             {

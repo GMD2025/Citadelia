@@ -1,10 +1,11 @@
 ﻿using _Scripts.Data;
 using _Scripts.Utils;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace _Scripts.Gameplay.ResourceSystem
 {
-    public class ResourceProducer : MonoBehaviour
+    public class ResourceProducer : NetworkBehaviour
     {
         [SerializeField] private ResourceProductionData resourceProdData;
         [SerializeField, Tooltip("Resource production animation")] private GameObject resourceProdUIPrefab;
@@ -24,6 +25,8 @@ namespace _Scripts.Gameplay.ResourceSystem
 
         private void ProduceResource()
         {
+            if (!IsOwner)
+                return;
             resourceProdService.AddResource(resourceProdData.resourceType, resourceProdData.productionAmount);
             var popupInstance = Instantiate(resourceProdUIPrefab, transform.position, Quaternion.identity, transform);
             popupInstance.GetComponent<ResourceProductionAnimation>().SetResourceData(resourceProdData);
