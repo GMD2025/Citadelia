@@ -8,7 +8,6 @@ namespace _Scripts.ResourceSystem
 {
     public class ResourceProducer : MonoBehaviour
     {
-        [SerializeField] private ResourceProductionServiceRefData resourceProdServiceRefData;
         [SerializeField] private ResourceProductionData resourceProdData;
         [SerializeField, Tooltip("Resource production animation")] private GameObject resourceProdUIPrefab;
         
@@ -16,7 +15,7 @@ namespace _Scripts.ResourceSystem
 
         private void Start()
         {
-            resourceProdService = resourceProdServiceRefData.Get;
+            resourceProdService = DependencyContainer.Instance.Resolve<ResourceProductionService>();
             IntervalRunner.Start(this, () => resourceProdData.intervalSeconds, ProduceResource);
         }
 

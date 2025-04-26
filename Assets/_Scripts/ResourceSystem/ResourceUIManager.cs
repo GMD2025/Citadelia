@@ -7,14 +7,12 @@ namespace _Scripts.ResourceSystem
 {
     public class ResourceUIManager : MonoBehaviour
     {
-        [SerializeField]
-        private ResourceProductionServiceRefData resourceProdServiceRefData;
         private List<ResourceUI> resourceUIs;
 
         private ResourceProductionService resourceProdService;
         private void Start()
         {
-            resourceProdService = resourceProdServiceRefData.Get;
+            resourceProdService = DependencyContainer.Instance.Resolve<ResourceProductionService>();
             resourceUIs = GetComponentsInChildren<ResourceUI>(includeInactive: true).ToList();
             resourceProdService.OnResourceChanged += HandleResourceChanged;
         }

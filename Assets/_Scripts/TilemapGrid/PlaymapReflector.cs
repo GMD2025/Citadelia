@@ -21,7 +21,9 @@ namespace _Scripts.TilemapGrid
     public class PlaymapReflector : MonoBehaviour
     {
         [SerializeField, Tooltip("Tilemaps like roads that rely on directional alignment should be flipped vertically (Y axis) relative to each tile's pivot.")]
-        private Tilemap[] tilemapsToFlip;        
+        private Tilemap[] tilemapsToFlip;
+
+        [SerializeField] private bool shouldEnableGizmo = false;
         
         
         private Grid grid; 
@@ -174,7 +176,9 @@ namespace _Scripts.TilemapGrid
         
         private void OnDrawGizmosSelected()
         {
-            return;
+            if (!shouldEnableGizmo)
+                return;
+            
             if (tilemaps == null || grid == null) return;
 
             float dotSize = 0.1f;
