@@ -5,73 +5,87 @@ using System.Collections.Generic;
 using System.Linq;
 using _Scripts.CustomInspector;
 using _Scripts.CustomInspector.Button;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 namespace _Scripts.TilemapGrid
 {
-    // P.S.
-    // I fucking hate the tile system in Unity, it sucks so much
-    // if you see the tile somewhere drawn it doesn't always mean that it's actual position matches visual placement of the tile
-    // if you want to change the position of the tilemap this means you MUST change each single tile position.
-    // Simply moving the tilemap will only change the visual part of the tilemap engine.
-    // by the link below you can view how the position (drawn by gizmo) differs from actual tilebase placement
-    // (the green dots are hidden under magenta, because they overlap)
-    // https://docs.google.com/presentation/d/1V88n3ZTK4adhwx3VvxhSGTsAOh5vA7dBGUmfeR3YjOU/edit?usp=sharing
-    public class SymmetricTilemapCreator : MonoBehaviour
+    public class SymmetricTilemapCreator : NetworkBehaviour
     {
-        [SerializeField, Tooltip("Tilemaps like roads that rely on directional alignment should be flipped vertically (Y axis) relative to each tile's pivot.")]
+        [Header("Settings")]
+        [Tooltip("Tilemaps like roads that rely on directional alignment should be flipped vertically.")]
+        [SerializeField]
         private Tilemap[] tilemapsToFlip;
 
-        [SerializeField] private bool shouldEnableGizmo = false;
-        
-        
-        private Grid grid; 
+        [Tooltip("Enable debug gizmos for tile cell positions.")]
+        [SerializeField]
+        private bool shouldEnableGizmo = false;
+
+        private Grid grid;
+        private HighlightGridAreaController highlightGridController;
         private Tilemap[] tilemaps;
         private GameObject reflectedTilemapsParent;
-        
+        private List<Tilemap> reflectedTilemapsToDeny = new List<Tilemap>();
 
         private void OnValidate()
         {
             grid = GetComponent<Grid>();
             tilemaps = grid.GetComponentsInChildren<Tilemap>();
+            highlightGridController = grid.GetComponent<HighlightGridAreaController>();
         }
 
-        private void Start()
+        public override void OnNetworkSpawn()
         {
+            base.OnNetworkSpawn();
+
             grid = GetComponent<Grid>();
-            tilemaps = grid.GetComponentsInChildren<Tilemap>();
+            highlightGridController = GetComponent<HighlightGridAreaController>();
+            tilemaps = grid.GetComponentsInChildren<Tilemap>()
+                .Where(tm => tm.transform.parent == grid.transform)
+                .ToArray();
+
             CreateSymmetricalTilemaps();
+
+            if (IsClient && !IsServer)
+                SwapOriginalAndReflectedHierarchy();
         }
 
-        [InspectorLabel("Debug Buttons")]
-        [InspectorButton("center tilemaps")]
+
+        [InspectorButton("Clear Symmetrical Tilemaps")]
+        private void Clear()
+        {
+            var existing = grid.transform.Find("ReflectedTilemaps");
+            if (existing != null)
+                DestroyImmediate(existing.gameObject);
+
+            CenterTilemaps();
+        }
+
+        [InspectorButton("Center Tilemaps")]
         private void CenterTilemaps()
         {
+            var tilemaps = grid.GetComponentsInChildren<Tilemap>();
             foreach (var tilemap in tilemaps)
             {
                 if (tilemap == null) continue;
 
                 tilemap.CompressBounds();
-
                 var bounds = tilemap.cellBounds;
                 var centerOffset = new Vector3Int(
                     Mathf.FloorToInt(bounds.xMin + bounds.size.x / 2f),
                     Mathf.FloorToInt(bounds.yMin + bounds.size.y / 2f),
-                    0
-                );
+                    0);
 
                 var tiles = new Dictionary<Vector3Int, TileBase>();
-                var transforms = new Dictionary<Vector3Int, Matrix4x4>();
+                var matrices = new Dictionary<Vector3Int, Matrix4x4>();
 
                 foreach (var pos in bounds.allPositionsWithin)
                 {
                     var tile = tilemap.GetTile(pos);
-                    if (tile != null)
-                    {
-                        tiles.Add(pos, tile);
-                        transforms.Add(pos, tilemap.GetTransformMatrix(pos));
-                    }
+                    if (tile == null) continue;
+                    tiles[pos] = tile;
+                    matrices[pos] = tilemap.GetTransformMatrix(pos);
                 }
 
                 tilemap.ClearAllTiles();
@@ -79,7 +93,7 @@ namespace _Scripts.TilemapGrid
                 {
                     var newPos = kvp.Key - centerOffset;
                     tilemap.SetTile(newPos, kvp.Value);
-                    tilemap.SetTransformMatrix(newPos, transforms[kvp.Key]);
+                    tilemap.SetTransformMatrix(newPos, matrices[kvp.Key]);
                 }
 
                 tilemap.transform.localPosition = Vector3.zero;
@@ -89,93 +103,100 @@ namespace _Scripts.TilemapGrid
         [InspectorButton("Create Symmetrical Tilemaps")]
         private void CreateSymmetricalTilemaps()
         {
-            Clear();
+            // Remove any previous reflected maps
+            var existing = grid.transform.Find("ReflectedTilemaps");
+            if (existing != null)
+                DestroyImmediate(existing.gameObject);
+
             CenterTilemaps();
 
             reflectedTilemapsParent = new GameObject("ReflectedTilemaps");
-            reflectedTilemapsParent.transform.SetParent(grid.transform);
+            reflectedTilemapsParent.transform.SetParent(grid.transform, worldPositionStays: true);
 
-            tilemaps = grid.GetComponentsInChildren<Tilemap>();
+            var tilemaps = grid.GetComponentsInChildren<Tilemap>();
             int maxY = tilemaps.Max(tm => tm.cellBounds.yMax);
             int minY = tilemaps.Min(tm => tm.cellBounds.yMin);
             int totalHeight = maxY - minY;
 
-            Vector3Int cellOffsetDown = new Vector3Int(0, -(totalHeight / 2), 0); 
-            Vector3Int cellOffsetUp   = new Vector3Int(0,   totalHeight / 2, 0);
-
+            Vector3Int offsetDown = new Vector3Int(0, -totalHeight / 2, 0);
+            Vector3Int offsetUp   = new Vector3Int(0,  totalHeight / 2, 0);
             int mirrorLineY = minY + maxY - 1;
 
-            foreach (var originalTilemap in tilemaps)
+            foreach (var original in tilemaps)
             {
-                if (originalTilemap == null) continue;
+                if (original == null) continue;
+                
+                    
 
-                originalTilemap.CompressBounds();
-                var bounds = originalTilemap.cellBounds;
+                original.CompressBounds();
+                var bounds = original.cellBounds;
 
-                var tileDataList = new List<(Vector3Int pos, TileBase tile, Matrix4x4 matrix)>();
-                // persist current tiles state, pos, tilebase and matrix 4x4 (needed for scaling)
+                var data = new List<(Vector3Int pos, TileBase tile, Matrix4x4 mat)>();
                 foreach (var pos in bounds.allPositionsWithin)
                 {
-                    TileBase tile = originalTilemap.GetTile(pos);
+                    var tile = original.GetTile(pos);
                     if (tile == null) continue;
-
-                    Matrix4x4 mat = originalTilemap.GetTransformMatrix(pos);
-                    tileDataList.Add((pos, tile, mat));
+                    data.Add((pos, tile, original.GetTransformMatrix(pos)));
                 }
 
-                // delete all tiles and put them back on the new pos (with -offset)
-                originalTilemap.ClearAllTiles();
-                foreach (var (pos, tile, mat) in tileDataList)
+                original.ClearAllTiles();
+                foreach (var (pos, tile, mat) in data)
                 {
-                    Vector3Int newPos = pos + cellOffsetDown;
-                    originalTilemap.SetTile(newPos, tile);
-                    originalTilemap.SetTransformMatrix(newPos, mat);
+                    var newPos = pos + offsetDown;
+                    original.SetTile(newPos, tile);
+                    original.SetTransformMatrix(newPos, mat);
                 }
 
-                GameObject reflectedGo = new GameObject(originalTilemap.name + "_Reflected");
-                reflectedGo.transform.SetParent(reflectedTilemapsParent.transform);
+                // Create reflected clone
+                var go = new GameObject(original.name + "_Reflected");
+                go.transform.SetParent(reflectedTilemapsParent.transform, worldPositionStays: true);
 
-                Tilemap reflectedTilemap = reflectedGo.AddComponent<Tilemap>();
-                TilemapRenderer reflectedRenderer = reflectedGo.AddComponent<TilemapRenderer>();
-                reflectedRenderer.sortingOrder =
-                    originalTilemap.GetComponent<TilemapRenderer>().sortingOrder;
+                var reflected = go.AddComponent<Tilemap>();
+                var renderer = go.AddComponent<TilemapRenderer>();
+                renderer.sortingOrder = original.GetComponent<TilemapRenderer>().sortingOrder;
 
-                // draw tiles with changing the order of rows + offset (with -offset)
-                foreach (var (pos, tile, mat) in tileDataList)
+                foreach (var (pos, tile, mat) in data)
                 {
                     int mirroredY = mirrorLineY - pos.y;
-                    Vector3Int mirroredPos = new Vector3Int(pos.x, mirroredY, 0);
+                    var mirrorPos = new Vector3Int(pos.x, mirroredY, 0) + offsetUp;
+                    reflected.SetTile(mirrorPos, tile);
 
-                    mirroredPos += cellOffsetUp;
+                    var finalMat = mat;
+                    if (tilemapsToFlip != null && tilemapsToFlip.Contains(original))
+                        finalMat = Matrix4x4.Scale(new Vector3(1, -1, 1)) * mat;
 
-                    reflectedTilemap.SetTile(mirroredPos, tile);
-
-                    // if the tilemap need each tile flipping, it applies here
-                    Matrix4x4 finalMatrix = mat;
-                    if (tilemapsToFlip != null && tilemapsToFlip.Contains(originalTilemap))
-                    {
-                        Matrix4x4 flip = Matrix4x4.Scale(new Vector3(1, -1, 1));
-                        finalMatrix = flip * finalMatrix;
-                    }
-                    reflectedTilemap.SetTransformMatrix(mirroredPos, finalMatrix);
+                    reflected.SetTransformMatrix(mirrorPos, finalMat);
                 }
+
+                if (highlightGridController.TilemapsToDeny.Contains(original))
+                    reflectedTilemapsToDeny.Add(reflected);
             }
         }
 
-
-        [InspectorButton("Clear Symmetrical Tilemaps")]
-        private void Clear()
+        /// <summary>
+        /// Swaps the hierarchy so that what was original under grid
+        /// moves to ReflectedTilemaps, and vice versa.
+        /// </summary>
+        private void SwapOriginalAndReflectedHierarchy()
         {
-            Transform existing = grid.transform.Find("ReflectedTilemaps");
-            if (existing != null)
+            if (reflectedTilemapsParent == null) return;
+            Tilemap[] reflectedTilemaps = reflectedTilemapsParent.GetComponentsInChildren<Tilemap>();
+
+            foreach (Tilemap tilemap in tilemaps)
             {
-                DestroyImmediate(existing.gameObject);
+                tilemap.transform.SetParent(reflectedTilemapsParent.transform);
             }
 
-            reflectedTilemapsParent = null;
-            CenterTilemaps();
+            var newOriginalTilemaps = new List<Tilemap>();
+            foreach (Tilemap tilemap in reflectedTilemaps)
+            {
+                tilemap.transform.SetParent(grid.transform);
+                newOriginalTilemaps.Add(tilemap);
+            }
+
+            highlightGridController.UpdateTilemaps(newOriginalTilemaps, reflectedTilemapsToDeny);
         }
-        
+
         private void OnDrawGizmosSelected()
         {
             if (!shouldEnableGizmo)

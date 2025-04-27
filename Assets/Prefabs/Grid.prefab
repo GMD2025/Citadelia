@@ -1992,6 +1992,7 @@ GameObject:
   - component: {fileID: 6112341058933846265}
   - component: {fileID: 8383736858926536327}
   - component: {fileID: 6456117364200460795}
+  - component: {fileID: 3100335944637682792}
   - component: {fileID: 6134232108173578711}
   m_Layer: 0
   m_Name: Grid
@@ -2054,6 +2055,31 @@ MonoBehaviour:
   - {fileID: 5532067106744751359}
   - {fileID: 1132821739480338067}
   - {fileID: 7853373271302671397}
+--- !u!114 &3100335944637682792
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9042766485264129296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 4180700461
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &6134232108173578711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2066,6 +2092,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca2d8112bb14c7790415586a9764f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   tilemapsToFlip:
   - {fileID: 1132821739480338067}
   shouldEnableGizmo: 0

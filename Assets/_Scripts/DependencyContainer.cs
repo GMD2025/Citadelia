@@ -85,8 +85,22 @@ namespace _Scripts
             Register(new ResourceProductionService());
         }
 
-        public static DependencyContainer LocalInstance =>
-            NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<DependencyContainer>();
+        public static DependencyContainer LocalInstance
+        {
+            get
+            {
+                if (!NetworkManager.Singleton || 
+                    NetworkManager.Singleton.LocalClient == null || 
+                    !NetworkManager.Singleton.LocalClient.PlayerObject)
+                {
+                    Debug.LogWarning("DependencyContainer: Client is not connected to the server. Dependency retrieval failed. Functionality will break. Try to reconnect.");
+                    return null;
+                }
+
+                return NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<DependencyContainer>();
+            }
+        }
+
         
         public static DependencyContainer Instance(ulong clientId)
         {
