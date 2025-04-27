@@ -94,7 +94,8 @@ namespace _Scripts
                     !NetworkManager.Singleton.LocalClient.PlayerObject)
                 {
                     Debug.LogWarning("DependencyContainer: Client is not connected to the server. Dependency retrieval failed. Functionality will break. Try to reconnect.");
-                    return null;
+                    var net = NetworkManager.Singleton;
+                    if (net.StartHost()) Debug.Log("Started Host.");
                 }
 
                 return NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<DependencyContainer>();
