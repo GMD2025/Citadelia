@@ -78,16 +78,45 @@ namespace _Scripts.Utils
 
         public static void RunOnce(MonoBehaviour host, Func<float> intervalGetter, Action callback)
         {
-            if (!Application.isPlaying || !host || callback == null)
+            if (!Application.isPlaying || host == null || !host || callback == null)
                 return;
 
-            host.StartCoroutine(RunOnceCoroutine(intervalGetter, callback));
+            try
+            {
+                host.StartCoroutine(RunOnceCoroutine(host, intervalGetter, callback));
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError($"Failed to start interval coroutine for {host?.GetType().Name}.{callback?.Method.Name}: {ex.Message}");
+            }
         }
 
-        private static IEnumerator RunOnceCoroutine(Func<float> intervalGetter, Action callback)
+        private static IEnumerator RunOnceCoroutine(MonoBehaviour host, Func<float> intervalGetter, Action callback)
         {
-            yield return new WaitForSeconds(intervalGetter.Invoke());
-            callback?.Invoke();
+            float delay;
+            try
+            {
+                delay = intervalGetter?.Invoke() ?? 0f;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[{host?.GetType().Name}.{intervalGetter?.Method.Name}] threw during interval setup: {e.Message}");
+                yield break;
+            }
+
+            yield return new WaitForSeconds(delay);
+
+            if (!host)
+                yield break;
+
+            try
+            {
+                callback?.Invoke();
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"[{host.GetType().Name}.{callback.Method.Name}] threw during delayed execution: {e.Message}");
+            }
         }
 
         public static void StopAll(MonoBehaviour host)

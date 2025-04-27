@@ -1,5 +1,6 @@
 using System;
 using _Scripts;
+using _Scripts.Gameplay.UserInput;
 using _Scripts.TilemapGrid;
 using _Scripts.UI;
 using Unity.VisualScripting;
@@ -51,13 +52,13 @@ public class KeyboardManager : MonoBehaviour
             case FocusState.UI:
             {
                 ToggleMode();
-                currentFocusButton.GetComponent<BuildingPlacer>().OnPointerDown();
+                currentFocusButton.GetComponent<BuildingPlacer>().PlaceBuildingPlaceholder();
                 break;
             }
             case FocusState.Gameplay:
             {
                 ToggleMode();
-                currentFocusButton.GetComponent<BuildingPlacer>().OnPointerUp(); 
+                currentFocusButton.GetComponent<BuildingPlacer>().PlaceBuilding(); 
                 break;
             }
         }
@@ -85,7 +86,7 @@ public class KeyboardManager : MonoBehaviour
         
         if (moveInput != Vector2.zero && moveTimer <= 0f)
         {
-            IGridInput grid = DependencyContainer.Instance.Resolve<IGridInput>();
+            IGridInput grid = DependencyContainer.LocalInstance.Resolve<IGridInput>();
             if (grid is GridInputKeyboard)
             {
                 ((GridInputKeyboard)grid).MoveCurrentPosition(moveInput);
