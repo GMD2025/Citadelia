@@ -79,7 +79,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -474071591
-  m_SortingLayer: 3
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: -1554648942058723538, guid: 3cd5ed26d54f6754a9f7a271e03fe573, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -165,7 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3471dbbfe214071b8125516066ffa81, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  flameTowerData: {fileID: 11400000, guid: c9468930774ea5b4792306b36cf26a31, type: 2}
+  flameTowerData: {fileID: 11400000, guid: 09206527c6a28e04184f08b74067a266, type: 2}
 --- !u!58 &622515213797557336
 CircleCollider2D:
   m_ObjectHideFlags: 0

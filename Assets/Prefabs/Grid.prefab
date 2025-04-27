@@ -2043,12 +2043,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30576e560b5ae44458d7b628fbbe7c57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highlighterPrefab: {fileID: 6007272961333544781, guid: 23b37b2bb23234348bb92fdaa105e25e, type: 3}
+  highlighterCellPrefab: {fileID: 6007272961333544781, guid: 23b37b2bb23234348bb92fdaa105e25e, type: 3}
+  highlighterParentPrefab: {fileID: 7073767192060214975, guid: 89c62cc1819f9f046aae3166d410a3fa, type: 3}
   shouldHighlight: 1
   highlightSize: {x: 1, y: 1}
-  transparentTile: {fileID: 11400000, guid: 4e7b1045450665f4a949d30318b397ee, type: 2}
   highlightColor: {r: 0.3584906, g: 0, b: 0, a: 0.28235295}
   highlightColorDeny: {r: 0.7584905, g: 0, b: 0, a: 0.5882353}
+  transparentTile: {fileID: 11400000, guid: 4e7b1045450665f4a949d30318b397ee, type: 2}
   tilemapsToDeny:
   - {fileID: 5532067106744751359}
   - {fileID: 1132821739480338067}
@@ -2067,6 +2068,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tilemapsToFlip:
   - {fileID: 1132821739480338067}
+  shouldEnableGizmo: 0
 --- !u!1 &9047080778757505130
 GameObject:
   m_ObjectHideFlags: 0

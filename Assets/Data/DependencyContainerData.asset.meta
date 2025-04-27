@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Data/DependencyContainerData.asset.meta
+guid: 014049e5bd3873845a09a825c5bfea1d
+========
+guid: 31c9f512549d85543916c0e086f48323
+>>>>>>>> main:Assets/DefaultNetworkPrefabs.asset.meta
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

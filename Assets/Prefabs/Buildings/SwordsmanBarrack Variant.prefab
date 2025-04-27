@@ -59,6 +59,14 @@ PrefabInstance:
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3400961113462768810, guid: 469045dfa782ca246be8833d07698482, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: e7ab3d0040e89a743b4f99635f91e37e, type: 2}
+    - target: {fileID: 3544053493412343377, guid: 469045dfa782ca246be8833d07698482, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 3928029399
+      objectReference: {fileID: 0}
     - target: {fileID: 5298935601310585982, guid: 469045dfa782ca246be8833d07698482, type: 3}
       propertyPath: m_Carve
       value: 1
