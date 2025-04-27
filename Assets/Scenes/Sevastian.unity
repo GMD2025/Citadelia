@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 143362572}
   - component: {fileID: 143362571}
   - component: {fileID: 143362570}
+  - component: {fileID: 143362573}
   - component: {fileID: 143362569}
   m_Layer: 0
   m_Name: Grid
@@ -150,6 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eca2d8112bb14c7790415586a9764f52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   tilemapsToFlip:
   - {fileID: 1949220549}
   shouldEnableGizmo: 0
@@ -207,6 +209,31 @@ Transform:
   - {fileID: 1949220551}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &143362573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 143362568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1024569097
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1001 &166344600
 PrefabInstance:
   m_ObjectHideFlags: 0

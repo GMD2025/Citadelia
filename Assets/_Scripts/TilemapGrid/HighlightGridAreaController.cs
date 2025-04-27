@@ -23,8 +23,9 @@ namespace _Scripts.TilemapGrid
 
         [Header("Tilemaps preventing from placing building")]
         [SerializeField] private Tilemap[] tilemapsToDeny;
-        
-        
+
+
+        public Tilemap[] TilemapsToDeny => tilemapsToDeny;
         public Vector2Int HighlightSize
         {
             get => highlightSize;
@@ -46,7 +47,6 @@ namespace _Scripts.TilemapGrid
         private Vector2Int lastHighlightSize = new(1, 1);
         private SpriteRenderer highlightRenderer;
         private Grid grid;
-        private Camera mainCamera;
         private Tilemap[] tilemaps;
         private List<GameObject> supplementalHighlights = new List<GameObject>();
 
@@ -54,7 +54,6 @@ namespace _Scripts.TilemapGrid
         private void Awake()
         {
             grid = GetComponent<Grid>();
-            mainCamera = Camera.main;
             tilemaps = GetComponentsInChildren<Tilemap>();
             CreateHighlightObject();
         }
@@ -176,6 +175,12 @@ namespace _Scripts.TilemapGrid
             }
 
             Selectable = allCellsValid;
+        }
+
+        public void UpdateTilemaps(List<Tilemap> newTilemaps, List<Tilemap> newTilemapsToDeny)
+        {
+            tilemaps = newTilemaps.ToArray();
+            tilemapsToDeny = newTilemapsToDeny.ToArray();
         }
 
         public void ResetHighlighterSize()

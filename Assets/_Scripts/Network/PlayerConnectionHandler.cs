@@ -10,9 +10,10 @@ namespace _Scripts.UI
     [RequireComponent(typeof(Button))]
     public class PlayerConnectionHandler : MonoBehaviour
     {
+        [SerializeField] private string gameSceneName;
+        
         private Button button;
         private TextMeshProUGUI buttonText;
-        private const string GameSceneName = "Sevastian";
 
         private void Awake()
         {
@@ -99,7 +100,7 @@ namespace _Scripts.UI
 
         private void LoadGameScene()
         {
-            NetworkManager.Singleton.SceneManager.LoadScene(GameSceneName, LoadSceneMode.Single);
+            NetworkManager.Singleton.SceneManager.LoadScene(gameSceneName, LoadSceneMode.Single);
         }
     }
 }
