@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &1594368277973888845
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 949873520380350842, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_Extents.x
+      value: 5.1200004
+      objectReference: {fileID: 0}
+    - target: {fileID: 949873520380350842, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_Extents.y
+      value: 5.1200004
+      objectReference: {fileID: 0}
+    - target: {fileID: 949873520380350842, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_Extents.z
+      value: 5.1200004
+      objectReference: {fileID: 0}
+    - target: {fileID: 1361058041048648148, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: productionConfig
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d565660c748b3e4f944917af153893f, type: 2}
+    - target: {fileID: 1361058041048648148, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: resourceProdData
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d565660c748b3e4f944917af153893f, type: 2}
+    - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 76.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2512301934222388071, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807083159324533105, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_Name
+      value: Stonemason Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 3807083159324533105, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625046246883034775, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_Size.x
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625046246883034775, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_Size.y
+      value: 10.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625046246883034775, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: afcaba6d55b2700448eef4bd9e821d3e, type: 3}
+    - target: {fileID: 6625046246883034775, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6625046246883034775, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7752275131107787182, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: data
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b99755bdd508874da18e411ae50c9ed, type: 2}
+    - target: {fileID: 8469081589363043157, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      propertyPath: GlobalObjectIdHash
+      value: 2106892474
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3807083159324533105, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2772046197039115729}
+  m_SourcePrefab: {fileID: 100100000, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+--- !u!1 &2518968452104965692 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3807083159324533105, guid: 6e957eea27bea8a41b2a295484aacc4c, type: 3}
+  m_PrefabInstance: {fileID: 1594368277973888845}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2772046197039115729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2518968452104965692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d080201a05c5455db2c27643c2e7004b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trainInterval: 15
+  unitPrefab: {fileID: 2602448445874458205, guid: c58bcc994cab65b4b8eb9ac8c58bf155, type: 3}
+  spawnPoint: {fileID: 8227086077996740052, guid: 023491af03b3b8f44b801e5c8ce502d1, type: 3}

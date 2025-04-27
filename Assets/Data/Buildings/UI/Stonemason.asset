@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d6518823914024b89cb339029217f8, type: 3}
+  m_Name: Stonemason
+  m_EditorClassIdentifier: 
+  cellsize: {x: 2, y: 2}
+  resources:
+  - resourceData: {fileID: 11400000, guid: c373c01eaf188b944bf1e2cce8dee79b, type: 2}
+    amount: 100
+  - resourceData: {fileID: 11400000, guid: 14826a5645b227f4687102cd9020f548, type: 2}
+    amount: 500
