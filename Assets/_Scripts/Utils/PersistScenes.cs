@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace _Scripts.Network
 {
-    public class SupportManyScenes: MonoBehaviour
+    public class PersistScenes: MonoBehaviour
     {
         private void Awake()
         {

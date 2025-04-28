@@ -25,7 +25,7 @@ namespace _Scripts.Gameplay.UserInput
         private void Awake()
         {
             gridController = FindAnyObjectByType<HighlightGridAreaController>();
-            resourceService = DependencyContainer.LocalInstance.Resolve<ResourceProductionService>();
+            resourceService = LocalDependencyContainer.Instance.Resolve<ResourceProductionService>();
             gridGameObject = FindAnyObjectByType<Grid>();
         }
 
