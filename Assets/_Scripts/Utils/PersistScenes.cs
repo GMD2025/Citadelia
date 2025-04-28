@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace _Scripts.Network
+namespace _Scripts.Utils
 {
     public class PersistScenes: MonoBehaviour
     {

@@ -2,6 +2,7 @@ using System;
 using _Scripts.Data;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace _Scripts.Gameplay.Buildings
 {
@@ -33,7 +34,7 @@ namespace _Scripts.Gameplay.Buildings
                 grid.cellSize.x * data.cellsize.x,
                 grid.cellSize.y * data.cellsize.y
             );
-            
+
             SpriteRenderer sr = GetComponent<SpriteRenderer>();
             if (sr != null && sr.sprite != null)
             {
@@ -52,6 +53,13 @@ namespace _Scripts.Gameplay.Buildings
             {
                 box2D.size = targetSize;
                 box2D.offset = Vector2.zero;
+            }
+
+            NavMeshObstacle obstacle = GetComponent<NavMeshObstacle>();
+            if (obstacle != null && obstacle.shape == NavMeshObstacleShape.Capsule)
+            {
+                obstacle.radius = Mathf.Min(targetSize.x, targetSize.y) * 0.5f; // half of the smallest size
+                obstacle.height = 1f;
             }
         }
 

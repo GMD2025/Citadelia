@@ -1,10 +1,9 @@
-﻿
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.CustomInspector;
 using _Scripts.CustomInspector.Button;
+using NavMeshPlus.Components;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -18,8 +17,7 @@ namespace _Scripts.TilemapGrid
         [SerializeField]
         private Tilemap[] tilemapsToFlip;
 
-        [Tooltip("Enable debug gizmos for tile cell positions.")]
-        [SerializeField]
+        [Tooltip("Enable debug gizmos for tile cell positions.")] [SerializeField]
         private bool shouldEnableGizmo = false;
 
         private Grid grid;
@@ -27,6 +25,7 @@ namespace _Scripts.TilemapGrid
         private Tilemap[] tilemaps;
         private GameObject reflectedTilemapsParent;
         private List<Tilemap> reflectedTilemapsToDeny = new List<Tilemap>();
+        private NavMeshSurface navMeshSurface;
 
         private void OnValidate()
         {
@@ -44,11 +43,14 @@ namespace _Scripts.TilemapGrid
             tilemaps = grid.GetComponentsInChildren<Tilemap>()
                 .Where(tm => tm.transform.parent == grid.transform)
                 .ToArray();
+            navMeshSurface = FindFirstObjectByType<NavMeshSurface>();
 
             CreateSymmetricalTilemaps();
 
             if (IsClient && !IsServer)
                 SwapOriginalAndReflectedHierarchy();
+
+            navMeshSurface.BuildNavMeshAsync();
         }
 
 
@@ -63,7 +65,7 @@ namespace _Scripts.TilemapGrid
         }
 
         [InspectorButton("Center Tilemaps")]
-        private void CenterTilemaps()
+        public void CenterTilemaps()
         {
             var tilemaps = grid.GetComponentsInChildren<Tilemap>();
             foreach (var tilemap in tilemaps)
@@ -103,30 +105,27 @@ namespace _Scripts.TilemapGrid
         [InspectorButton("Create Symmetrical Tilemaps")]
         private void CreateSymmetricalTilemaps()
         {
-            // Remove any previous reflected maps
-            var existing = grid.transform.Find("ReflectedTilemaps");
-            if (existing != null)
-                DestroyImmediate(existing.gameObject);
-
-            CenterTilemaps();
+            Clear();
 
             reflectedTilemapsParent = new GameObject("ReflectedTilemaps");
             reflectedTilemapsParent.transform.SetParent(grid.transform, worldPositionStays: true);
 
             var tilemaps = grid.GetComponentsInChildren<Tilemap>();
+            if (tilemaps.Length == 0) return;
+
             int maxY = tilemaps.Max(tm => tm.cellBounds.yMax);
             int minY = tilemaps.Min(tm => tm.cellBounds.yMin);
             int totalHeight = maxY - minY;
 
-            Vector3Int offsetDown = new Vector3Int(0, -totalHeight / 2, 0);
-            Vector3Int offsetUp   = new Vector3Int(0,  totalHeight / 2, 0);
+            int halfHeight = Mathf.CeilToInt(totalHeight / 2f);
             int mirrorLineY = minY + maxY - 1;
+
+            Vector3Int offsetDown = new Vector3Int(0, -halfHeight, 0); // Shift originals downward
+            Vector3Int offsetUp = new Vector3Int(0, +halfHeight, 0); // Shift mirrors upward
 
             foreach (var original in tilemaps)
             {
                 if (original == null) continue;
-                
-                    
 
                 original.CompressBounds();
                 var bounds = original.cellBounds;
@@ -139,6 +138,7 @@ namespace _Scripts.TilemapGrid
                     data.Add((pos, tile, original.GetTransformMatrix(pos)));
                 }
 
+                // Shift original tiles DOWN
                 original.ClearAllTiles();
                 foreach (var (pos, tile, mat) in data)
                 {
@@ -148,17 +148,17 @@ namespace _Scripts.TilemapGrid
                 }
 
                 // Create reflected clone
-                var go = new GameObject(original.name + "_Reflected");
-                go.transform.SetParent(reflectedTilemapsParent.transform, worldPositionStays: true);
+                var reflectedGO = Instantiate(original.gameObject, reflectedTilemapsParent.transform);
+                reflectedGO.name = original.name + "_Reflected";
 
-                var reflected = go.AddComponent<Tilemap>();
-                var renderer = go.AddComponent<TilemapRenderer>();
-                renderer.sortingOrder = original.GetComponent<TilemapRenderer>().sortingOrder;
+                var reflected = reflectedGO.GetComponent<Tilemap>();
+                reflected.ClearAllTiles();
 
                 foreach (var (pos, tile, mat) in data)
                 {
                     int mirroredY = mirrorLineY - pos.y;
                     var mirrorPos = new Vector3Int(pos.x, mirroredY, 0) + offsetUp;
+
                     reflected.SetTile(mirrorPos, tile);
 
                     var finalMat = mat;
@@ -173,10 +173,6 @@ namespace _Scripts.TilemapGrid
             }
         }
 
-        /// <summary>
-        /// Swaps the hierarchy so that what was original under grid
-        /// moves to ReflectedTilemaps, and vice versa.
-        /// </summary>
         private void SwapOriginalAndReflectedHierarchy()
         {
             if (reflectedTilemapsParent == null) return;
@@ -201,10 +197,10 @@ namespace _Scripts.TilemapGrid
         {
             if (!shouldEnableGizmo)
                 return;
-            
+
             if (tilemaps == null || grid == null) return;
 
-            float dotSize = 0.1f;
+            float dotSize = 0.2f;
 
             foreach (var tilemap in tilemaps)
             {
@@ -220,7 +216,7 @@ namespace _Scripts.TilemapGrid
                     if (!tilemap.HasTile(pos)) continue;
 
                     Vector3 worldPos = grid.CellToWorld(pos) + grid.cellSize / 2f;
-                    Gizmos.DrawSphere(worldPos, dotSize * 3);
+                    Gizmos.DrawSphere(worldPos, dotSize * 1.5f);
                 }
             }
 
