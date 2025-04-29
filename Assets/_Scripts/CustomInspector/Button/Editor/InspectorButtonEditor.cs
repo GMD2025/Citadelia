@@ -1,28 +1,26 @@
 using System.Reflection;
 using UnityEditor;
 using UnityEngine;
-using _Scripts.CustomInspector;
+using Unity.Netcode; // Needed because NetworkBehaviour exists
 
 namespace _Scripts.CustomInspector.Button.Editor
 {
-    [CustomEditor(typeof(MonoBehaviour), true)]
+    [CustomEditor(typeof(Component), true)]
+    [CanEditMultipleObjects]
     public class InspectorButtonEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
-            // Draw serialized fields first
             DrawDefaultInspector();
 
-            var targetType = target.GetType();
+            var targetType = serializedObject.targetObject.GetType();
             var methods = targetType.GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
             foreach (var method in methods)
             {
-                // Check for [InspectorButton]
                 var buttonAttr = method.GetCustomAttribute<InspectorButtonAttribute>();
                 if (buttonAttr == null) continue;
 
-                // Check for [InspectorLabel] optionally
                 var labelAttr = method.GetCustomAttribute<InspectorLabelAttribute>();
                 if (labelAttr != null && !string.IsNullOrWhiteSpace(labelAttr.Label))
                 {
@@ -30,18 +28,18 @@ namespace _Scripts.CustomInspector.Button.Editor
                     EditorGUILayout.LabelField(labelAttr.Label, EditorStyles.boldLabel);
                 }
 
-                // Use custom name if provided, otherwise fallback to method name
                 string buttonText = string.IsNullOrWhiteSpace(buttonAttr.ButtonName)
                     ? ObjectNames.NicifyVariableName(method.Name)
                     : buttonAttr.ButtonName;
 
                 if (GUILayout.Button(buttonText))
                 {
-                    method.Invoke(target, null);
+                    foreach (var targetObj in serializedObject.targetObjects)
+                    {
+                        method.Invoke(targetObj, null);
+                    }
                 }
             }
-
-            Repaint();
         }
     }
 }

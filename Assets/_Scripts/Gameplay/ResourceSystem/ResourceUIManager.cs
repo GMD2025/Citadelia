@@ -12,7 +12,7 @@ namespace _Scripts.Gameplay.ResourceSystem
         private ResourceProductionService resourceProdService;
         private void Start()
         {
-            resourceProdService = DependencyContainer.LocalInstance.Resolve<ResourceProductionService>();
+            resourceProdService = LocalDependencyContainer.Instance.Resolve<ResourceProductionService>();
             resourceUIs = GetComponentsInChildren<ResourceUI>(includeInactive: true).ToList();
             resourceProdService.OnResourceChanged += HandleResourceChanged;
         }

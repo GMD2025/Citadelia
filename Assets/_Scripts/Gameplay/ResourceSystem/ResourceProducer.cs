@@ -41,7 +41,7 @@ namespace _Scripts.Gameplay.ResourceSystem
         [ClientRpc]
         private void ProduceResourceOnClientRpc(ClientRpcParams rpcParams = default)
         {
-            var container = DependencyContainer.Instance(OwnerClientId);
+            var container = global::_Scripts.Network.HostedDependencyContainerLocator.Get(OwnerClientId);
             if (!container)
             {
                 Debug.LogError($"ResourceProducer: Failed to find DependencyContainer for client {OwnerClientId}");
