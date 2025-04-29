@@ -10,19 +10,15 @@ using UnityEngine.InputSystem.UI;
 
 namespace _Scripts
 {
-    /// <summary>
-    /// Any non MonoBehaviour, Singleton class can be registered in DependencyContainer. 
-    /// When doing so, it is safe to remove all the Singleton features.
-    /// </summary>
-    public class DependencyContainer : NetworkBehaviour
+    public class LocalDependencyContainer : MonoBehaviour
     {
         [SerializeField] public DependencyContainerData Data;
-
+        
+        
         private Dictionary<Type, object> services = new();
+        private static LocalDependencyContainer cached;
 
-        private bool dependenciesInitialized = false;
-
-        public override void OnNetworkSpawn()
+        public void Awake()
         {
             RegisterDependencies();
         }
@@ -43,9 +39,8 @@ namespace _Scripts
             return service as T;
         }
 
-        public void RegisterDependencies()
+        private void RegisterDependencies()
         {
-            if (!IsOwner || dependenciesInitialized) return;
             RegisterGridInputSystem();
             RegisterResourceService();
         }
@@ -85,33 +80,20 @@ namespace _Scripts
             Register(new ResourceProductionService());
         }
 
-        public static DependencyContainer LocalInstance
+        public static LocalDependencyContainer Instance
         {
             get
             {
-                if (!NetworkManager.Singleton || 
-                    NetworkManager.Singleton.LocalClient == null || 
-                    !NetworkManager.Singleton.LocalClient.PlayerObject)
+                if (cached) 
+                    return cached;
+
+                cached = FindFirstObjectByType<LocalDependencyContainer>();
+                if (!cached)
                 {
-                    Debug.LogWarning("DependencyContainer: Client is not connected to the server. Dependency retrieval failed. Functionality will break. Try to reconnect.");
-                    var net = NetworkManager.Singleton;
-                    if (net.StartHost()) Debug.Log("Started Host.");
+                    Debug.LogError("LocalDependencyContainerAccessor: No LocalDependencyContainer found in scene.");
                 }
-
-                return NetworkManager.Singleton.LocalClient.PlayerObject.GetComponent<DependencyContainer>();
+                return cached;
             }
-        }
-
-        
-        public static DependencyContainer Instance(ulong clientId)
-        {
-            if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var networkClient))
-            {
-                return networkClient.PlayerObject.GetComponent<DependencyContainer>();
-            }
-
-            Debug.LogError($"DependencyContainer: No player found for clientId {clientId}");
-            return null;
         }
     }
 }

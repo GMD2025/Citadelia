@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace _Scripts.Network
+namespace _Scripts.Utils
 {
-    public class SupportManyScenes: MonoBehaviour
+    public class PersistScenes: MonoBehaviour
     {
         private void Awake()
         {

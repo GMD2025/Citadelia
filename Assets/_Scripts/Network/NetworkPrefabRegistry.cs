@@ -3,15 +3,8 @@ using _Scripts.Data;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace _Scripts
+namespace _Scripts.Network
 {
-    /// <summary>
-    /// Centralized service locator for non-MonoBehaviour dependencies.
-    /// Registers and resolves services like input systems and resource production,
-    /// replacing the need for individual singletons. Configured via DependencyContainerData.
-    /// </summary>
-
-    
     public class NetworkPrefabRegistry : MonoBehaviour
     {
         public static NetworkPrefabRegistry Instance { get; private set; }
