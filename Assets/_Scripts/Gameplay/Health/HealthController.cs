@@ -28,19 +28,8 @@ namespace _Scripts.Gameplay.Health
                 OnHealthChange += () => AdaptTextToHealth(text);
                 OnHealthChange += () => AdaptMask(mask);
             }
-
-            StartCoroutine(startTaking());
         }
-
-        IEnumerator startTaking()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(3f);
-                TakeDamage(10);
-            }
-        }
-
+        
         public void TakeDamage(int amount)
         {
             health -= amount;
@@ -72,7 +61,7 @@ namespace _Scripts.Gameplay.Health
         private void AdaptMask(RectMask2D mask)
         {
             float width = mask.rectTransform.rect.width;
-            mask.padding = new Vector4(0,0,(1 - health/startingHealth) * width, 0);
+            mask.padding = new Vector4(0,0,(1 - (float) health/startingHealth) * width, 0);
         }
     }
 }
