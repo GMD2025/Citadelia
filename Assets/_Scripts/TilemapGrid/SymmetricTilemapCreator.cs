@@ -61,113 +61,107 @@ namespace _Scripts.TilemapGrid
             if (existing != null)
                 DestroyImmediate(existing.gameObject);
 
-            CenterTilemaps();
+            // CenterTilemaps();
         }
 
-        [InspectorButton("Center Tilemaps")]
-        public void CenterTilemaps()
+        private void CenterTilemap(Tilemap tilemap, Vector3Int centerOffset)
         {
-            var tilemaps = grid.GetComponentsInChildren<Tilemap>();
-            foreach (var tilemap in tilemaps)
+            tilemap.CompressBounds();
+            var tilesData = this.tilesData(tilemap);
+            tilemap.ClearAllTiles();
+            foreach (var kvp in tilesData)
             {
-                if (tilemap == null) continue;
+                var newPos = kvp.Key - centerOffset;
+                tilemap.SetTile(newPos, kvp.Value);
+            }
 
-                tilemap.CompressBounds();
-                var bounds = tilemap.cellBounds;
-                var centerOffset = new Vector3Int(
-                    Mathf.FloorToInt(bounds.xMin + bounds.size.x / 2f),
-                    Mathf.FloorToInt(bounds.yMin + bounds.size.y / 2f),
-                    0);
+            tilemap.transform.localPosition = Vector3.zero;
+        }
 
-                var tiles = new Dictionary<Vector3Int, TileBase>();
-                var matrices = new Dictionary<Vector3Int, Matrix4x4>();
-
-                foreach (var pos in bounds.allPositionsWithin)
-                {
-                    var tile = tilemap.GetTile(pos);
-                    if (tile == null) continue;
-                    tiles[pos] = tile;
-                    matrices[pos] = tilemap.GetTransformMatrix(pos);
-                }
-
-                tilemap.ClearAllTiles();
-                foreach (var kvp in tiles)
-                {
-                    var newPos = kvp.Key - centerOffset;
-                    tilemap.SetTile(newPos, kvp.Value);
-                    tilemap.SetTransformMatrix(newPos, matrices[kvp.Key]);
-                }
-
-                tilemap.transform.localPosition = Vector3.zero;
+        private void ShiftTilemap(Tilemap tilemap, Vector3Int offset)
+        {
+            var tilesData = this.tilesData(tilemap);
+            tilemap.ClearAllTiles();
+            foreach (var (pos, tile) in tilesData)
+            {
+                var newPos = pos + offset;
+                tilemap.SetTile(newPos, tile);
             }
         }
 
-        [InspectorButton("Create Symmetrical Tilemaps")]
+        private Vector3Int CenterOffset()
+        {
+            // Handle ground layer as the superset. Calculate Vector t omove ground layer, all others repear the same movement.
+            tilemaps[0].CompressBounds();
+            var bounds = tilemaps[0].cellBounds;
+            return new Vector3Int(
+                Mathf.FloorToInt(bounds.xMin + bounds.size.x / 2f),
+                Mathf.FloorToInt(bounds.yMin + bounds.size.y / 2f),
+                0);
+        }
+
+        private Dictionary<Vector3Int, TileBase> tilesData(Tilemap tilemap)
+        {
+            var data = new Dictionary<Vector3Int, TileBase>();
+            foreach (var pos in tilemap.cellBounds.allPositionsWithin)
+            {
+                var tile = tilemap.GetTile(pos);
+                if (tile == null) continue;
+                data[pos] = tile;
+            }
+            
+            return data;
+        }
+
         private void CreateSymmetricalTilemaps()
         {
-            Clear();
-
+            Vector3Int centerOffset = CenterOffset();
+            foreach (var tilemap in tilemaps)
+            {
+                CenterTilemap(tilemap, centerOffset);
+            }
             reflectedTilemapsParent = new GameObject("ReflectedTilemaps");
             reflectedTilemapsParent.transform.SetParent(grid.transform, worldPositionStays: true);
 
-            var tilemaps = grid.GetComponentsInChildren<Tilemap>();
             if (tilemaps.Length == 0) return;
 
-            int maxY = tilemaps.Max(tm => tm.cellBounds.yMax);
-            int minY = tilemaps.Min(tm => tm.cellBounds.yMin);
-            int totalHeight = maxY - minY;
+            int maxY = tilemaps[0].cellBounds.yMax;
+            int minY = tilemaps[0].cellBounds.yMin;
 
-            int halfHeight = Mathf.CeilToInt(totalHeight / 2f);
-            int mirrorLineY = minY + maxY - 1;
-
+            int halfHeight = Mathf.CeilToInt((maxY - minY) / 2f);
+            int mirrorLineY = minY + maxY - 2;
+                
+            Debug.Log("MIAXY is " + maxY);
             Vector3Int offsetDown = new Vector3Int(0, -halfHeight, 0); // Shift originals downward
             Vector3Int offsetUp = new Vector3Int(0, +halfHeight, 0); // Shift mirrors upward
-
+            
             foreach (var original in tilemaps)
             {
-                if (original == null) continue;
-
-                original.CompressBounds();
-                var bounds = original.cellBounds;
-
-                var data = new List<(Vector3Int pos, TileBase tile, Matrix4x4 mat)>();
-                foreach (var pos in bounds.allPositionsWithin)
-                {
-                    var tile = original.GetTile(pos);
-                    if (tile == null) continue;
-                    data.Add((pos, tile, original.GetTransformMatrix(pos)));
-                }
-
-                // Shift original tiles DOWN
-                original.ClearAllTiles();
-                foreach (var (pos, tile, mat) in data)
-                {
-                    var newPos = pos + offsetDown;
-                    original.SetTile(newPos, tile);
-                    original.SetTransformMatrix(newPos, mat);
-                }
-
+                ShiftTilemap(original, offsetDown);
+                
                 // Create reflected clone
-                var reflectedGO = Instantiate(original.gameObject, reflectedTilemapsParent.transform);
-                reflectedGO.name = original.name + "_Reflected";
-
-                var reflected = reflectedGO.GetComponent<Tilemap>();
+                var reflectedGameObject = Instantiate(original.gameObject, reflectedTilemapsParent.transform);
+                reflectedGameObject.name = original.name + "_Reflected";
+                
+                var reflected = reflectedGameObject.GetComponent<Tilemap>();
+                
                 reflected.ClearAllTiles();
-
-                foreach (var (pos, tile, mat) in data)
+                
+                foreach (var (pos, tile) in tilesData(original))
                 {
                     int mirroredY = mirrorLineY - pos.y;
-                    var mirrorPos = new Vector3Int(pos.x, mirroredY, 0) + offsetUp;
-
+                    Debug.Log(mirrorLineY + " Mirrored");
+                    var mirrorPos = new Vector3Int(pos.x, mirroredY, 0);
+                
                     reflected.SetTile(mirrorPos, tile);
-
-                    var finalMat = mat;
+                
+                    var finalMat = original.GetTransformMatrix(pos);
                     if (tilemapsToFlip != null && tilemapsToFlip.Contains(original))
-                        finalMat = Matrix4x4.Scale(new Vector3(1, -1, 1)) * mat;
-
+                        finalMat = Matrix4x4.Scale(new Vector3(1, -1, 1)) * finalMat;
+                
                     reflected.SetTransformMatrix(mirrorPos, finalMat);
                 }
-
+                
                 if (highlightGridController.TilemapsToDeny.Contains(original))
                     reflectedTilemapsToDeny.Add(reflected);
             }
