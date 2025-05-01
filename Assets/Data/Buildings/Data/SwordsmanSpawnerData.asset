@@ -9,12 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 715cba22e9a743db96afd91ec7df03ea, type: 3}
-  m_Name: FlameTower
+  m_Script: {fileID: 11500000, guid: aff2960c36f44712840a653d2de2b9bb, type: 3}
+  m_Name: SwordsmanSpawnerData
   m_EditorClassIdentifier: 
-  detectionRadius: 10
-  fireDelay: 3
-  flameRestoreDelay: 5
-  cooldownAfterRestore: 1
-  speed: 15
-  damageOnHit: 100
+  TrainInterval: 4
+  UnitPrefab: {fileID: 2602448445874458205, guid: c58bcc994cab65b4b8eb9ac8c58bf155, type: 3}
+  AliveUnitsNumber: 5

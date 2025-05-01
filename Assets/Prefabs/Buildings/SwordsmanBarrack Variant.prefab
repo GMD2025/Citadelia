@@ -167,9 +167,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d080201a05c5455db2c27643c2e7004b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trainInterval: 6
-  unitPrefab: {fileID: 2602448445874458205, guid: c58bcc994cab65b4b8eb9ac8c58bf155, type: 3}
-  spawnPoint: {fileID: 8227086077996740052}
+  ShowTopMostFoldoutHeaderGroup: 1
+  spawnerData: {fileID: 11400000, guid: 1009e2c62f447474e9932888ca82b80e, type: 2}
+  spawnPointTransform: {fileID: 8227086077996740052}
 --- !u!4 &8914627168978721057 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7384289829766426211, guid: 469045dfa782ca246be8833d07698482, type: 3}

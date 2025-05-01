@@ -1,4 +1,5 @@
-﻿using _Scripts.Utils;
+﻿using _Scripts.Data;
+using _Scripts.Utils;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -6,29 +7,16 @@ namespace _Scripts.Gameplay
 {
     public class TrainUnitController : NetworkBehaviour
     {
-        [SerializeField] private float trainInterval = 4f;
-        [SerializeField] private GameObject unitPrefab;
-        [SerializeField] private Transform spawnPoint;
+        [SerializeField] private UnitSpawnerData spawnerData;
+        [SerializeField] private Transform spawnPointTransform;
 
-        private static GameObject unitParentCachedInstance;
 
-        public static GameObject UnitParentInstance
-        {
-            get
-            {
-                if (!unitParentCachedInstance)
-                {
-                    unitParentCachedInstance = new GameObject("Troops");
-                }
-
-                return unitParentCachedInstance;
-            }
-        }
+        private uint unitsAlive = 0;
 
         private void Start()
         {
             if (!IsServer) return;
-            IntervalRunner.Start(this, () => trainInterval, TrainWarrior);
+            IntervalRunner.Start(this, () => spawnerData.TrainInterval, TrainWarrior);
         }
 
         private void OnDisable()
@@ -39,8 +27,15 @@ namespace _Scripts.Gameplay
 
         private void TrainWarrior()
         {
-            var go = Instantiate(unitPrefab, spawnPoint.position, spawnPoint.rotation, UnitParentInstance.transform);
+            if(unitsAlive >= spawnerData.AliveUnitsNumber)
+                return;
+            
+            var go = Instantiate(spawnerData.UnitPrefab, spawnPointTransform.position,
+                spawnPointTransform.rotation);
             go.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);
+            go.transform.SetParent(transform, worldPositionStays: true);
+            unitsAlive++;
+            LifecycleHooks.OnDestroy(go) += () => unitsAlive--;
         }
     }
 }
