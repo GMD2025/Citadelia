@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
-  - FollowPoint
-  - DependencyContainer
+  - MyWall
+  - EnemyWall
   layers:
   - Default
   - TransparentFX

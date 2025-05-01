@@ -1,11 +1,13 @@
 using System.Linq;
+using _Scripts.Gameplay.Enemy;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace _Scripts.Gameplay
 {
     [RequireComponent(typeof(NavMeshAgent))]
-    public class AIUnitTargetMovementController : MonoBehaviour
+    public class AIUnitTargetMovementController : NetworkBehaviour
     {
         private NavMeshAgent navMeshAgent;
 
@@ -18,26 +20,37 @@ namespace _Scripts.Gameplay
         {
             if (!navMeshAgent.isOnNavMesh)
             {
-                Debug.LogError("Either NavMeshAgent is not on the NavMesh or gameobject is inactive");
+                Debug.LogWarning("The unit is not on NavMesh. Will try to move it to the closest point on the navmesh.");
+                MoveToNavmesh();
                 return;
             }
 
-            Transform target = FindClosestFollowPoint();
+            Transform target = FindClosestEnemyTarget();
+            if (!target)
+                return;
+
             navMeshAgent.SetDestination(target.position);
         }
 
-        private Transform FindClosestFollowPoint()
+        private Transform FindClosestEnemyTarget()
         {
-            var followPoints = GameObject.FindGameObjectsWithTag("FollowPoint");
-            if (followPoints == null || followPoints.Length == 0)
-                return null;
+            var enemies = FindObjectsByType<CastleController>(FindObjectsInactive.Exclude, FindObjectsSortMode.None)
+                .Where(c => c.OwnerClientId != OwnerClientId)
+                .Select(c => c.transform);
 
-            NavMeshHit hit;
-            return followPoints
-                .Where(go => NavMesh.SamplePosition(go.transform.position, out hit, 1.0f, NavMesh.AllAreas))
-                .OrderBy(go => Vector3.SqrMagnitude(transform.position - go.transform.position))
-                .FirstOrDefault()?.transform;
+            return enemies
+                .OrderBy(t => (transform.position - t.position).sqrMagnitude)
+                .FirstOrDefault();
         }
 
+        private void MoveToNavmesh()
+        {
+            NavMeshHit hit;
+            if (NavMesh.SamplePosition(transform.position, out hit, 100f, NavMesh.AllAreas))
+            {
+                transform.position = hit.position;
+                navMeshAgent.Warp(hit.position);
+            }
+        }
     }
 }
