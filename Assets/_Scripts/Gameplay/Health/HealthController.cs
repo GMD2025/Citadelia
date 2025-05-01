@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Collections;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace _Scripts.Gameplay.Health
 {
     public class HealthController : MonoBehaviour
     {
         [SerializeField] private int startingHealth = 100;
-
         public int StartingHealth => startingHealth;
         public int Health => health;
-
         private int health;
 
         public event Action OnDied;
@@ -18,8 +19,17 @@ namespace _Scripts.Gameplay.Health
         private void Awake()
         {
             health = startingHealth;
-        }
+            TextMeshProUGUI text = GetComponentInChildren<TextMeshProUGUI>();
+            RectMask2D mask = GetComponentInChildren<RectMask2D>();
 
+            if (text != null)
+            {
+                AdaptTextToHealth(text);
+                OnHealthChange += () => AdaptTextToHealth(text);
+                OnHealthChange += () => AdaptMask(mask);
+            }
+        }
+        
         public void TakeDamage(int amount)
         {
             health -= amount;
@@ -42,6 +52,16 @@ namespace _Scripts.Gameplay.Health
         {
             health = Mathf.Clamp(health + amount, 0, startingHealth);
             OnHealthChange?.Invoke();
+        }
+
+        private void AdaptTextToHealth(TextMeshProUGUI text)
+        {
+            text.text = $"{health.ToString()} / {startingHealth.ToString()}";
+        }
+        private void AdaptMask(RectMask2D mask)
+        {
+            float width = mask.rectTransform.rect.width;
+            mask.padding = new Vector4(0,0,(1 - (float) health/startingHealth) * width, 0);
         }
     }
 }
