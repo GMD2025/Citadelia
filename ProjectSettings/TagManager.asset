@@ -5,8 +5,6 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
-  - FollowPoint
-  - DependencyContainer
   layers:
   - Default
   - TransparentFX

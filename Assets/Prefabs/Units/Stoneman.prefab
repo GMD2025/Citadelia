@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4400580507141496574}
   - component: {fileID: 8213193710146087321}
   - component: {fileID: 3949146133772361551}
+  - component: {fileID: -480908054690531767}
   - component: {fileID: -6936289533813210908}
   - component: {fileID: 5880895038831915597}
   - component: {fileID: -8679068460717103692}
@@ -128,6 +129,31 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &-480908054690531767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2602448445874458205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1694247455
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!114 &-6936289533813210908
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4adb2351a7c9451eaf9aa9d4edae5776, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!210 &5880895038831915597
 SortingGroup:
   m_ObjectHideFlags: 0

@@ -11,7 +11,7 @@ namespace _Scripts.UI
     {
         private TextMeshProUGUI playerCountText;
 
-        private void Start()
+        public override void OnNetworkSpawn()
         {
             playerCountText = GetComponent<TextMeshProUGUI>();
         }

@@ -9,10 +9,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Start Scene.unity
     guid: b25987de9b75d764abe216a9833f4dd8
   - enabled: 1
-    path: Assets/Scenes/Sevastian.unity
-    guid: 9e3ec224ac609aa41862db114ce8e957
+    path: Assets/Scenes/Our.unity
+    guid: e847d7940b1229342a759c80adc5c2ca
   - enabled: 1
-    path: Assets/Scenes/Michael.unity
+    path: Assets/Scenes/Sevastian.unity
     guid: b81c9374e189ebf428e76a4d569c1d16
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2dace79e8e2691f41b6ab3df93272145, type: 3}

@@ -1,43 +1,41 @@
-﻿using _Scripts.Utils;
+﻿using _Scripts.Data;
+using _Scripts.Utils;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace _Scripts.Gameplay
 {
-    public class TrainUnitController : MonoBehaviour
+    public class TrainUnitController : NetworkBehaviour
     {
-        // TODO think if we can benefit from introducing SO for interval and unit prefab
-        [SerializeField] private float trainInterval = 4f;
-        [SerializeField] private GameObject unitPrefab;
-        [SerializeField] private Transform spawnPoint;
+        [SerializeField] private UnitSpawnerData spawnerData;
+        [SerializeField] private Transform spawnPointTransform;
 
-        private static GameObject unitParentCachedInstance;
 
-        public static GameObject UnitParentInstance
-        {
-            get
-            {
-                if (!unitParentCachedInstance)
-                {
-                    unitParentCachedInstance = new GameObject("Troops");
-                }
-
-                return unitParentCachedInstance;
-            }
-        }
+        private uint unitsAlive = 0;
 
         private void Start()
         {
-            IntervalRunner.Start(this, () => trainInterval, TrainWarrior);
+            if (!IsServer) return;
+            IntervalRunner.Start(this, () => spawnerData.TrainInterval, TrainWarrior);
         }
 
         private void OnDisable()
         {
+            if (!IsServer) return;
             IntervalRunner.StopAll(this);
         }
 
         private void TrainWarrior()
         {
-            Instantiate(unitPrefab, spawnPoint.position, spawnPoint.rotation, UnitParentInstance.transform);
+            if(unitsAlive >= spawnerData.AliveUnitsNumber)
+                return;
+            
+            var go = Instantiate(spawnerData.UnitPrefab, spawnPointTransform.position,
+                spawnPointTransform.rotation);
+            go.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);
+            go.transform.SetParent(transform, worldPositionStays: true);
+            unitsAlive++;
+            LifecycleHooks.OnDestroy(go) += () => unitsAlive--;
         }
     }
 }
