@@ -41,8 +41,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7287624388444229725}
   - component: {fileID: 4522582186096694245}
-  - component: {fileID: 7542468347376930678}
-  - component: {fileID: 4556540620731591515}
   m_Layer: 0
   m_Name: BlockBase
   m_TagString: Untagged
@@ -124,43 +122,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7542468347376930678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3594954272839852349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9cd44ae22c54a88b82424c2a9e9ad8b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4556540620731591515
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3594954272839852349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b64bb315e016452289872eef98d307e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  topConfig:
-    blockPrefab: {fileID: 0}
-    sortingBehavior: 1
-  bottomConfig:
-    blockPrefab: {fileID: 0}
-    sortingBehavior: 0
-  leftConfig:
-    blockPrefab: {fileID: 0}
-    sortingBehavior: 2
-  rightConfig:
-    blockPrefab: {fileID: 0}
-    sortingBehavior: 2
-  spriteRenderer: {fileID: 4522582186096694245}
 --- !u!1 &6260770127319221263
 GameObject:
   m_ObjectHideFlags: 0
