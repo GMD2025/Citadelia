@@ -5,7 +5,7 @@ using _Scripts.Utils;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace _Scripts.TilemapGrid
+namespace _Scripts.Systems.TilemapGrid
 {
     public class HighlightGridAreaController : MonoBehaviour
     {

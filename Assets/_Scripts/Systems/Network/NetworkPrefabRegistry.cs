@@ -3,7 +3,7 @@ using _Scripts.Data;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace _Scripts.Network
+namespace _Scripts.Systems.Network
 {
     public class NetworkPrefabRegistry : MonoBehaviour
     {

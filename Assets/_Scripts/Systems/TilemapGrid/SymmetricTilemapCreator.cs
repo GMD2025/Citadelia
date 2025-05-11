@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using _Scripts.CustomInspector;
 using _Scripts.CustomInspector.Button;
 using NavMeshPlus.Components;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace _Scripts.TilemapGrid
+namespace _Scripts.Systems.TilemapGrid
 {
     public class SymmetricTilemapCreator : NetworkBehaviour
     {
@@ -54,14 +52,19 @@ namespace _Scripts.TilemapGrid
         }
 
 
-        [InspectorButton("Clear Symmetrical Tilemaps")]
+        [InspectorButton("Center all tilemaps")]
         private void Clear()
         {
-            var existing = grid.transform.Find("ReflectedTilemaps");
-            if (existing != null)
-                DestroyImmediate(existing.gameObject);
+            CenterAllTilemaps();
+        }
 
-            // CenterTilemaps();
+        private void CenterAllTilemaps()
+        {
+            Vector3Int centerOffset = CenterOffset();
+            foreach (var tilemap in tilemaps)
+            {
+                CenterTilemap(tilemap, centerOffset);
+            }
         }
 
         private void CenterTilemap(Tilemap tilemap, Vector3Int centerOffset)
@@ -115,11 +118,7 @@ namespace _Scripts.TilemapGrid
 
         private void CreateSymmetricalTilemaps()
         {
-            Vector3Int centerOffset = CenterOffset();
-            foreach (var tilemap in tilemaps)
-            {
-                CenterTilemap(tilemap, centerOffset);
-            }
+            CenterAllTilemaps();
             reflectedTilemapsParent = new GameObject("ReflectedTilemaps");
             reflectedTilemapsParent.transform.SetParent(grid.transform, worldPositionStays: true);
 
@@ -131,7 +130,6 @@ namespace _Scripts.TilemapGrid
             int halfHeight = Mathf.CeilToInt((maxY - minY) / 2f);
             int mirrorLineY = minY + maxY - 2;
                 
-            Debug.Log("MIAXY is " + maxY);
             Vector3Int offsetDown = new Vector3Int(0, -halfHeight, 0); // Shift originals downward
             Vector3Int offsetUp = new Vector3Int(0, +halfHeight, 0); // Shift mirrors upward
             
@@ -150,7 +148,6 @@ namespace _Scripts.TilemapGrid
                 foreach (var (pos, tile) in tilesData(original))
                 {
                     int mirroredY = mirrorLineY - pos.y;
-                    Debug.Log(mirrorLineY + " Mirrored");
                     var mirrorPos = new Vector3Int(pos.x, mirroredY, 0);
                 
                     reflected.SetTile(mirrorPos, tile);

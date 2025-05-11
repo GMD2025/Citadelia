@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Data;
@@ -8,7 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace _Scripts.UI
+namespace _Scripts.Systems.UI
 {
     public class ButtonGenerator : MonoBehaviour
     {

@@ -1,16 +1,15 @@
-using System.Collections;
+using _Scripts.Data;
 using TMPro;
-using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace _Scripts.UI
+namespace _Scripts.Systems.UI
 {
     [RequireComponent(typeof(Button))]
     public class StartGameScene : MonoBehaviour
     {
-        [SerializeField] private string gameplaySceneName;
+        [SerializeField] private ProjectConfig projectConfig;
         
         private Button button;
         private TextMeshProUGUI buttonText;
@@ -26,7 +25,7 @@ namespace _Scripts.UI
         {
             button.interactable = false;
             buttonText.text = "Loading...";
-            SceneManager.LoadScene(gameplaySceneName);
+            SceneManager.LoadScene(projectConfig.GameplaySceneName);
         }
     }
 }

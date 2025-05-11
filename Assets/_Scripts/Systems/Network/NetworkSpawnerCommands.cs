@@ -1,7 +1,7 @@
 using Unity.Netcode;
 using UnityEngine;
 
-namespace _Scripts.Network
+namespace _Scripts.Systems.Network
 {
     [RequireComponent(typeof(NetworkObject))]
     public class NetworkSpawnerCommands : NetworkBehaviour

@@ -1,10 +1,8 @@
-using System;
-using _Scripts.Network;
 using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace _Scripts.UI
+namespace _Scripts.Systems.UI
 {
     [RequireComponent(typeof(TextMeshPro))]
     public class PlayerNumUI: NetworkBehaviour

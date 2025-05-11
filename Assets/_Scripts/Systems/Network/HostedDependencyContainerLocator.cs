@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace _Scripts.Network
+namespace _Scripts.Systems.Network
 {
     public sealed class HostedDependencyContainerLocator : NetworkBehaviour
     {
