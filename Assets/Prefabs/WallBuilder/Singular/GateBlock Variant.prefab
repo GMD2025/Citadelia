@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &628213736221456811
+--- !u!1001 &6672571057828703079
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -14,11 +14,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 774649180169656642, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.046
+      value: 0.072
       objectReference: {fileID: 0}
     - target: {fileID: 1801556767910819198, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.365
+      value: -0.13
       objectReference: {fileID: 0}
     - target: {fileID: 3340423028880193262, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -26,24 +26,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3594954272839852349, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
       propertyPath: m_Name
-      value: BlockWall Variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 4522582186096694245, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
-      propertyPath: m_Size.x
-      value: 0.64
-      objectReference: {fileID: 0}
-    - target: {fileID: 4522582186096694245, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
-      propertyPath: m_Size.y
-      value: 0.73
+      value: GateBlock Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4522582186096694245, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 1389150286, guid: c493ef565f5cc324b8d2c217531cd462, type: 3}
+      objectReference: {fileID: 905901327, guid: c493ef565f5cc324b8d2c217531cd462, type: 3}
+    - target: {fileID: 4522582186096694245, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
+      propertyPath: m_Color.b
+      value: 0.6792453
+      objectReference: {fileID: 0}
+    - target: {fileID: 4522582186096694245, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
+      propertyPath: m_Color.g
+      value: 0.40146273
+      objectReference: {fileID: 0}
+    - target: {fileID: 4522582186096694245, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
+      propertyPath: m_Color.r
+      value: 0.37486652
+      objectReference: {fileID: 0}
     - target: {fileID: 4522582186096694245, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4556540620731591515, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
+      propertyPath: anchorConfigs.Array.data[0].site
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4556540620731591515, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
+      propertyPath: anchorConfigs.Array.data[0].blockPrefab
+      value: 
+      objectReference: {fileID: 7888736287648827994}
     - target: {fileID: 7287624388444229725, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -89,3 +101,8 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
+--- !u!1 &7888736287648827994 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3594954272839852349, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
+  m_PrefabInstance: {fileID: 6672571057828703079}
+  m_PrefabAsset: {fileID: 0}
