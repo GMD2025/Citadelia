@@ -2,6 +2,7 @@
 using _Scripts.Utils;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace _Scripts.Gameplay
 {
@@ -27,15 +28,27 @@ namespace _Scripts.Gameplay
 
         private void TrainWarrior()
         {
-            if(unitsAlive >= spawnerData.AliveUnitsNumber)
+            if (unitsAlive >= spawnerData.AliveUnitsNumber)
                 return;
-            
-            var go = Instantiate(spawnerData.UnitPrefab, spawnPointTransform.position,
-                spawnPointTransform.rotation);
+
+            Vector3 spawnPos = spawnPointTransform.position;
+            Quaternion spawnRot = spawnPointTransform.rotation;
+
+            // Ensure the spawn point is on or near the NavMesh
+            if (!NavMesh.SamplePosition(spawnPos, out var hit, 2f, NavMesh.AllAreas))
+            {
+                Debug.LogWarning($"[{nameof(TrainUnitController)}] Could not find valid NavMesh near spawn point.");
+                return;
+            }
+
+            spawnPos = hit.position;
+
+            var go = Instantiate(spawnerData.UnitPrefab, spawnPos, spawnRot);
             go.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);
             go.transform.SetParent(transform, worldPositionStays: true);
             unitsAlive++;
             LifecycleHooks.OnDestroy(go) += () => unitsAlive--;
         }
+
     }
 }

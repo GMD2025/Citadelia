@@ -1,9 +1,10 @@
 ﻿using System;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace _Scripts.Gameplay.Health
 {
-    public class HealthController : MonoBehaviour
+    public class HealthController : NetworkBehaviour
     {
         [SerializeField] private int maxHealth = 100;
         public int MaxHealth => maxHealth;
@@ -45,7 +46,8 @@ namespace _Scripts.Gameplay.Health
         private void Die()
         {
             OnDied?.Invoke();
-            Destroy(gameObject);
+            if (IsServer)
+                NetworkObject.Despawn();
         }
     }
 }
