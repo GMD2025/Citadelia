@@ -1,8 +1,8 @@
 using _Scripts.Data;
 using _Scripts.Gameplay.Buildings;
 using _Scripts.Gameplay.ResourceSystem;
-using _Scripts.Network;
-using _Scripts.TilemapGrid;
+using _Scripts.Systems.Network;
+using _Scripts.Systems.TilemapGrid;
 using _Scripts.Utils;
 using DG.Tweening;
 using Unity.Netcode;

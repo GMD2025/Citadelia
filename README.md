@@ -2,6 +2,22 @@
   <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" alt="Figma" width="40" />
 </a>
 
+## Citadelia
+
+Citadelia is a strategic tower defense game where players build and manage their own fortress to fend off waves of enemies. The game combines resource management, tactical placement of buildings, and real-time combat mechanics to create an engaging experience.
+
+### Core Mechanics
+- **Building Placement**: Drag and drop buildings onto a grid-based map to create your fortress.
+- **Resource Management**: Collect and spend resources to construct and upgrade buildings.
+- **Combat System**: Deploy units and defensive structures to protect your base from enemy attacks.
+- **Symmetry-Based Gameplay**: Utilize mirrored tilemaps to create balanced and strategic layouts.
+
+### Features
+- **Dynamic Resource Production**: Buildings generate resources over time, enabling continuous growth.
+- **AI-Controlled Units**: Enemy units dynamically navigate the map to attack your base.
+- **Multiplayer Support**: Play with or against other players in a networked environment.
+- **Customizable Grid Highlights**: Visualize building placement and restricted areas with interactive grid highlights.
+
 ## Collaboration
 
 ### Setup
