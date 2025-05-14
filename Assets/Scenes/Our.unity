@@ -11408,7 +11408,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13879010af8d4c7db66524fa22545cae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 100
+  ShowTopMostFoldoutHeaderGroup: 1
+  maxHealth: 100
 --- !u!1 &1833248278
 GameObject:
   m_ObjectHideFlags: 0
@@ -11989,6 +11990,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cddb102d788946adafc0f201d9b394b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  numberOfSprites: 10
+  sprite: {fileID: 0}
+  spriteSize: {x: 32, y: 32}
+  spacing: {x: 2, y: 0}
+  padding: {x: 10, y: 10}
+  backImageFill: 0.3
 --- !u!114 &2047948185
 MonoBehaviour:
   m_ObjectHideFlags: 0
