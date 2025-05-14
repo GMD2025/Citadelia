@@ -1,8 +1,6 @@
 using System;
 using _Scripts;
 using _Scripts.Gameplay.UserInput;
-using _Scripts.TilemapGrid;
-using _Scripts.UI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;

@@ -1,38 +1,41 @@
 using System;
 using UnityEngine;
 
-public static class LifecycleHooks
+namespace _Scripts.Utils
 {
-    public static ref Action OnStart(GameObject go)
+    public static class LifecycleHooks
     {
-        return ref Attach(go).OnStartCallback;
-    }
-
-    public static ref Action OnDestroy(GameObject go)
-    {
-        return ref Attach(go).OnDestroyCallback;
-    }
-
-    private static LifeCycleProxy Attach(GameObject go)
-    {
-        if (!go.TryGetComponent<LifeCycleProxy>(out var proxy))
-            proxy = go.AddComponent<LifeCycleProxy>();
-        return proxy;
-    }
-
-    private class LifeCycleProxy : MonoBehaviour
-    {
-        public Action OnStartCallback;
-        public Action OnDestroyCallback;
-
-        private void Start()
+        public static ref Action OnStart(GameObject go)
         {
-            OnStartCallback?.Invoke();
+            return ref Attach(go).OnStartCallback;
         }
 
-        private void OnDestroy()
+        public static ref Action OnDestroy(GameObject go)
         {
-            OnDestroyCallback?.Invoke();
+            return ref Attach(go).OnDestroyCallback;
+        }
+
+        private static LifeCycleProxy Attach(GameObject go)
+        {
+            if (!go.TryGetComponent<LifeCycleProxy>(out var proxy))
+                proxy = go.AddComponent<LifeCycleProxy>();
+            return proxy;
+        }
+
+        private class LifeCycleProxy : MonoBehaviour
+        {
+            public Action OnStartCallback;
+            public Action OnDestroyCallback;
+
+            private void Start()
+            {
+                OnStartCallback?.Invoke();
+            }
+
+            private void OnDestroy()
+            {
+                OnDestroyCallback?.Invoke();
+            }
         }
     }
 }
