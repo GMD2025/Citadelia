@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace _Scripts.Gameplay.UserInput
 {
-    public class GridInputKeyboard : IGridInput
+    public class GridInputKeyboardGamepad : IGridInput
     {
-        public GridInputKeyboard()
+        public GridInputKeyboardGamepad()
         {
             mainCamera = Camera.main;
         }

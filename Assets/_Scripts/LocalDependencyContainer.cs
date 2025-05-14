@@ -10,11 +10,15 @@ using UnityEngine.InputSystem.UI;
 
 namespace _Scripts
 {
+    public enum InputMode
+    {
+        Keyboard,
+        Pointer,
+        Gamepad
+    }
     public class LocalDependencyContainer : MonoBehaviour
     {
-        [SerializeField] public DependencyContainerData Data;
-        
-        
+        [SerializeField] public InputMode SelectedInputMode = InputMode.Keyboard;
         private Dictionary<Type, object> services = new();
         private static LocalDependencyContainer cached;
 
@@ -41,37 +45,25 @@ namespace _Scripts
 
         private void RegisterDependencies()
         {
+            Register<InputActions>(new InputActions());
             RegisterGridInputSystem();
             RegisterResourceService();
         }
 
-        private void RegisterGridInputSystem()
+        public void RegisterGridInputSystem()
         {
-            switch (Data.InputMode)
+            switch (SelectedInputMode)
             {
                 case InputMode.Keyboard:
-                {
-                    Register<IGridInput, GridInputKeyboard>(new GridInputKeyboard());
-
-                    InputSystemUIInputModule inputModule = FindFirstObjectByType<InputSystemUIInputModule>();
-                    inputModule.actionsAsset = Data.ActionAssets[1];
-                    inputModule.move =
-                        InputActionReference.Create(Data.ActionAssets[1].FindActionMap("UI").FindAction("Horizontal"));
-                    inputModule.submit =
-                        InputActionReference.Create(Data.ActionAssets[1].FindActionMap("Global").FindAction("Confirm"));
-
-                    KeyboardManager keyboardManager = gameObject.AddComponent<KeyboardManager>();
+                case InputMode.Gamepad:
+                    Register<IGridInput>(new GridInputKeyboardGamepad());
+                    gameObject.AddComponent<KeyboardGamepadManager>();
                     break;
-                }
-                case InputMode.Mouse:
-                {
-                    Register<IGridInput, GridInputTouch>(new GridInputTouch());
-
-                    InputSystemUIInputModule inputModule = FindFirstObjectByType<InputSystemUIInputModule>();
-                    inputModule.actionsAsset = Data.ActionAssets[0];
-                    InputActionMap inputActionMap = Data.ActionAssets[1].FindActionMap("UI");
+                case InputMode.Pointer:
+                    Register<IGridInput>(new GridInputTouch());
                     break;
-                }
+                default:
+                    throw new ArgumentOutOfRangeException();
             }
         }
 

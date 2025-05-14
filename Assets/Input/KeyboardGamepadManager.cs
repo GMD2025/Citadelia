@@ -8,40 +8,42 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-public enum FocusState { Gameplay, UI }
-public class KeyboardManager : MonoBehaviour
+public enum FocusState
+{
+    Gameplay,
+    UI
+}
+
+public class KeyboardGamepadManager : MonoBehaviour
 {
     [SerializeField] private GameObject firstUIButton;
-    public static KeyboardManager Instance;
 
     public FocusState CurrentFocus { get; private set; }
-    
-    private KeyboardActions keyboardActions;
+
+    private InputActions keyboardActions;
     private GameObject currentFocusButton;
     private EventSystem eventSystem;
-    
+
     private void Awake()
     {
-        if (Instance == null) Instance = this;
-        else Destroy(gameObject);
-        
         eventSystem = EventSystem.current;
-        keyboardActions = new KeyboardActions();
+        keyboardActions = LocalDependencyContainer.Instance.Resolve<InputActions>();
         firstUIButton = GameObject.Find("ArrowLeft");
-        
+
         // Gameplay Move
         keyboardActions.Gameplay.Move.Enable();
-        
+        keyboardActions.Gameplay.Move.performed += ctx => { Debug.Log(ctx.action.name); };
+
         // Global
         keyboardActions.Global.SwitchFocus.performed += ctx => ToggleMode();
         keyboardActions.Global.Confirm.performed += ctx => Confirm();
         keyboardActions.Global.Cancel.performed += ctx => Cancel();
         keyboardActions.Global.Enable();
-        
+
         // UI
         keyboardActions.UI.Disable();
 
-        
+
         CurrentFocus = FocusState.Gameplay;
     }
 
@@ -58,12 +60,12 @@ public class KeyboardManager : MonoBehaviour
             case FocusState.Gameplay:
             {
                 ToggleMode();
-                currentFocusButton.GetComponent<BuildingPlacer>().PlaceBuilding(); 
+                currentFocusButton.GetComponent<BuildingPlacer>().PlaceBuilding();
                 break;
             }
         }
     }
-    
+
     private void Cancel()
     {
         switch (CurrentFocus)
@@ -83,18 +85,18 @@ public class KeyboardManager : MonoBehaviour
     {
         moveTimer -= Time.deltaTime;
         Vector2 moveInput = keyboardActions.Gameplay.Move.ReadValue<Vector2>();
-        
+
         if (moveInput != Vector2.zero && moveTimer <= 0f)
         {
             IGridInput grid = _Scripts.LocalDependencyContainer.Instance.Resolve<IGridInput>();
-            if (grid is GridInputKeyboard)
+            if (grid is GridInputKeyboardGamepad)
             {
-                ((GridInputKeyboard)grid).MoveCurrentPosition(moveInput);
+                ((GridInputKeyboardGamepad)grid).MoveCurrentPosition(moveInput);
                 moveTimer = moveCooldown;
             }
         }
     }
-    
+
     public void ToggleMode()
     {
         Debug.Log("toggle mode");
@@ -104,6 +106,7 @@ public class KeyboardManager : MonoBehaviour
             {
                 currentFocusButton.GetComponent<BuildingPlacer>().Cancel();
             }
+
             CurrentFocus = FocusState.UI;
             keyboardActions.UI.Enable();
             EnableUI();
@@ -123,6 +126,7 @@ public class KeyboardManager : MonoBehaviour
         eventSystem.sendNavigationEvents = true;
         eventSystem.SetSelectedGameObject(currentFocusButton ?? firstUIButton);
     }
+
     private void DisableUI()
     {
         currentFocusButton = eventSystem.currentSelectedGameObject;
