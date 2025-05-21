@@ -19,8 +19,7 @@ namespace _Scripts.Systems.UI
         private List<BuildingController> buildings;
         public static event Action OnButtonLoad;
 
-
-        private void Awake()
+        private void Start()
         {
             buildings = new List<BuildingController>();
             foreach (var prefab in buildingPrefabs)
@@ -29,10 +28,6 @@ namespace _Scripts.Systems.UI
                 if(!buildingController) continue;
                 buildings.Add(buildingController);
             }
-        }
-
-        private void Start()
-        {
             LoadTiles();
         }
 

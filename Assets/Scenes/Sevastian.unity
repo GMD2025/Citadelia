@@ -666,6 +666,7 @@ GameObject:
   - component: {fileID: 39805566}
   - component: {fileID: 39805565}
   - component: {fileID: 39805564}
+  - component: {fileID: 39805567}
   m_Layer: 5
   m_Name: BuildingBar
   m_TagString: Untagged
@@ -745,6 +746,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39805562}
   m_CullTransparentMesh: 1
+--- !u!114 &39805567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 39805562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5013cf8fc29a46e6891cb0c621afec2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  buildingButtonContent: {fileID: 224718075}
+  leftArrow: {fileID: 855556050}
+  rightArrow: {fileID: 1833248280}
 --- !u!1001 &57686902
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1024,7 +1040,8 @@ MonoBehaviour:
   - {fileID: 1747134290971494789, guid: 0b491e76c64d90a4c9f9ad8d6e15e41a, type: 3}
   - {fileID: 7908068709618864951, guid: 023491af03b3b8f44b801e5c8ce502d1, type: 3}
   - {fileID: 377756928019826520, guid: 60b4fa1a92c9945498f20c9ca5060839, type: 3}
-  - {fileID: 2518968452104965692, guid: 1c73e4d41cc40994c8996c95e270d962, type: 3}
+  - {fileID: 2989775804103541102, guid: 8bbf45d3078cafb48aad7640b5a2ace0, type: 3}
+  - {fileID: 4698639894604897336, guid: e9189a4282e82c2459366d09983fc98f, type: 3}
   tileButtonPrefab: {fileID: 6304482592369991020, guid: a827366fbbdc26e40a37db1203fe5c8d, type: 3}
   buildingSortingLayer: Highlighter
 --- !u!114 &224718079
@@ -8957,6 +8974,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 501485824}
   m_CullTransparentMesh: 1
+--- !u!114 &518682252 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114466839828933532, guid: 67117722a812a2e46ab8cb8eafbf5f5e, type: 3}
+  m_PrefabInstance: {fileID: 2065113355}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &519420031 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 5556816763478883087, guid: 5cd0568f4e984cb43b78b5d5284f838a, type: 3}
@@ -8996,17 +9024,17 @@ MonoBehaviour:
   m_MoveRepeatDelay: 0.5
   m_MoveRepeatRate: 0.1
   m_XRTrackingOrigin: {fileID: 0}
-  m_ActionsAsset: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_PointAction: {fileID: -1654692200621890270, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_CancelAction: {fileID: 7727032971491509709, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_LeftClickAction: {fileID: 3001919216989983466, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_MiddleClickAction: {fileID: -2185481485913320682, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_RightClickAction: {fileID: -4090225696740746782, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_ScrollWheelAction: {fileID: 6240969308177333660, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_TrackedDevicePositionAction: {fileID: 6564999863303420839, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
-  m_TrackedDeviceOrientationAction: {fileID: 7970375526676320489, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
+  m_ActionsAsset: {fileID: -944628639613478452, guid: 7feab5e780732134d9c376ea0c137136, type: 3}
+  m_PointAction: {fileID: -6963361091054335135, guid: 7feab5e780732134d9c376ea0c137136, type: 3}
+  m_MoveAction: {fileID: 4229679716070085666, guid: 7feab5e780732134d9c376ea0c137136, type: 3}
+  m_SubmitAction: {fileID: 7442591629174569373, guid: 7feab5e780732134d9c376ea0c137136, type: 3}
+  m_CancelAction: {fileID: -8766521226173435638, guid: 7feab5e780732134d9c376ea0c137136, type: 3}
+  m_LeftClickAction: {fileID: -1626770006729476262, guid: 7feab5e780732134d9c376ea0c137136, type: 3}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 0}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
@@ -9176,12 +9204,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 1
+    m_Mode: 4
     m_WrapAround: 1
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 1833248280}
+    m_SelectOnRight: {fileID: 518682252}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -9615,7 +9643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 179da2d6d0d54b919cda2e2ebc215a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Data: {fileID: 11400000, guid: 014049e5bd3873845a09a825c5bfea1d, type: 2}
+  SelectedInputMode: 1
 --- !u!4 &1098001441
 Transform:
   m_ObjectHideFlags: 0
@@ -9643,7 +9671,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 965548369
+  GlobalObjectIdHash: 3386751985
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -11315,7 +11343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3444087106
+  GlobalObjectIdHash: 481387699
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -11461,12 +11489,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 1
+    m_Mode: 4
     m_WrapAround: 1
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
-    m_SelectOnLeft: {fileID: 0}
-    m_SelectOnRight: {fileID: 0}
+    m_SelectOnLeft: {fileID: 855556050}
+    m_SelectOnRight: {fileID: 855556050}
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
@@ -11594,7 +11622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3915517508
+  GlobalObjectIdHash: 2087034505
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -11991,10 +12019,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  numberOfSprites: 3
+  numberOfSprites: 10
   sprite: {fileID: 21300000, guid: 8fa0e7b5628991b4484a3177175c80b6, type: 3}
-  spriteSize: {x: 60, y: 90}
-  spacing: {x: 0, y: 0}
+  spriteSize: {x: 32, y: 32}
+  spacing: {x: 2, y: 0}
   padding: {x: 10, y: 10}
   backImageFill: 0.3
 --- !u!114 &2047948185
@@ -12047,7 +12075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1558778373
+  GlobalObjectIdHash: 2255513995
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1

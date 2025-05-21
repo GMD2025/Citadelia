@@ -9,7 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f9c0f9ac494470c85ee51e20caf87e9, type: 3}
-  m_Name: ProjectConfig
+  m_Script: {fileID: 11500000, guid: dd8a6b147890496eb63942000fb1a83d, type: 3}
+  m_Name: LightningTower
   m_EditorClassIdentifier: 
-  GameplaySceneName: Sevastian
+  detectionRadius: 11
+  fireDelay: 1
+  stunDuration: 0.2
+  destroyDelay: 0.2
+  biggestFrame: {fileID: -524064992, guid: eec1360825bae6c4fb95fe80134e4534, type: 3}
+  damageOnHit: 20
