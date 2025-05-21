@@ -29,6 +29,10 @@ PrefabInstance:
       value: GateBlock Variant
       objectReference: {fileID: 0}
     - target: {fileID: 4522582186096694245, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
+      propertyPath: m_Size.y
+      value: 0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 4522582186096694245, guid: efd21794e073caf4b8d731a7fb53305e, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 905901327, guid: c493ef565f5cc324b8d2c217531cd462, type: 3}

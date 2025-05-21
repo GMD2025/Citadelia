@@ -9,32 +9,38 @@ namespace _Scripts.Systems.TilemapGrid
 {
     public class HighlightGridAreaController : MonoBehaviour
     {
-        [Header("Highlighter Setup")]
-        [SerializeField] private GameObject highlighterCellPrefab;
+        [Header("Highlighter Setup")] [SerializeField]
+        private GameObject highlighterCellPrefab;
+
         [SerializeField] private GameObject highlighterParentPrefab;
         [SerializeField] private bool shouldHighlight = true;
         [SerializeField] private Vector2Int highlightSize = new(1, 1);
 
-        [Header("Highlight Colors")]
-        [SerializeField] private Color highlightColor = Color.white;
+        [Header("Highlight Colors")] [SerializeField]
+        private Color highlightColor = Color.white;
+
         [SerializeField] private Color highlightColorDeny = Color.red;
 
         [SerializeField] private TileBase transparentTile;
 
-        [Header("Tilemaps preventing from placing building")]
-        [SerializeField] private Tilemap[] tilemapsToDeny;
+        [Header("Tilemaps preventing from placing building")] [SerializeField]
+        private Tilemap[] tilemapsToDeny;
 
 
         public Tilemap[] TilemapsToDeny => tilemapsToDeny;
+
         public Vector2Int HighlightSize
         {
             get => highlightSize;
             set => SetHighlightedArea(value);
         }
-        public GameObject highlightParent {get; private set;}
-        public Vector2Int[] HighlightedCells {
+
+        public GameObject highlightParent { get; private set; }
+
+        public Vector2Int[] HighlightedCells
+        {
             get
-            { 
+            {
                 return highlightParent.GetComponentsInChildren<Transform>()
                     .Select(t => t.gameObject.transform.position)
                     .Select(p => VectorUtil.ToVector2Int(p))
@@ -42,7 +48,7 @@ namespace _Scripts.Systems.TilemapGrid
             }
         }
 
-        
+
         public bool Selectable { get; private set; } = true;
         private Vector2Int lastHighlightSize = new(1, 1);
         private SpriteRenderer highlightRenderer;
@@ -61,16 +67,11 @@ namespace _Scripts.Systems.TilemapGrid
         private void Update()
         {
             HandleInput();
-            if (Application.isPlaying && highlightSize != lastHighlightSize)
-            {
-                SetHighlightedArea(highlightSize);
-            }
             RepaintHighlight();
         }
 
         private void SetHighlightedArea(Vector2Int value)
         {
-            lastHighlightSize = value;
             int width = Mathf.Max(1, value.x);
             int height = Mathf.Max(1, value.y);
             highlightSize = new Vector2Int(width, height);
@@ -102,7 +103,7 @@ namespace _Scripts.Systems.TilemapGrid
                 -(size.y - 1) / 2,
                 0
             );
-            
+
             var bottomLeftCell = startTilePosition + offset;
             Vector3 worldBL = grid.CellToWorld(bottomLeftCell);
             float halfW = size.x * grid.cellSize.x * 0.5f;
@@ -121,6 +122,7 @@ namespace _Scripts.Systems.TilemapGrid
 
             highlightParent = Instantiate(highlighterParentPrefab, transform);
             highlightParent.transform.SetParent(transform, worldPositionStays: true);
+            highlightParent.transform.position = new Vector3(0.5f, -5.5f, 0);
             SetHighlightedArea(highlightSize);
         }
 
@@ -137,7 +139,34 @@ namespace _Scripts.Systems.TilemapGrid
             IGridInput input = LocalDependencyContainer.Instance.Resolve<IGridInput>();
 
             if (input.GetCurrentPosition(grid) is { } inputPosition)
+            {
                 HighlightGridArea(inputPosition, highlightSize);
+            }
+        }
+
+        public bool isNextToTheBorder(Vector2 direction)
+        {
+            List<Vector3> positions = highlightParent.GetComponentsInChildren<Transform>()
+                .Select(t => t.gameObject.transform.position)
+                .Select(pos => new Vector3(pos.x + direction.x, pos.y + direction.y, pos.z))
+                .ToList();
+
+            float maxY = positions.Max(p => p.y);
+            
+            positions.AddRange(positions
+                .Where(p => Mathf.Approximately(p.y, maxY))
+                .Select(p => new Vector3(p.x, maxY + 1, 0f))
+                .Distinct()
+            );
+            
+            foreach (var position in positions)
+            {
+                Vector3Int tilePos = Vector3Int.RoundToInt(position - new Vector3(0.5f, 0.5f, 0));
+                bool isInside = tilemaps.Any(tm => tm.GetTile(tilePos) != null);
+                if (!isInside) return true;
+            }
+
+            return false;
         }
 
         private void RepaintHighlight()
@@ -161,7 +190,7 @@ namespace _Scripts.Systems.TilemapGrid
                 bool hasTile = tilemaps.Any(tm => tm.GetTile(tilePos) != null);
                 bool foundInDeny = tilemapsToDeny.Any(t => t.GetTile(tilePos) != null);
 
-                renderer.enabled = hasTile;
+                // renderer.enabled = hasTile;
 
                 if (!hasTile || foundInDeny)
                 {

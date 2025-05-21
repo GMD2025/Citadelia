@@ -9615,7 +9615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 179da2d6d0d54b919cda2e2ebc215a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectedInputMode: 1
+  SelectedInputMode: 0
 --- !u!4 &1098001441
 Transform:
   m_ObjectHideFlags: 0
@@ -9643,7 +9643,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2790478815
+  GlobalObjectIdHash: 3384685851
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -11315,7 +11315,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3431965808
+  GlobalObjectIdHash: 3036032138
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -11594,7 +11594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1398433857
+  GlobalObjectIdHash: 2720918047
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -12047,7 +12047,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 2388628885
+  GlobalObjectIdHash: 3646984741
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -12619,6 +12619,22 @@ PrefabInstance:
     - target: {fileID: 4444461114406079207, guid: 5cd0568f4e984cb43b78b5d5284f838a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556816763478883087, guid: 5cd0568f4e984cb43b78b5d5284f838a, type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556816763478883087, guid: 5cd0568f4e984cb43b78b5d5284f838a, type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0.3529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556816763478883087, guid: 5cd0568f4e984cb43b78b5d5284f838a, type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0.6392157
+      objectReference: {fileID: 0}
+    - target: {fileID: 5556816763478883087, guid: 5cd0568f4e984cb43b78b5d5284f838a, type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0.13725491
       objectReference: {fileID: 0}
     - target: {fileID: 8703323949657428163, guid: 5cd0568f4e984cb43b78b5d5284f838a, type: 3}
       propertyPath: m_Name

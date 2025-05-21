@@ -30,7 +30,6 @@ public class KeyboardGamepadManager : MonoBehaviour
 
         // Gameplay Move
         keyboardActions.Gameplay.Move.Enable();
-        keyboardActions.Gameplay.Move.performed += ctx => { Debug.Log(ctx.action.name); };
 
         // Global
         keyboardActions.Global.SwitchFocus.performed += ctx => ToggleMode();
@@ -76,7 +75,7 @@ public class KeyboardGamepadManager : MonoBehaviour
         }
     }
 
-    private float moveCooldown = 0.1f;
+    private float moveCooldown = 0.15f;
     private float moveTimer = 0f;
 
     private void Update()
