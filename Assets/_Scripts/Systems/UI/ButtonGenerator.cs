@@ -46,8 +46,11 @@ namespace _Scripts.Systems.UI
 
             if (building.Data.resources.Length != 0)
             {
-                buttonObj.GetComponentInChildren<TextMeshProUGUI>().text = building.Data.resources[0].amount.ToString();
-                buttonObj.GetComponentInChildren<SpriteRenderer>().sprite = building.Data.resources[0].resourceData.icon;
+                for (int i = 0; i < building.Data.resources.Length; i++)
+                {
+                    buttonObj.GetComponentsInChildren<TextMeshProUGUI>()[i].text = building.Data.resources[i].amount.ToString();
+                    buttonObj.GetComponentsInChildren<SpriteRenderer>()[i].sprite = building.Data.resources[i].resourceData.icon;
+                }
             }
             
             var buildingPlacer = buttonObj.GetComponent<BuildingPlacer>();
