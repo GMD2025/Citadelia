@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _Scripts.Systems.UI
 {
-    [RequireComponent(typeof(TextMeshPro))]
+    [RequireComponent(typeof(TextMeshProUGUI))]
     public class PlayerNumUI: NetworkBehaviour
     {
         private TextMeshProUGUI playerCountText;
@@ -16,7 +16,7 @@ namespace _Scripts.Systems.UI
 
         private void Update()
         {
-            if (!IsServer) return;
+            if (!IsServer || !playerCountText) return;
 
             int playerCount = NetworkManager.Singleton.ConnectedClientsIds.Count;
             UpdatePlayerCountClientRpc(playerCount);

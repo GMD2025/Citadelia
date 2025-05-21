@@ -40,6 +40,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "MiddleMouse",
+                    "type": "Button",
+                    "id": "f143152e-90df-4e9f-ae62-ab40eca53ac0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -199,6 +208,17 @@
                 },
                 {
                     "name": "",
+                    "id": "027503b3-37ae-468e-9938-173f975a6612",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Confirm",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "fc74e489-43c0-4340-863c-7ebc9e88fecd",
                     "path": "<Mouse>/position",
                     "interactions": "",
@@ -271,6 +291,17 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "52dd95e8-89e4-4f79-9874-53dbc79d1ac2",
+                    "path": "<Mouse>/middleButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MiddleMouse",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

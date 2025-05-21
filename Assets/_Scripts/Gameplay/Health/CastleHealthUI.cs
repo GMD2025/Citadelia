@@ -30,12 +30,10 @@ namespace _Scripts.Gameplay.Health
         private void GenerateUI()
         {
             rect = GetComponent<RectTransform>();
-
-            rect.anchorMin = new Vector2(0, 1);
-            rect.anchorMax = new Vector2(0, 1);
-            rect.pivot = new Vector2(0, 1);
-            rect.anchoredPosition = new Vector2(padding.x, -padding.y);
-
+            rect.anchorMin = new Vector2(0f, 1);
+            rect.anchorMax = new Vector2(0f, 1);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = new Vector2(0, -padding.y);
             RegenerateSprites(numberOfSprites);
             healthController.OnHealthChange += UpdateHealthUI;
             UpdateHealthUI(healthController.Health, healthController.MaxHealth);
@@ -53,6 +51,10 @@ namespace _Scripts.Gameplay.Health
                 Utils.Utils.SmartDestroy(rect.GetChild(i).gameObject);
 
             healthImages = new Image[count];
+            
+            // Calculate total width to help with center positioning
+            float totalWidth = count * spriteSize.x + (count - 1) * spacing.x;
+            float startX = -totalWidth / 2 + spriteSize.x / 2;
 
             for (int i = 0; i < count; i++)
             {
@@ -60,8 +62,11 @@ namespace _Scripts.Gameplay.Health
                 container.transform.SetParent(rect, false);
                 RectTransform containerRT = container.GetComponent<RectTransform>();
                 containerRT.sizeDelta = spriteSize;
-                containerRT.anchorMin = containerRT.anchorMax = containerRT.pivot = new Vector2(0, 1);
-                containerRT.anchoredPosition = new Vector2(i * (spriteSize.x + spacing.x), 0);
+                // Center anchoring for containers
+                containerRT.anchorMin = containerRT.anchorMax = new Vector2(0.5f, 0.5f);
+                containerRT.pivot = new Vector2(0.5f, 0.5f);
+                // Position relative to center
+                containerRT.anchoredPosition = new Vector2(startX + i * (spriteSize.x + spacing.x), 0);
 
                 GameObject backGO = new GameObject("Background", typeof(RectTransform), typeof(Image));
                 backGO.transform.SetParent(container.transform, false);
@@ -90,7 +95,7 @@ namespace _Scripts.Gameplay.Health
             }
 
             rect.sizeDelta = new Vector2(
-                count * spriteSize.x + (count - 1) * spacing.x,
+                totalWidth + padding.x * 2,
                 spriteSize.y + padding.y * 2);
         }
 

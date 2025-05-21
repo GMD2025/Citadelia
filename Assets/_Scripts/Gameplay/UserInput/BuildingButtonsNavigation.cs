@@ -21,7 +21,6 @@ namespace _Scripts.Gameplay.UserInput
 
         private void WhenButtonReady()
         {
-            Debug.Log("HUI HUevich");
             var buttons = buildingButtonContent.GetComponentsInChildren<Button>();
             var leftNav = leftArrow.navigation;
             leftNav.mode = Navigation.Mode.Explicit;
