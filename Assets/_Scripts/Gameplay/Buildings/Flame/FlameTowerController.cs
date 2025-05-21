@@ -1,11 +1,12 @@
 using System.Collections.Generic;
 using _Scripts.Data;
 using _Scripts.Utils;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace _Scripts.Gameplay.Buildings.Flame
 {
-    public class FlameTowerController : MonoBehaviour
+    public class FlameTowerController : NetworkBehaviour
     {
         [SerializeField]
         private FlameTowerData flameTowerData;
@@ -34,7 +35,7 @@ namespace _Scripts.Gameplay.Buildings.Flame
         private void CheckAndFire()
         {
             Collider2D enemyCollider = Physics2D.OverlapCircle(transform.position, flameTowerData.detectionRadius, enemyLayer);
-            if (!enemyCollider)
+            if (!enemyCollider || enemyCollider.GetComponent<NetworkObject>().OwnerClientId == OwnerClientId)
                 return;
             
             Transform flame = GetClosestFlame(enemyCollider.transform.position);

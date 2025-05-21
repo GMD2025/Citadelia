@@ -2,12 +2,13 @@ using System.Collections.Generic;
 using _Scripts.Data;
 using _Scripts.Gameplay.Health;
 using _Scripts.Utils;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace _Scripts.Gameplay.Buildings.Lightning
 {
-    public class LightningTowerController : MonoBehaviour
+    public class LightningTowerController : NetworkBehaviour
     {
         [SerializeField] private GameObject lightningPrefab;
         [SerializeField] private LayerMask enemyLayer;
@@ -37,6 +38,10 @@ namespace _Scripts.Gameplay.Buildings.Lightning
             {
                 if (activeStrikes >= lightningData.maxActiveStrikes)
                     break;
+
+                var networkObject = hit.GetComponent<NetworkObject>();
+                if (!networkObject || networkObject.OwnerClientId == OwnerClientId)
+                    continue;
 
                 var enemy = hit.gameObject;
                 if (recentlyStruck.Contains(enemy))
