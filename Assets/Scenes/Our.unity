@@ -693,7 +693,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 120}
+  m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!210 &39805564
 SortingGroup:
@@ -989,7 +989,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 120}
+  m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &224718077
 MonoBehaviour:
@@ -1043,7 +1043,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 20
     m_Right: 20
-    m_Top: 20
+    m_Top: -35
     m_Bottom: 20
   m_ChildAlignment: 4
   m_Spacing: 20
@@ -9815,9 +9815,9 @@ MonoBehaviour:
   m_MaxConnectAttempts: 60
   m_DisconnectTimeoutMS: 30000
   ConnectionData:
-    Address: 127.0.0.1
+    Address: 10.154.210.90
     Port: 7777
-    ServerListenAddress: 127.0.0.1
+    ServerListenAddress: 10.154.210.90
   DebugSimulator:
     PacketDelayMS: 0
     PacketJitterMS: 0
