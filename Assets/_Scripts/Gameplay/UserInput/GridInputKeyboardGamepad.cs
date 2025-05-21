@@ -1,9 +1,11 @@
+using _Scripts.Systems.TilemapGrid;
 using UnityEngine;
 
 namespace _Scripts.Gameplay.UserInput
 {
     public class GridInputKeyboardGamepad : IGridInput
     {
+        private HighlightGridAreaController obj = GameObject.Find("Grid").GetComponent<HighlightGridAreaController>();
         public GridInputKeyboardGamepad()
         {
             mainCamera = Camera.main;
@@ -16,7 +18,9 @@ namespace _Scripts.Gameplay.UserInput
 
         public void MoveCurrentPosition(Vector2 direction)
         {
-            CellPosition += Vector3Int.RoundToInt(direction);
+            Vector3Int newPosition = CellPosition + Vector3Int.RoundToInt(direction);
+            bool move = ! obj.isNextToTheBorder(direction);
+            if (move) CellPosition = newPosition;
         }
     }
 }

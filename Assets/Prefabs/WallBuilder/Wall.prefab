@@ -1768,7 +1768,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  healthUIPrefab: {fileID: 0}
 --- !u!1001 &7078761471971280653
 PrefabInstance:
   m_ObjectHideFlags: 0

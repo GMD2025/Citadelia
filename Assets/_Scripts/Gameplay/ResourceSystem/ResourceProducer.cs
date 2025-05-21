@@ -53,7 +53,6 @@ namespace _Scripts.Gameplay.ResourceSystem
             resourceService.AddResource(resourceProdData.resourceType, resourceProdData.productionAmount);
 
             CreatePopup();
-            Debug.Log($"[{gameObject.name}] Produced {resourceProdData.productionAmount} {resourceProdData.resourceType.resourceName}. Total: {resourceService.GetResourceAmount(resourceProdData.resourceType)}");
         }
 
         private void CreatePopup()
