@@ -8,7 +8,7 @@ namespace _Scripts.Data
         [Header("Detection")]
         public float detectionRadius = 5f;
         
-        [Header("Delay System")]
+        [Header("Time Dependant Systems")]
         [Tooltip("Fire rate")]
         public float fireDelay = 2f;
         [Tooltip("Time that it takes to create a new flame after firing and old one")]

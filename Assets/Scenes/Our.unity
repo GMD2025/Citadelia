@@ -1024,7 +1024,8 @@ MonoBehaviour:
   - {fileID: 1747134290971494789, guid: 0b491e76c64d90a4c9f9ad8d6e15e41a, type: 3}
   - {fileID: 7908068709618864951, guid: 023491af03b3b8f44b801e5c8ce502d1, type: 3}
   - {fileID: 377756928019826520, guid: 60b4fa1a92c9945498f20c9ca5060839, type: 3}
-  - {fileID: 2518968452104965692, guid: 1c73e4d41cc40994c8996c95e270d962, type: 3}
+  - {fileID: 2989775804103541102, guid: 8bbf45d3078cafb48aad7640b5a2ace0, type: 3}
+  - {fileID: 4698639894604897336, guid: e9189a4282e82c2459366d09983fc98f, type: 3}
   tileButtonPrefab: {fileID: 6304482592369991020, guid: a827366fbbdc26e40a37db1203fe5c8d, type: 3}
   buildingSortingLayer: Highlighter
 --- !u!114 &224718079
@@ -9615,7 +9616,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 179da2d6d0d54b919cda2e2ebc215a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectedInputMode: 0
+  SelectedInputMode: 1
 --- !u!4 &1098001441
 Transform:
   m_ObjectHideFlags: 0
@@ -12184,7 +12185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   numberOfSprites: 10
-  sprite: {fileID: 0}
+  sprite: {fileID: 21300000, guid: 8fa0e7b5628991b4484a3177175c80b6, type: 3}
   spriteSize: {x: 32, y: 32}
   spacing: {x: 2, y: 0}
   padding: {x: 10, y: 10}

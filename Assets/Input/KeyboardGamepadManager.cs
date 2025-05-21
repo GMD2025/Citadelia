@@ -51,13 +51,15 @@ public class KeyboardGamepadManager : MonoBehaviour
             case FocusState.UI:
             {
                 ToggleMode();
-                currentFocusButton.GetComponent<BuildingPlacer>().PlaceBuildingPlaceholder();
+                if (currentFocusButton && currentFocusButton.GetComponent<BuildingPlacer>() is not null)
+                    currentFocusButton.GetComponent<BuildingPlacer>().PlaceBuildingPlaceholder();
                 break;
-            }
+        }
             case FocusState.Gameplay:
             {
                 ToggleMode();
-                currentFocusButton.GetComponent<BuildingPlacer>().PlaceBuilding();
+                if (currentFocusButton && currentFocusButton.GetComponent<BuildingPlacer>() is not null)
+                    currentFocusButton.GetComponent<BuildingPlacer>().PlaceBuilding();
                 break;
             }
         }
@@ -114,7 +116,7 @@ public class KeyboardGamepadManager : MonoBehaviour
             CurrentFocus = FocusState.Gameplay;
             keyboardActions.UI.Disable();
             DisableUI();
-            keyboardActions.Gameplay.Enable();
+            keyboardActions.Gameplay.Disable();
         }
     }
 

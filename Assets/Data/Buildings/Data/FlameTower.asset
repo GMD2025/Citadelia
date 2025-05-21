@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 715cba22e9a743db96afd91ec7df03ea, type: 3}
   m_Name: FlameTower
   m_EditorClassIdentifier: 
-  detectionRadius: 10
-  fireDelay: 3
-  flameRestoreDelay: 5
+  detectionRadius: 8
+  fireDelay: 2
+  flameRestoreDelay: 4
   cooldownAfterRestore: 1
   speed: 15
   damageOnHit: 100
