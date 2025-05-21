@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using _Scripts.Data;
@@ -16,6 +17,7 @@ namespace _Scripts.Systems.UI
         [SerializeField] private string buildingSortingLayer;
 
         private List<BuildingController> buildings;
+        public static event Action OnButtonLoad;
 
 
         private void Awake()
@@ -40,6 +42,7 @@ namespace _Scripts.Systems.UI
             {
                 CreateButton(building);
             }
+            OnButtonLoad?.Invoke();
         }
 
         private void CreateButton(BuildingController building)
