@@ -1,6 +1,7 @@
 ﻿using System;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Scripts.Gameplay.Health
 {
@@ -8,44 +9,57 @@ namespace _Scripts.Gameplay.Health
     {
         [SerializeField] private int maxHealth = 100;
         public int MaxHealth => maxHealth;
-        public int Health
-        {
-            get => health;
-            set
-            {
-                health = Mathf.Clamp(value, 0, maxHealth);
-                OnHealthChange?.Invoke(health, maxHealth);
-            }
-        }
 
-        private int health;
+        public NetworkVariable<int> Health = new(
+            value: 100,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server
+        );
 
         public event Action<int, int> OnHealthChange;
         public event Action OnDied;
 
-        private void Awake()
+        public override void OnNetworkSpawn()
         {
-            health = maxHealth;
-            OnHealthChange?.Invoke(health, maxHealth);
+            base.OnNetworkSpawn();
+
+            if (IsServer)
+                Health.Value = maxHealth;
+
+            Health.OnValueChanged += OnHealthChanged;
+
+            if (IsClient)
+                OnHealthChange?.Invoke(Health.Value, maxHealth);
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            base.OnNetworkDespawn();
+            Health.OnValueChanged -= OnHealthChanged;
+        }
+
+        private void OnHealthChanged(int previous, int current)
+        {
+            Debug.Log($"[HealthController] {gameObject.name} health changed: {previous} -> {current}");
+            OnHealthChange?.Invoke(current, maxHealth);
         }
 
         public void TakeDamage(int amount)
         {
-            health -= amount;
-            OnHealthChange?.Invoke(health, maxHealth);
-            if (health <= 0)
-                Die();
-        }
+            if (!IsServer) return;
 
-        public void HealBy(int amount)
-        {
-            health = Mathf.Clamp(health + amount, 0, maxHealth);
-            OnHealthChange?.Invoke(health, maxHealth);
+            int newHealth = Mathf.Max(Health.Value - amount, 0);
+            Health.Value = newHealth;
+
+            if (newHealth <= 0)
+                Die();
         }
 
         private void Die()
         {
+            Debug.Log($"{gameObject.name} died.");
             OnDied?.Invoke();
+
             if (IsServer)
                 NetworkObject.Despawn();
         }

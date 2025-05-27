@@ -49,7 +49,7 @@ namespace _Scripts.Gameplay
                 return;
             }
 
-            if (!CurrentTarget || CurrentTarget.Health <= 0)
+            if (!CurrentTarget || CurrentTarget.Health.Value <= 0)
                 CurrentTarget = FindNewTarget();
 
             if (CurrentTarget)
@@ -61,7 +61,7 @@ namespace _Scripts.Gameplay
             var allTargets = FindObjectsByType<HealthController>(
                     FindObjectsInactive.Exclude,
                     FindObjectsSortMode.None)
-                .Where(h => h.Health > 0)
+                .Where(h => h.Health.Value > 0)
                 .Where(h =>
                 {
                     if (!h.TryGetComponent<NetworkObject>(out var net)) return false;

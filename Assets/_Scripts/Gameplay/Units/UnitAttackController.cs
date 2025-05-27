@@ -15,7 +15,7 @@ namespace _Scripts.Gameplay
         private HealthController currentTarget;
         private NetworkObject selfNetworkObject;
 
-        private void Start()
+        public override void OnNetworkSpawn()
         {
             movement = GetComponent<AIUnitTargetMovementController>();
             selfNetworkObject = GetComponent<NetworkObject>();
@@ -29,8 +29,12 @@ namespace _Scripts.Gameplay
 
         private void TryAttack()
         {
+            if (!IsServer)
+            {
+                return;
+            }
             currentTarget = movement.CurrentTarget;
-            if (!currentTarget || currentTarget.Health <= 0)
+            if (!currentTarget || currentTarget.Health.Value <= 0)
                 return;
 
             if (!currentTarget.TryGetComponent<NetworkObject>(out var netObj))
@@ -43,7 +47,7 @@ namespace _Scripts.Gameplay
                 return;
 
             currentTarget.TakeDamage(data.DamagePerHit);
-            Debug.Log($"{name} attacked {currentTarget.name} for {data.DamagePerHit}");
+            Debug.Log($"{name} attacked {currentTarget.name} for {data.DamagePerHit}. Health is {currentTarget.Health}");
         }
 
         private void OnDrawGizmosSelected()

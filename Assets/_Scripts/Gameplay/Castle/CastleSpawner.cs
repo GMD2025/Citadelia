@@ -7,7 +7,6 @@ using UnityEngine.Tilemaps;
 
 namespace _Scripts.Gameplay.Enemy
 {
-    [RequireComponent(typeof(HealthController))]
     [RequireComponent(typeof(Grid))]
     public class CastleSpawner : NetworkBehaviour
     {
