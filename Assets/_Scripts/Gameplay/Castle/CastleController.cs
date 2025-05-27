@@ -1,39 +1,59 @@
+using System.Collections;
 using _Scripts.Gameplay.Health;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace _Scripts.Gameplay.Castle
 {
-    [RequireComponent(typeof(HealthController))]
+    [RequireComponent(typeof(HealthController), typeof(Team))]
     public class CastleController : NetworkBehaviour
     {
+        private Team team;
+        private bool bound;
+
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
 
-            if (!IsOwner) return;
+            if (!IsClient) 
+                return;
 
-            StartCoroutine(DelayedUIBind());
+            team = GetComponent<Team>();
+
+            team.TeamId.OnValueChanged += OnTeamIdChanged;
         }
 
-        private System.Collections.IEnumerator DelayedUIBind()
+        private void OnTeamIdChanged(int previous, int current)
         {
-            // Wait a frame to ensure UI and health are synced
+            if (bound) return;
+
+            if (current < 0) return;
+
+            if (current == (int)NetworkManager.Singleton.LocalClientId)
+            {
+                StartCoroutine(DelayedUIBind());
+                bound = true;
+            }
+            team.TeamId.OnValueChanged -= OnTeamIdChanged;
+        }
+
+        private IEnumerator DelayedUIBind()
+        {
             yield return null;
 
-            CastleHealthUI castleUi = FindObjectOfType<CastleHealthUI>();
-            if (castleUi == null)
+            var ui = FindObjectOfType<CastleHealthUI>();
+            if (!ui)
             {
-                Debug.LogWarning("CastleHealthUI not found in scene!");
+                Debug.LogWarning("[CastleController] CastleHealthUI not found!");
                 yield break;
             }
 
-            var health = GetComponent<HealthController>();
-            if (health)
-            {
-                Debug.Log($"Binding CastleHealthUI to {gameObject.name}'s HealthController");
-                castleUi.SetHealthController(health);
-            }
+            var hc = GetComponent<HealthController>();
+            ui.SetHealthController(hc);
+            Debug.Log(
+                $"[Client:{NetworkManager.Singleton.LocalClientId}] " +
+                $"Bound HUD to local castle (Team {team.TeamId.Value})"
+            );
         }
     }
 }

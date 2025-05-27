@@ -7,6 +7,7 @@ using UnityEngine;
 namespace _Scripts.Gameplay
 {
     [RequireComponent(typeof(NetworkObject))]
+    [RequireComponent(typeof(Team))]
     public class UnitAttackController : NetworkBehaviour
     {
         [SerializeField] private UnitAttackData data;
@@ -14,12 +15,18 @@ namespace _Scripts.Gameplay
         private AIUnitTargetMovementController movement;
         private HealthController currentTarget;
         private NetworkObject selfNetworkObject;
-
+        private Team team;
+        
         public override void OnNetworkSpawn()
         {
+            base.OnNetworkSpawn();
+
             movement = GetComponent<AIUnitTargetMovementController>();
             selfNetworkObject = GetComponent<NetworkObject>();
-            IntervalRunner.Start(this, () => data.AttackInterval, TryAttack);
+            team = GetComponent<Team>();
+
+            if (IsServer)
+                IntervalRunner.Start(this, () => data.AttackInterval, TryAttack);
         }
 
         private void OnDisable()
@@ -29,17 +36,14 @@ namespace _Scripts.Gameplay
 
         private void TryAttack()
         {
-            if (!IsServer)
-            {
-                return;
-            }
+            if (!IsServer) return;
+            
             currentTarget = movement.CurrentTarget;
             if (!currentTarget || currentTarget.Health.Value <= 0)
                 return;
 
-            if (!currentTarget.TryGetComponent<NetworkObject>(out var netObj))
-                return;
-            if (netObj.OwnerClientId == selfNetworkObject.OwnerClientId)
+            var targetTeam = currentTarget.GetComponent<Team>();
+            if (targetTeam != null && targetTeam.TeamId.Value == team.TeamId.Value)
                 return;
 
             float dist = Vector3.Distance(transform.position, currentTarget.transform.position);
@@ -47,7 +51,7 @@ namespace _Scripts.Gameplay
                 return;
 
             currentTarget.TakeDamage(data.DamagePerHit);
-            Debug.Log($"{name} attacked {currentTarget.name} for {data.DamagePerHit}. Health is {currentTarget.Health}");
+            Debug.Log($"{name} attacked {currentTarget.name} for {data.DamagePerHit}. Health is {currentTarget.Health}. Who: {team.TeamId.Value}; Whom: {targetTeam.TeamId.Value}");
         }
 
         private void OnDrawGizmosSelected()

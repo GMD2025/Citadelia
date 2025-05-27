@@ -44,7 +44,8 @@ namespace _Scripts.Gameplay
             spawnPos = hit.position;
 
             var go = Instantiate(spawnerData.UnitPrefab, spawnPos, spawnRot);
-            go.GetComponent<NetworkObject>().SpawnWithOwnership(OwnerClientId);
+            go.GetComponent<NetworkObject>().Spawn();
+            go.GetComponent<Team>().SetTeam((int) OwnerClientId);
             go.transform.SetParent(transform, worldPositionStays: true);
             unitsAlive++;
             LifecycleHooks.OnDestroy(go) += () => unitsAlive--;

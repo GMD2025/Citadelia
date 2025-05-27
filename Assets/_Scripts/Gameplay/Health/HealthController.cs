@@ -5,6 +5,7 @@ using UnityEngine.Serialization;
 
 namespace _Scripts.Gameplay.Health
 {
+    [RequireComponent(typeof(Team))]
     public class HealthController : NetworkBehaviour
     {
         [SerializeField] private int maxHealth = 100;
@@ -16,20 +17,20 @@ namespace _Scripts.Gameplay.Health
             NetworkVariableWritePermission.Server
         );
 
-        public event Action<int, int> OnHealthChange;
+        private Team team;
+
         public event Action OnDied;
 
         public override void OnNetworkSpawn()
         {
             base.OnNetworkSpawn();
 
+            team = GetComponent<Team>();
+
             if (IsServer)
                 Health.Value = maxHealth;
 
             Health.OnValueChanged += OnHealthChanged;
-
-            if (IsClient)
-                OnHealthChange?.Invoke(Health.Value, maxHealth);
         }
 
         public override void OnNetworkDespawn()
@@ -41,7 +42,6 @@ namespace _Scripts.Gameplay.Health
         private void OnHealthChanged(int previous, int current)
         {
             Debug.Log($"[HealthController] {gameObject.name} health changed: {previous} -> {current}");
-            OnHealthChange?.Invoke(current, maxHealth);
         }
 
         public void TakeDamage(int amount)

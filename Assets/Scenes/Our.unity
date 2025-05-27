@@ -11544,6 +11544,7 @@ GameObject:
   - component: {fileID: 1736218016}
   - component: {fileID: 1736218015}
   - component: {fileID: 1736218020}
+  - component: {fileID: 1736218022}
   m_Layer: 0
   m_Name: Grid
   m_TagString: Untagged
@@ -11658,6 +11659,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   castlePrefab: {fileID: 7383324237987535707, guid: d54fab45c3cbbea43943f7d1930d0379, type: 3}
+--- !u!114 &1736218022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1736218014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c86780bc6a284cbaaee9214df47e5164, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TeamId:
+    m_InternalValue: 0
 --- !u!1 &1744985550
 GameObject:
   m_ObjectHideFlags: 0
@@ -12275,7 +12291,6 @@ GameObject:
   - component: {fileID: 2047948183}
   - component: {fileID: 2047948186}
   - component: {fileID: 2047948185}
-  - component: {fileID: 2047948187}
   m_Layer: 5
   m_Name: WallHealth
   m_TagString: Untagged
@@ -12317,7 +12332,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cddb102d788946adafc0f201d9b394b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
   numberOfSprites: 5
   sprite: {fileID: 21300000, guid: 8fa0e7b5628991b4484a3177175c80b6, type: 3}
   spriteSize: {x: 32, y: 32}
@@ -12362,31 +12376,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2047948181}
   m_CullTransparentMesh: 1
---- !u!114 &2047948187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2047948181}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3646984741
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 0
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!1001 &2065113355
 PrefabInstance:
   m_ObjectHideFlags: 0

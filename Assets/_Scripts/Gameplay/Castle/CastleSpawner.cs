@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using _Scripts.Gameplay.Health;
 using Unity.Netcode;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -50,7 +51,9 @@ namespace _Scripts.Gameplay.Enemy
         {
             var castle = Instantiate(castlePrefab, worldPos, Quaternion.identity);
             var netObj = castle.GetComponent<NetworkObject>();
-            netObj.SpawnWithOwnership(ownerId);
+            netObj.Spawn();
+            netObj.GetComponent<Team>().SetTeam((int) ownerId);
+
         }
 
         private int GetTallestTilemapHeight()

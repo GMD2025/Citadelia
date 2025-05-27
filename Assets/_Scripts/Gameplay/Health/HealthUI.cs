@@ -15,12 +15,10 @@ namespace _Scripts.Gameplay.Health
         private void Awake()
         {
             controller = GetComponent<HealthController>();
-            controller.OnHealthChange += UpdateUI;
         }
 
         private void OnDestroy()
         {
-            controller.OnHealthChange -= UpdateUI;
         }
 
         private void UpdateUI(int current, int max)

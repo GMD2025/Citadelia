@@ -1,5 +1,4 @@
 using System.Linq;
-using _Scripts.Gameplay.Enemy;
 using _Scripts.Gameplay.Health;
 using Unity.Netcode;
 using UnityEngine;
@@ -41,7 +40,8 @@ namespace _Scripts.Gameplay
 
         private void Update()
         {
-            if (!IsOwner) return;
+            // only the server drives AI movement & targeting
+            if (!IsServer) return;
 
             if (!navMeshAgent.isOnNavMesh)
             {
@@ -58,20 +58,21 @@ namespace _Scripts.Gameplay
 
         private HealthController FindNewTarget()
         {
-            var allTargets = FindObjectsByType<HealthController>(
+            int myTeam = GetComponent<Team>().TeamId.Value;
+
+            return FindObjectsByType<HealthController>(
                     FindObjectsInactive.Exclude,
                     FindObjectsSortMode.None)
                 .Where(h => h.Health.Value > 0)
                 .Where(h =>
                 {
-                    if (!h.TryGetComponent<NetworkObject>(out var net)) return false;
-                    return net.OwnerClientId != OwnerClientId;
-                });
-
-            return allTargets
+                    var t = h.GetComponent<Team>();
+                    return t != null && t.TeamId.Value != myTeam;
+                })
                 .OrderBy(t => (transform.position - t.transform.position).sqrMagnitude)
                 .FirstOrDefault();
         }
+
 
         private void MoveToNavmesh()
         {
