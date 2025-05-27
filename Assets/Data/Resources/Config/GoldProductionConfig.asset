@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GoldProductionConfig
   m_EditorClassIdentifier: 
   resourceType: {fileID: 11400000, guid: c373c01eaf188b944bf1e2cce8dee79b, type: 2}
-  productionAmount: 10
-  intervalSeconds: 20
+  productionAmount: 30
+  intervalSeconds: 15

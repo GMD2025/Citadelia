@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9d6518823914024b89cb339029217f8, type: 3}
   m_Name: Quarry
   m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: 3459248199090289539, guid: d51035e74da9d94429f62d23e22a852c, type: 3}
   cellsize: {x: 2, y: 2}
   resources:
+  - resourceData: {fileID: 11400000, guid: c373c01eaf188b944bf1e2cce8dee79b, type: 2}
+    amount: 30
   - resourceData: {fileID: 11400000, guid: a33836f01d5205b41b70cd9dd52a5542, type: 2}
-    amount: 1000
+    amount: 300

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9d6518823914024b89cb339029217f8, type: 3}
   m_Name: Gold Mine
   m_EditorClassIdentifier: 
-  buildingPrefab: {fileID: 2518968452104965692, guid: 5d589661b7d0f0847815ae1d5691f0d3, type: 3}
   cellsize: {x: 2, y: 2}
   resources:
   - resourceData: {fileID: 11400000, guid: 14826a5645b227f4687102cd9020f548, type: 2}
-    amount: 800
+    amount: 300
+  - resourceData: {fileID: 11400000, guid: a33836f01d5205b41b70cd9dd52a5542, type: 2}
+    amount: 400

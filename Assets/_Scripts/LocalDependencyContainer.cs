@@ -19,6 +19,8 @@ namespace _Scripts
     public class LocalDependencyContainer : MonoBehaviour
     {
         [SerializeField] public InputMode SelectedInputMode = InputMode.Keyboard;
+        [SerializeField] public ResourceData[] resources;
+
         private Dictionary<Type, object> services = new();
         private static LocalDependencyContainer cached;
 
@@ -69,7 +71,7 @@ namespace _Scripts
 
         private void RegisterResourceService()
         {
-            Register(new ResourceProductionService());
+            Register(new ResourceProductionService(resources));
         }
 
         public static LocalDependencyContainer Instance

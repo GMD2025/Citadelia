@@ -648,11 +648,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8fe25130d07f4dd40805adc5349f14f9, type: 3}
---- !u!1839735485 &22696811 stripped
-Tilemap:
-  m_CorrespondingSourceObject: {fileID: 3306395612148333020, guid: 8fe25130d07f4dd40805adc5349f14f9, type: 3}
-  m_PrefabInstance: {fileID: 22696810}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &22696812 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6058648559948349077, guid: 8fe25130d07f4dd40805adc5349f14f9, type: 3}
@@ -707,9 +702,9 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 39805562}
   m_Enabled: 1
-  m_SortingLayerID: -1282571173
-  m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingLayerID: 429234281
+  m_SortingLayer: 5
+  m_SortingOrder: 12
   m_SortAtRoot: 0
 --- !u!114 &39805565
 MonoBehaviour:
@@ -9778,6 +9773,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SelectedInputMode: 1
+  resources:
+  - {fileID: 11400000, guid: c373c01eaf188b944bf1e2cce8dee79b, type: 2}
+  - {fileID: 11400000, guid: 14826a5645b227f4687102cd9020f548, type: 2}
+  - {fileID: 11400000, guid: a33836f01d5205b41b70cd9dd52a5542, type: 2}
 --- !u!4 &1098001441
 Transform:
   m_ObjectHideFlags: 0
@@ -11436,11 +11435,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a596f4ea584cace4996022dee7e6832e, type: 3}
---- !u!1839735485 &1603381594 stripped
-Tilemap:
-  m_CorrespondingSourceObject: {fileID: 1472507656986563550, guid: a596f4ea584cace4996022dee7e6832e, type: 3}
-  m_PrefabInstance: {fileID: 1603381593}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1603381595 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 275396681553271290, guid: a596f4ea584cace4996022dee7e6832e, type: 3}
@@ -11604,10 +11598,7 @@ MonoBehaviour:
   highlightColor: {r: 0.3584906, g: 0, b: 0, a: 0.28235295}
   highlightColorDeny: {r: 0.7584905, g: 0, b: 0, a: 0.5882353}
   transparentTile: {fileID: 11400000, guid: 4e7b1045450665f4a949d30318b397ee, type: 2}
-  tilemapsToDeny:
-  - {fileID: 22696811}
-  - {fileID: 905536923}
-  - {fileID: 1603381594}
+  tilemapsToDeny: []
 --- !u!156049354 &1736218018
 Grid:
   m_ObjectHideFlags: 0
@@ -12232,7 +12223,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -10}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 180, y: 110}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2047948183
@@ -12248,7 +12239,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  numberOfSprites: 10
+  numberOfSprites: 5
   sprite: {fileID: 21300000, guid: 8fa0e7b5628991b4484a3177175c80b6, type: 3}
   spriteSize: {x: 32, y: 32}
   spacing: {x: 2, y: 0}

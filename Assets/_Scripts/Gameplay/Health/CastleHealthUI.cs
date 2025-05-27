@@ -32,8 +32,8 @@ namespace _Scripts.Gameplay.Health
             rect = GetComponent<RectTransform>();
             rect.anchorMin = new Vector2(0f, 1);
             rect.anchorMax = new Vector2(0f, 1);
-            rect.pivot = new Vector2(0.5f, 0.5f);
-            rect.anchoredPosition = new Vector2(0, -padding.y);
+            rect.pivot = new Vector2(0f, 1f);
+            rect.anchoredPosition = new Vector2(padding.x, -padding.y);
             RegenerateSprites(numberOfSprites);
             healthController.OnHealthChange += UpdateHealthUI;
             UpdateHealthUI(healthController.Health, healthController.MaxHealth);
@@ -51,8 +51,8 @@ namespace _Scripts.Gameplay.Health
                 Utils.Utils.SmartDestroy(rect.GetChild(i).gameObject);
 
             healthImages = new Image[count];
-            
-            // Calculate total width to help with center positioning
+
+            // // Calculate total width to help with center positioning
             float totalWidth = count * spriteSize.x + (count - 1) * spacing.x;
             float startX = -totalWidth / 2 + spriteSize.x / 2;
 
@@ -66,7 +66,9 @@ namespace _Scripts.Gameplay.Health
                 containerRT.anchorMin = containerRT.anchorMax = new Vector2(0.5f, 0.5f);
                 containerRT.pivot = new Vector2(0.5f, 0.5f);
                 // Position relative to center
-                containerRT.anchoredPosition = new Vector2(startX + i * (spriteSize.x + spacing.x), 0);
+                containerRT.anchoredPosition = new Vector2(
+                    startX + i * (spriteSize.x + spacing.x),
+                    0.5f);
 
                 GameObject backGO = new GameObject("Background", typeof(RectTransform), typeof(Image));
                 backGO.transform.SetParent(container.transform, false);

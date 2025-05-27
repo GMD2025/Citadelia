@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: StoneProductionConfig
   m_EditorClassIdentifier: 
   resourceType: {fileID: 11400000, guid: 14826a5645b227f4687102cd9020f548, type: 2}
-  productionAmount: 20
+  productionAmount: 75
   intervalSeconds: 10

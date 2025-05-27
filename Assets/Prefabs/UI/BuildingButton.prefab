@@ -367,7 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 712308a8edb54a7494a646ea6699a80b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isTodayBlackFriday: 1
+  isTodayBlackFriday: 0
 --- !u!1 &7333032944932121152
 GameObject:
   m_ObjectHideFlags: 0
