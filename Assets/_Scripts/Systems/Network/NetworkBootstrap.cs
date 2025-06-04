@@ -93,7 +93,8 @@ namespace _Scripts.Systems.Network
 
         private void LoadIPConfig()
         {
-            string configPath = Path.Combine(Application.streamingAssetsPath, "config.txt");
+            string exeDir = Directory.GetParent(Application.dataPath)!.FullName;
+            string configPath = Path.Combine(exeDir, "config.txt");
 
             if (!File.Exists(configPath)) return;
 
@@ -116,5 +117,6 @@ namespace _Scripts.Systems.Network
                 Debug.LogError("UnityTransport component missing on NetworkManager.");
             }
         }
+
     }
 }
