@@ -8,6 +8,7 @@ using UnityEngine;
 
 namespace _Scripts.Gameplay.Buildings.Flame
 {
+    [RequireComponent(typeof(Team))]
     public class FlameTowerController : NetworkBehaviour
     {
         [SerializeField] private FlameTowerData flameTowerData;

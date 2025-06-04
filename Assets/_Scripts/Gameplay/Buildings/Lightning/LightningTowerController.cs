@@ -10,6 +10,7 @@ using UnityEngine.AI;
 
 namespace _Scripts.Gameplay.Buildings.Lightning
 {
+    [RequireComponent(typeof(Team))]
     public class LightningTowerController : NetworkBehaviour
     {
         [SerializeField] private GameObject lightningPrefab;

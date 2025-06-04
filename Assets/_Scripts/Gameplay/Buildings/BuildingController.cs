@@ -1,16 +1,16 @@
 using System;
 using _Scripts.Data;
+using _Scripts.Gameplay.Units;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace _Scripts.Gameplay.Buildings
 {
+    [RequireComponent(typeof(Team))]
     public class BuildingController: NetworkBehaviour, IHaveId
     {
         [SerializeField] private BuildingData data;
-        
-        
         private Grid grid;
         
         
