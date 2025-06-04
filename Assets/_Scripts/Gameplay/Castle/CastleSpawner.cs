@@ -1,12 +1,10 @@
-using System;
 using System.Linq;
-using _Scripts.Gameplay.Health;
+using _Scripts.Gameplay.Units;
 using Unity.Netcode;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace _Scripts.Gameplay.Enemy
+namespace _Scripts.Gameplay.Castle
 {
     [RequireComponent(typeof(Grid))]
     public class CastleSpawner : NetworkBehaviour

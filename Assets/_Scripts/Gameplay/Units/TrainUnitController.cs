@@ -4,7 +4,7 @@ using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace _Scripts.Gameplay
+namespace _Scripts.Gameplay.Units
 {
     public class TrainUnitController : NetworkBehaviour
     {

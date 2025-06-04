@@ -1,89 +1,120 @@
 using System.Collections;
+using System.IO;
 using Unity.Netcode;
+using Unity.Netcode.Transports.UTP;
 using UnityEngine;
 
-public class GameplayNetworkBootstrapper : MonoBehaviour
+namespace _Scripts.Systems.Network
 {
-    [SerializeField] private float clientTimeout = 0.65f;
-
-    private void OnEnable()
+    public class GameplayNetworkBootstrapper : MonoBehaviour
     {
-        NetworkManager.Singleton.OnClientDisconnectCallback += HandleClientDisconnect;
-    }
+        [SerializeField] private float clientTimeout = 0.65f;
 
-    private void OnDisable()
-    {
-        if (NetworkManager.Singleton != null)
-            NetworkManager.Singleton.OnClientDisconnectCallback -= HandleClientDisconnect;
-    }
-
-    private void Start()
-    {
-        TryStartClient();
-    }
-
-    private void HandleClientDisconnect(ulong clientId)
-    {
-        // only react to our own client losing connection
-        if (NetworkManager.Singleton.ConnectedClients.Count == 0)
+        private void OnEnable()
         {
-            Debug.LogWarning("Client disconnected—retrying connection...");
+            NetworkManager.Singleton.OnClientDisconnectCallback += HandleClientDisconnect;
+        }
+
+        private void OnDisable()
+        {
+            if (NetworkManager.Singleton != null)
+                NetworkManager.Singleton.OnClientDisconnectCallback -= HandleClientDisconnect;
+        }
+
+        private void Start()
+        {
+            LoadIPConfig();
             TryStartClient();
         }
-    }
 
-    private void TryStartClient()
-    {
-        var net = NetworkManager.Singleton;
-
-        Debug.Log("Attempting to start client...");
-        bool started = net.StartClient();
-
-        if (started)
+        private void HandleClientDisconnect(ulong clientId)
         {
-            StartCoroutine(WaitForConnectionOrBecomeHost());
-        }
-        else
-        {
-            Debug.LogError("Can't start client. Check your network configuration.");
-        }
-    }
-
-    private IEnumerator WaitForConnectionOrBecomeHost()
-    {
-        var net = NetworkManager.Singleton;
-        float elapsed = 0f;
-
-        while (!net.IsConnectedClient && elapsed < clientTimeout)
-        {
-            elapsed += Time.deltaTime;
-            yield return null;
+            if (NetworkManager.Singleton.ConnectedClients.Count == 0)
+            {
+                Debug.LogWarning("Client disconnected—retrying connection...");
+                TryStartClient();
+            }
         }
 
-        if (net.IsConnectedClient)
+        private void TryStartClient()
         {
-            Debug.Log("Connected to Host successfully.");
-        }
-        else
-        {
-            Debug.LogWarning("Connection timeout. Becoming Host.");
-            net.Shutdown();
-            yield return new WaitForSeconds(0.2f);
-            StartHost();
-        }
-    }
+            var net = NetworkManager.Singleton;
 
-    private void StartHost()
-    {
-        var net = NetworkManager.Singleton;
+            Debug.Log("Attempting to start client...");
+            bool started = net.StartClient();
 
-        if (net.StartHost())
-        {
-            Debug.Log("Host started successfully.");
+            if (started)
+            {
+                StartCoroutine(WaitForConnectionOrBecomeHost());
+            }
+            else
+            {
+                Debug.LogError("Can't start client. Check your network configuration.");
+            }
         }
-        else
+
+        private IEnumerator WaitForConnectionOrBecomeHost()
         {
-            Debug.LogError("Failed to start Host. Critical failure.");
+            var net = NetworkManager.Singleton;
+            float elapsed = 0f;
+
+            while (!net.IsConnectedClient && elapsed < clientTimeout)
+            {
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            if (net.IsConnectedClient)
+            {
+                Debug.Log("Connected to Host successfully.");
+            }
+            else
+            {
+                Debug.LogWarning("Connection timeout. Becoming Host.");
+                net.Shutdown();
+                yield return new WaitForSeconds(0.2f);
+                StartHost();
+            }
+        }
+
+        private void StartHost()
+        {
+            var net = NetworkManager.Singleton;
+
+            if (net.StartHost())
+            {
+                Debug.Log("Host started successfully.");
+            }
+            else
+            {
+                Debug.LogError("Failed to start Host. Critical failure.");
+            }
+        }
+
+        private void LoadIPConfig()
+        {
+            string configPath = Path.Combine(Application.streamingAssetsPath, "config.txt");
+
+            if (!File.Exists(configPath)) return;
+
+            string[] lines = File.ReadAllLines(configPath);
+            if (lines.Length < 2) return;
+
+            string serverIP = lines[0].Trim();
+            if (!int.TryParse(lines[1].Trim(), out int port)) return;
+
+            Debug.Log($"Overriding connection config: IP={serverIP}, Port={port}");
+
+            var utp = NetworkManager.Singleton.GetComponent<UnityTransport>();
+            if (utp != null)
+            {
+                utp.ConnectionData.Address = serverIP;
+                utp.ConnectionData.Port = (ushort)port;
+            }
+            else
+            {
+                Debug.LogError("UnityTransport component missing on NetworkManager.");
+            }
         }
     }
 }

@@ -9753,6 +9753,9 @@ GameObject:
   - component: {fileID: 1098001441}
   - component: {fileID: 1098001442}
   - component: {fileID: 1098001440}
+  - component: {fileID: 1098001445}
+  - component: {fileID: 1098001444}
+  - component: {fileID: 1098001443}
   m_Layer: 0
   m_Name: Dependency Container
   m_TagString: Untagged
@@ -9776,6 +9779,7 @@ MonoBehaviour:
   resources:
   - {fileID: 11400000, guid: c373c01eaf188b944bf1e2cce8dee79b, type: 2}
   - {fileID: 11400000, guid: 14826a5645b227f4687102cd9020f548, type: 2}
+  - {fileID: 11400000, guid: a33836f01d5205b41b70cd9dd52a5542, type: 2}
   - {fileID: 11400000, guid: a33836f01d5205b41b70cd9dd52a5542, type: 2}
 --- !u!4 &1098001441
 Transform:
@@ -9817,6 +9821,51 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &1098001443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098001439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b5588b28724acb901dea0d4d42f6e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  resourceProdData: {fileID: 11400000, guid: 7c43076694de45f4f891dce6344506dd, type: 2}
+  resourceProdUIPrefab: {fileID: 0}
+--- !u!114 &1098001444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098001439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b5588b28724acb901dea0d4d42f6e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  resourceProdData: {fileID: 11400000, guid: 307ca2bafa42a0a459926e372248a003, type: 2}
+  resourceProdUIPrefab: {fileID: 0}
+--- !u!114 &1098001445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1098001439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65b5588b28724acb901dea0d4d42f6e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  resourceProdData: {fileID: 11400000, guid: 0cad835c978f80844b8eeb5a63b1b715, type: 2}
+  resourceProdUIPrefab: {fileID: 0}
 --- !u!1 &1181647281
 GameObject:
   m_ObjectHideFlags: 0
@@ -9852,10 +9901,10 @@ RectTransform:
   - {fileID: 2068064877}
   m_Father: {fileID: 899760280}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 867, y: 561}
-  m_SizeDelta: {x: 532.77, y: 105.33}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -221, y: -40}
+  m_SizeDelta: {x: 532.77, y: 105.33002}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1181647283
 MonoBehaviour:
@@ -11440,6 +11489,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 275396681553271290, guid: a596f4ea584cace4996022dee7e6832e, type: 3}
   m_PrefabInstance: {fileID: 1603381593}
   m_PrefabAsset: {fileID: 0}
+--- !u!1839735485 &1704186451 stripped
+Tilemap:
+  m_CorrespondingSourceObject: {fileID: 1472507656986563550, guid: a596f4ea584cace4996022dee7e6832e, type: 3}
+  m_PrefabInstance: {fileID: 1603381593}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1723313125
 GameObject:
   m_ObjectHideFlags: 0
@@ -11613,7 +11667,8 @@ MonoBehaviour:
   highlightColor: {r: 0.3584906, g: 0, b: 0, a: 0.28235295}
   highlightColorDeny: {r: 0.7584905, g: 0, b: 0, a: 0.5882353}
   transparentTile: {fileID: 11400000, guid: 4e7b1045450665f4a949d30318b397ee, type: 2}
-  tilemapsToDeny: []
+  tilemapsToDeny:
+  - {fileID: 1704186451}
 --- !u!156049354 &1736218018
 Grid:
   m_ObjectHideFlags: 0
@@ -11635,14 +11690,14 @@ Transform:
   m_GameObject: {fileID: 1736218014}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 6.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 433583756}
-  - {fileID: 1603381595}
   - {fileID: 22696812}
   - {fileID: 905536924}
+  - {fileID: 1603381595}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1736218020

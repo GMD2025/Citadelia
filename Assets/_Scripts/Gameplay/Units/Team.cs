@@ -1,14 +1,17 @@
 using Unity.Netcode;
 
-public class Team : NetworkBehaviour
+namespace _Scripts.Gameplay.Units
 {
-    public NetworkVariable<int> TeamId = new(-1,
-        NetworkVariableReadPermission.Everyone,
-        NetworkVariableWritePermission.Server);
-
-    public void SetTeam(int team)
+    public class Team : NetworkBehaviour
     {
-        if (IsServer)
-            TeamId.Value = team;
+        public NetworkVariable<int> TeamId = new(-1,
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server);
+
+        public void SetTeam(int team)
+        {
+            if (IsServer)
+                TeamId.Value = team;
+        }
     }
 }

@@ -4,7 +4,7 @@ using _Scripts.Utils;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace _Scripts.Gameplay
+namespace _Scripts.Gameplay.Units
 {
     [RequireComponent(typeof(NetworkObject))]
     [RequireComponent(typeof(Team))]

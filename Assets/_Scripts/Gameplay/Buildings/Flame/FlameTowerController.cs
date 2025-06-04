@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.Linq;
 using _Scripts.Data;
+using _Scripts.Gameplay.Units;
 using _Scripts.Utils;
 using Unity.Netcode;
 using UnityEngine;
@@ -8,18 +10,20 @@ namespace _Scripts.Gameplay.Buildings.Flame
 {
     public class FlameTowerController : NetworkBehaviour
     {
-        [SerializeField]
-        private FlameTowerData flameTowerData;
+        [SerializeField] private FlameTowerData flameTowerData;
 
         [SerializeField, Tooltip("Flames parent object")]
         private GameObject flameRing;
 
         [SerializeField] private LayerMask enemyLayer;
-        
+
         private PolygonBuilder polygonBuilder;
+        private Team myTeam;
+
 
         private void Start()
         {
+            myTeam = GetComponent<Team>();
             polygonBuilder = flameRing.GetComponent<PolygonBuilder>();
             polygonBuilder.BuildPolygon();
             ActivateCooldownInAll();
@@ -34,14 +38,16 @@ namespace _Scripts.Gameplay.Buildings.Flame
 
         private void CheckAndFire()
         {
-            Collider2D enemyCollider = Physics2D.OverlapCircle(transform.position, flameTowerData.detectionRadius, enemyLayer);
-            if (!enemyCollider || enemyCollider.GetComponent<NetworkObject>().OwnerClientId == OwnerClientId)
+            Collider2D enemyCollider = Physics2D
+                .OverlapCircleAll(transform.position, flameTowerData.detectionRadius, enemyLayer)
+                .First(e => e.GetComponent<Team>().TeamId != myTeam.TeamId);
+            if (!enemyCollider)
                 return;
-            
+
             Transform flame = GetClosestFlame(enemyCollider.transform.position);
             if (!flame)
                 return;
-            
+
             var flameProjectile = flame.GetComponent<FlameProjectile>();
             if (!flameProjectile)
                 return;
@@ -60,7 +66,7 @@ namespace _Scripts.Gameplay.Buildings.Flame
                 return;
 
             var flameProjectile = newFlames[0].GetComponent<FlameProjectile>();
-            if(flameProjectile)
+            if (flameProjectile)
                 flameProjectile.ActivateCooldown(this);
         }
 
@@ -77,6 +83,7 @@ namespace _Scripts.Gameplay.Buildings.Flame
                     closest = child;
                 }
             }
+
             return closest;
         }
 
@@ -87,7 +94,6 @@ namespace _Scripts.Gameplay.Buildings.Flame
                 var flameProjectile = flame.GetComponent<FlameProjectile>();
                 if (flameProjectile)
                     flameProjectile.ActivateCooldown(this);
-
             }
         }
 

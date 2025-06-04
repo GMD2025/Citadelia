@@ -55,12 +55,12 @@ namespace _Scripts.Gameplay.Buildings
                 box2D.offset = Vector2.zero;
             }
 
-            NavMeshObstacle obstacle = GetComponent<NavMeshObstacle>();
-            if (obstacle != null && obstacle.shape == NavMeshObstacleShape.Capsule)
-            {
-                obstacle.radius = Mathf.Min(targetSize.x, targetSize.y) * 0.5f; // half of the smallest size
-                obstacle.height = 1f;
-            }
+            // NavMeshObstacle obstacle = GetComponent<NavMeshObstacle>();
+            // if (obstacle != null && obstacle.shape == NavMeshObstacleShape.Capsule)
+            // {
+            //     obstacle.radius = Mathf.Min(targetSize.x, targetSize.y) * 0.5f; // half of the smallest size
+            //     obstacle.height = 1f;
+            // }
         }
 
     }

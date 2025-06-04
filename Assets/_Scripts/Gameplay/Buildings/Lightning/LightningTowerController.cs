@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.Linq;
 using _Scripts.Data;
 using _Scripts.Gameplay.Health;
+using _Scripts.Gameplay.Units;
 using _Scripts.Utils;
 using Unity.Netcode;
 using UnityEngine;
@@ -16,12 +18,15 @@ namespace _Scripts.Gameplay.Buildings.Lightning
 
         private int activeStrikes = 0;
         private readonly HashSet<GameObject> recentlyStruck = new();
+        private Team myTeam;
 
         private void Start()
         {
             IntervalRunner.Start(this,
                 () => lightningData.fireDelay,
                 PrepareLightningStrike);
+
+            myTeam = GetComponent<Team>();
         }
 
         private void PrepareLightningStrike()
@@ -32,7 +37,7 @@ namespace _Scripts.Gameplay.Buildings.Lightning
             var enemies = Physics2D.OverlapCircleAll(
                 transform.position,
                 lightningData.detectionRadius,
-                enemyLayer);
+                enemyLayer).Where(e => e.GetComponent<Team>().TeamId != myTeam.TeamId);
 
             foreach (var hit in enemies)
             {
