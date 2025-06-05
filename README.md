@@ -2,6 +2,8 @@
   <img src="https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg" alt="Figma" width="40" />
 </a>
 
+### NB! [How to run the game?](#how-toes)
+
 ## Citadelia
 
 Citadelia is a strategic tower defense game where players build and manage their own fortress to fend off waves of enemies. The game combines resource management, tactical placement of buildings, and real-time combat mechanics to create an engaging experience.
@@ -18,6 +20,28 @@ Citadelia is a strategic tower defense game where players build and manage their
 - **Multiplayer Support**: Play with or against other players in a networked environment.
 - **Customizable Grid Highlights**: Visualize building placement and restricted areas with interactive grid highlights.
 
+## How-to'es
+> Important to note:
+> - the game is exclusively targeted for 2 players.
+> - there is no functionality for split screen/local multiplayer inside the game
+> - the multiplayer is run over the network
+
+### How to play with a friend
+In order to configure the IP address of the friend you want to play with, you have to first decide, who is going to be the host, and who is going to join the running instance.  
+
+**The host:**  The host has it all easy - just run the `Citadelia.exe` and be the first one to start the game, i.e start the host  
+
+**The second player:** Has to create `config.txt` file next to `Citadelia.exe` (has to be in the same folder).
+The `txt` file should consist of two lines. The first one has to be your IPv4 address, the second will be just 7777  
+
+So the example of the config could be:
+```
+192.125.0.121
+7777
+```
+> NB! **You and your friend have to be on the same network!**
+
+Potentially, two instances of the game can be run on the same device, but with the joystick controls, you would not be able to play them, so don't
 ## Collaboration
 
 ### Setup
