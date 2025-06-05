@@ -9775,7 +9775,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 179da2d6d0d54b919cda2e2ebc215a09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectedInputMode: 1
+  SelectedInputMode: 2
   resources:
   - {fileID: 11400000, guid: c373c01eaf188b944bf1e2cce8dee79b, type: 2}
   - {fileID: 11400000, guid: 14826a5645b227f4687102cd9020f548, type: 2}
