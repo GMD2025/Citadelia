@@ -37,3 +37,18 @@ This ensures that rules from [./Ignore/common-ignore.conf](./Ignore/common-ignor
 
 > [!IMPORTANT]
 > When pulling or pushing in Git, you **must** also apply changesets or pull in Unity VCS (Plastic SCM). It is **crucial** to have the correct branches checked out in **both** repositories to avoid scenarios where changes are pushed to the wrong branch (e.g., pushing to a feature branch in Git but committing to `main` in Plastic SCM).
+
+## Third-Party Assets
+
+The following third-party assets and tools were used in this project:
+
+- **Kenney Game Assets** – https://kenney.nl/assets  
+  Used for building sprites and UI elements. Licensed under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).
+
+- **Universal LPC Spritesheet Character Generator** – https://liberatedpixelcup.github.io/Universal-LPC-Spritesheet-Character-Generator/  
+  Used for player and unit character sprites. Based on [Liberated Pixel Cup assets](https://lpc.opengameart.org/). Licensed under [CC-BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/).
+
+- **DOTween (Demigiant)** – http://dotween.demigiant.com/  
+  Used for tweening animations and timed transitions. Licensed under the Demigiant license.
+
+> Some visual or textual assets were generated with the help of AI tools (ChatGPT and Sora).
