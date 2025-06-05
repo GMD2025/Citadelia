@@ -52,3 +52,17 @@ The following third-party assets and tools were used in this project:
   Used for tweening animations and timed transitions. Licensed under the Demigiant license.
 
 > Some visual or textual assets were generated with the help of AI tools (ChatGPT and Sora).
+
+## Blogposts
+
+Development logs and design notes are maintained in a separate repository:  
+🔗 [GMD2025/Blogposts](https://github.com/GMD2025/Blogposts)
+
+You can browse individual posts directly:
+
+1. [Michael's Roll-a-ball](https://github.com/GMD2025/Blogposts/blob/main/1.%20Michael's%20Roll-a-ball.md) [Sevastian's Move-a-cube](https://github.com/GMD2025/Blogposts/blob/main/1.%20Sevastian's%20Move-a-cube.md)
+2. [Game Design Document](https://github.com/GMD2025/Blogposts/blob/main/2.%20Game%20Design%20Document.md)
+3. [Dev update!](https://github.com/GMD2025/Blogposts/blob/main/3.%20Dev%20update!.md)
+4. [Working hard](https://github.com/GMD2025/Blogposts/blob/main/4.%20Working%20hard.md)
+5. [In Development](https://github.com/GMD2025/Blogposts/blob/main/5.%20In%20Development.md)
+6. [Final chapter](https://github.com/GMD2025/Blogposts/blob/main/6.%20Final%20chapter.md)
