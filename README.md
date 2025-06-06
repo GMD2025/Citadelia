@@ -3,6 +3,7 @@
 </a>
 
 ### NB! [How to run the game?](#how-toes)
+### [Demo](https://youtu.be/QP5DW_KOAzk?si=nY0yo5D-Jfxk7CKP)
 
 ## Citadelia
 
